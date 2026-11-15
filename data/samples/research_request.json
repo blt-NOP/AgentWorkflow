@@ -1,0 +1,16 @@
+{
+  "description": "用于后续开发的虚构输入，不代表实际论文或实验结果",
+  "research_direction": "边缘设备上的模型推理效率",
+  "papers": [],
+  "constraints": {
+    "available_weeks": 4,
+    "gpu_count": 1,
+    "gpu_memory_gb": null,
+    "dataset": null
+  },
+  "expected_clarifications": [
+    "请补充参考论文或摘要",
+    "可用 GPU 的型号与显存是多少",
+    "是否已有数据集和可复现的基线代码"
+  ]
+}

@@ -1,0 +1,23 @@
+:root { color-scheme: light; font-family: "Segoe UI", "Microsoft YaHei", sans-serif; color: #203145; background: #f3f6f8; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { max-width: 900px; margin: 48px auto; padding: 0 24px; }
+header { margin-bottom: 28px; }
+h1 { font-size: clamp(26px, 5vw, 36px); margin: 8px 0 12px; }
+p { line-height: 1.7; }
+.eyebrow { color: #326b66; font-weight: 650; letter-spacing: .08em; }
+.panel { background: white; border: 1px solid #dce4e9; border-radius: 14px; padding: 24px; margin: 18px 0; }
+.muted, .hint { color: #657586; font-size: 14px; }
+.session, .actions { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; }
+#session-label { font-size: 13px; overflow-wrap: anywhere; }
+#messages { min-height: 170px; max-height: 420px; overflow-y: auto; margin: 20px 0; }
+.message { padding: 12px 16px; background: #f0f5f4; border-radius: 9px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.message.system { background: #fff6e8; }
+label { display: block; font-weight: 600; margin-bottom: 10px; }
+textarea { width: 100%; padding: 14px; font: inherit; line-height: 1.6; resize: vertical; border: 1px solid #b7c8d2; border-radius: 8px; }
+textarea:focus, button:focus-visible { outline: 3px solid #aad4ce; outline-offset: 2px; }
+.actions { margin-top: 14px; }
+button { border: 0; border-radius: 7px; padding: 10px 18px; background: #285f59; color: white; cursor: pointer; font: inherit; }
+button:disabled { opacity: .55; cursor: wait; }
+#new-session { background: #eaf1f2; color: #285f59; }
+@media (max-width: 600px) { main { margin-top: 24px; padding: 0 14px; } .panel { padding: 18px; } }

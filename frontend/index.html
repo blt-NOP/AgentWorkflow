@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AgentWorkflow · 论文 idea 助手</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">AgentWorkflow</p>
+      <h1>论文 idea 讨论助手</h1>
+      <p>从已读论文出发，逐步明确研究问题与实验思路。</p>
+    </header>
+    <section class="panel" aria-label="服务状态">
+      <span id="health" role="status">正在检查后端连接…</span>
+      <p class="muted">当前为初始化框架，论文处理、模型对话和会话保存待接入。</p>
+    </section>
+    <section class="panel" aria-label="研究讨论">
+      <div class="session"><span id="session-label"></span><button id="new-session" type="button">新建讨论</button></div>
+      <div id="messages" role="log" aria-live="polite">
+        <p class="hint">可以从专业方向、最近读过的论文和现有资源开始描述需求。</p>
+      </div>
+      <form id="chat-form">
+        <label for="message">你的研究需求</label>
+        <textarea id="message" rows="5" maxlength="10000" required placeholder="例如：我关注边缘端模型推理，有一张 GPU，希望在四周内验证一个研究想法……"></textarea>
+        <div class="actions"><span class="muted">发送后将显示当前接口状态。</span><button id="send" type="submit">发送</button></div>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
