@@ -14,6 +14,7 @@ AgentWorkflow/
     model.py       一次模型 HTTP 请求
     main.py        前端调用的 FastAPI 接口
     cli.py         命令行入口，同样调用 agent.run_turn
+    run.py         同时显示并保存每次运行的终端日志
     __init__.py    读取根目录 .env
   frontend/
     index.html     页面结构和输入框
@@ -44,10 +45,34 @@ python -m pip install -r requirements.txt
 if (-not (Test-Path -LiteralPath .env)) {
     Copy-Item -LiteralPath .env.example -Destination .env
 }
-python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000 --reload
+python -m backend.run
 ```
 
 浏览器访问 <http://127.0.0.1:8000>。**这一条命令同时提供网页和 API**；接口文档为 <http://127.0.0.1:8000/docs>。
+
+### 每次运行的日志
+
+统一使用 `python -m backend.run` 运行：每次生成一个新文件，路径在终端第一行打印。默认启动 Uvicorn；追加参数时转交给当前 Python，因此仍使用当前 Conda 环境，无需额外依赖。
+
+```powershell
+# 启动服务并自动保存日志；Ctrl+C 停止
+python -m backend.run
+# 只运行一次命令行后端，不启动网页或服务
+python -m backend.run -m backend.cli --session A --message "继续讨论"
+# 运行独立工具测试，同样自动保存整次输出
+python -m backend.run tests/check_tools.py
+# 查看最近一次运行日志
+$latestLog = Get-ChildItem data/logs/runs/*.log | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+Get-Content -LiteralPath $latestLog.FullName -Encoding UTF8
+```
+
+| 日志 | 默认位置 | 内容与保存方式 |
+| --- | --- | --- |
+| 每次运行的终端日志 | `data/logs/runs/年月日_时分秒_微秒_进程号.log` | 启动、标准输出、错误输出、结束时间与退出码；边运行边写入，每次独立保存 |
+| 每轮会话执行日志 | `data/logs/A.jsonl` | 会话 A 每个成功轮次的 before、changes、state（含工具实参与结果）；逐行追加 |
+| 工具测试详细证据 | `data/tool-check/run-.../` | 每项测试的实参、返回值、判定依据与汇总；由 check_tools.py 生成 |
+
+配置 `DATA_DIR` 后，上述运行日志与会话日志位于对应目录的 `logs` 下。删除会话只删除该会话 JSONL，整次运行日志仍保留。直接使用原来的 `python -m uvicorn ...`、`python -m backend.cli ...` 或 `python tests/check_tools.py` 不会额外保存整次终端日志，要留档时使用上面的统一入口。运行日志不读取或打印环境变量；聊天内容、工具材料及第三方报错可能出现在输出中，交报告前按需脱敏。日志默认不提交 Git。
 
 如果还运行着旧服务，先在它的终端按 Ctrl+C，再运行上面的新入口。旧的 `backend.app.main` 已归档，不再使用。
 
