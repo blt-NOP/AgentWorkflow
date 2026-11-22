@@ -62,7 +62,10 @@ function showState(data) {
   $("session-id").textContent = `当前会话：${sessionId}`;
   for (const key of ["direction", "claim", "weeks", "compute", "dataset"]) $(key).value = state.facts[key] ?? "";
   $("messages").replaceChildren();
-  for (const message of state.messages) text($("messages"), `${message.role === "user" ? "你" : "助手"}：${message.content}`, `message ${message.role}`);
+  for (const message of state.messages) {
+    const content = message.role === "assistant" ? message.content.replace(/^\[未调用模型\]\s*/, "") : message.content;
+    text($("messages"), `${message.role === "user" ? "你" : "助手"}：${content}`, `message ${message.role}`);
+  }
   $("messages").scrollTop = $("messages").scrollHeight;
   $("evidence").replaceChildren();
   for (const row of state.evidence.rows || []) {

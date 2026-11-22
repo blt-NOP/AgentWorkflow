@@ -113,7 +113,7 @@ def research_dialogue(state, message, skill_id="research-dialogue", use_model=Fa
         except (RuntimeError, ValueError, KeyError, TypeError) as error:
             raise ToolError("MODEL_ERROR", "模型返回失败或内容无效", True) from error
     else:
-        result["message"] = "[未调用模型] 当前条件：" + json.dumps(state["facts"], ensure_ascii=False)
+        result["message"] = "当前条件：" + json.dumps(state["facts"], ensure_ascii=False)
         if state.get("answers"):
             result["message"] += "\n讨论记录：" + json.dumps(state["answers"], ensure_ascii=False)
         if state["evidence"]["gaps"]:
