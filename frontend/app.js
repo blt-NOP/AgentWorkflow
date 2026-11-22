@@ -3,11 +3,13 @@ const $ = id => document.getElementById(id);
 let sessionId = localStorage.getItem("research-session") || crypto.randomUUID();
 let state = null;
 let editingPaperId = "";
+let parsedPaperId = "";
 let busy = false;
 
 async function api(path, method = "GET", body) {
-  const response = await fetch(path, { method, headers: { "Content-Type": "application/json" },
-    body: body === undefined ? undefined : JSON.stringify(body) });
+  const multipart = body instanceof FormData;
+  const response = await fetch(path, { method, headers: multipart ? {} : { "Content-Type": "application/json" },
+    body: multipart ? body : body === undefined ? undefined : JSON.stringify(body) });
   const data = await response.json();
   if (!response.ok) throw new Error(typeof data.detail === "string" ? data.detail : data.detail?.message || "输入格式无效，请检查字段。");
   return data;
@@ -102,6 +104,7 @@ async function loadLibrary() {
     paperButton(card, "编辑", async () => {
       const saved = await api(`/api/library/papers/${encodeURIComponent(paper.paper_id)}`);
       editingPaperId = saved.paper_id;
+      parsedPaperId = "";
       for (const key of ["title", "year", "doi", "abstract", "notes"]) $("paper-" + key).value = saved[key] ?? "";
       $("paper-form").closest("details").open = true;
     });
@@ -142,14 +145,33 @@ $("paper-form").onsubmit = event => {
   event.preventDefault();
   run(async () => {
     const path = editingPaperId ? `/api/library/papers/${encodeURIComponent(editingPaperId)}` : "/api/library/papers";
-    await api(path, editingPaperId ? "PUT" : "POST", { paper_id: editingPaperId, title: $("paper-title").value.trim(),
+    await api(path, editingPaperId ? "PUT" : "POST", { paper_id: editingPaperId || parsedPaperId, title: $("paper-title").value.trim(),
       year: $("paper-year").value ? Number($("paper-year").value) : null,
       doi: $("paper-doi").value.trim(), abstract: $("paper-abstract").value.trim(), notes: $("paper-notes").value.trim() });
-    editingPaperId = ""; $("paper-form").reset(); await loadLibrary();
+    editingPaperId = ""; parsedPaperId = ""; $("paper-form").reset(); await loadLibrary();
     $("status").textContent = "论文已保存；下次发送时重新整理材料。";
   });
 };
-$("paper-reset").onclick = () => { editingPaperId = ""; $("paper-form").reset(); };
+$("paper-reset").onclick = () => { editingPaperId = ""; parsedPaperId = ""; $("paper-form").reset(); };
+$("parse-pdf").onclick = () => run(async () => {
+  const file = $("paper-pdf").files[0];
+  if (!file) throw new Error("请先选择 PDF 文件。");
+  if (file.size > 20 * 1024 * 1024) throw new Error("PDF 不能超过20 MiB，请拆分文件。");
+  const form = new FormData(); form.append("file", file);
+  form.append("start_page", $("pdf-start").value || "1");
+  if ($("pdf-end").value) form.append("end_page", $("pdf-end").value);
+  $("pdf-status").textContent = "正在解析 PDF…";
+  try {
+    const data = await api("/api/tools/parse-pdf", "POST", form);
+    editingPaperId = ""; parsedPaperId = data.paper.paper_id;
+    for (const key of ["title", "year", "doi", "abstract", "notes"]) $("paper-" + key).value = data.paper[key] ?? "";
+    $("paper-form").closest("details").open = true;
+    $("pdf-status").textContent = `已提取第 ${data.start_page}—${data.end_page} 页，共 ${data.total_pages} 页。${data.warnings.join(" ")} 请核对后保存论文。`;
+  } catch (error) {
+    $("pdf-status").textContent = error.message;
+    throw error;
+  }
+});
 $("import-papers").onchange = () => run(async () => {
   const file = $("import-papers").files[0]; if (!file) return;
   if (file.size > 5 * 1024 * 1024) throw new Error("论文 JSON 不能超过5MB");

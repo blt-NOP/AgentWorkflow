@@ -1,5 +1,5 @@
 """网页入口：只做参数校验、接口映射和静态文件服务。"""
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, UploadFile, File, Form
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.exceptions import RequestValidationError
@@ -61,7 +61,8 @@ class EvidenceInput(BaseModel):
 @app.exception_handler(ToolError)
 def tool_error(request: Request, error: ToolError):
     status = {"TIMEOUT": 504, "NETWORK_ERROR": 502, "EXTERNAL_ERROR": 502,
-              "INVALID_RESPONSE": 502, "MODEL_ERROR": 502, "INVALID_SKILL": 500}.get(error.code, 400)
+              "INVALID_RESPONSE": 502, "MODEL_ERROR": 502, "INVALID_SKILL": 500,
+              "FILE_TOO_LARGE": 413, "PDF_LIMIT": 413, "NO_TEXT": 422}.get(error.code, 400)
     return JSONResponse(status_code=status, content={"detail": {
         "code": error.code, "message": error.message, "retryable": error.retryable}})
 
@@ -167,6 +168,18 @@ def dialogue_tool(data: DialogueInput):
 def registered_tools():
     return [{"name": name, "entry": f"{function.__module__}.{function.__name__}"}
             for name, function in tools.TOOL_REGISTRY.items()]
+
+
+@app.post("/api/tools/parse-pdf")
+def parse_pdf_tool(file: UploadFile = File(...), start_page: int = Form(1, ge=1),
+                   end_page: int | None = Form(None, ge=1)):
+    """multipart 上传 PDF，返回带页码原文和可供文库/材料工具使用的 paper；不自动入库。"""
+    from .pdf_parser import MAX_BYTES
+    try:
+        content = file.file.read(MAX_BYTES + 1)
+        return tools.TOOL_REGISTRY["parse_paper_pdf"](content, file.filename or "paper.pdf", start_page, end_page)
+    finally:
+        file.file.close()
 
 
 @app.post("/api/tools/search")

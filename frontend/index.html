@@ -31,6 +31,13 @@
           </form>
         </details>
         <label>导入论文 JSON<input id="import-papers" type="file" accept=".json"></label>
+        <details><summary>解析论文 PDF</summary>
+          <label>选择 PDF<input id="paper-pdf" type="file" accept=".pdf,application/pdf"></label>
+          <div class="fields"><label>起始页<input id="pdf-start" type="number" min="1" value="1"></label><label>结束页（可选）<input id="pdf-end" type="number" min="1"></label></div>
+          <p class="muted">单次最多20页、文件20 MiB；支持文字型 PDF。解析后请核对标题和原文，再点击“保存论文”。</p>
+          <button id="parse-pdf" type="button" class="secondary">解析到论文表单</button>
+          <p id="pdf-status" role="status" class="muted"></p>
+        </details>
       </section>
     </aside>
     <div class="workspace">

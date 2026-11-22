@@ -1,0 +1,31 @@
+{
+  "tool": "registration",
+  "case": "registry",
+  "arguments": {},
+  "returned": {
+    "status": 200,
+    "body": [
+      {
+        "name": "search_papers",
+        "entry": "backend.tools.search_papers"
+      },
+      {
+        "name": "build_evidence",
+        "entry": "backend.tools.build_evidence"
+      },
+      {
+        "name": "research_dialogue",
+        "entry": "backend.dialogue.research_dialogue"
+      },
+      {
+        "name": "parse_paper_pdf",
+        "entry": "backend.pdf_parser.parse_paper_pdf"
+      }
+    ]
+  },
+  "error": null,
+  "passed": true,
+  "basis": "GET /api/tools 列出全部真实函数入口",
+  "data_source": "local",
+  "changed_parameter": null
+}

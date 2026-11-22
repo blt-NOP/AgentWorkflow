@@ -1,0 +1,22 @@
+{
+  "tool": "parse_paper_pdf",
+  "case": "api_no_text",
+  "arguments": {
+    "content_ref": "blank.pdf"
+  },
+  "returned": {
+    "status": 422,
+    "body": {
+      "detail": {
+        "code": "NO_TEXT",
+        "message": "所选页面没有可提取文字，可能是扫描件；请先 OCR 或更换页码",
+        "retryable": false
+      }
+    }
+  },
+  "error": null,
+  "passed": true,
+  "basis": "无文字页面返回422并提示OCR",
+  "data_source": "local",
+  "changed_parameter": null
+}

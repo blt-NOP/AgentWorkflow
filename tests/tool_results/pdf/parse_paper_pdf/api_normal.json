@@ -1,0 +1,48 @@
+{
+  "tool": "parse_paper_pdf",
+  "case": "api_normal",
+  "arguments": {
+    "content_ref": "sample_paper.pdf"
+  },
+  "returned": {
+    "status": 200,
+    "body": {
+      "filename": "sample_paper.pdf",
+      "sha256": "34625d92a8503b98af970fec17a33a47ae5c1d753944ce12ee4dda5703abb208",
+      "total_pages": 2,
+      "start_page": 1,
+      "end_page": 1,
+      "pages": [
+        {
+          "page_number": 1,
+          "text": "Synthetic page one: CPU latency baseline.",
+          "truncated": false
+        }
+      ],
+      "text": "[PDF第1页]\nSynthetic page one: CPU latency baseline.",
+      "truncated": false,
+      "warnings": [
+        "仅提取文字，版面顺序、公式和表格需对照原文核查；不判断创新性。",
+        "paper.abstract 为带页码的原文摘录兼容字段，不是论文摘要或模型总结。",
+        "仅解析所选页码范围，未包含全文。"
+      ],
+      "metadata": {
+        "title": "Synthetic PDF teaching fixture",
+        "author": "Course test"
+      },
+      "paper": {
+        "paper_id": "pdf-34625d92a8503b98af970fec17a33a47ae5c1d753944ce12ee4dda5703abb208",
+        "title": "Synthetic PDF teaching fixture",
+        "year": null,
+        "doi": "",
+        "abstract": "[PDF原文摘录，非自动摘要]\n[PDF第1页]\nSynthetic page one: CPU latency baseline.",
+        "notes": ""
+      }
+    }
+  },
+  "error": null,
+  "passed": true,
+  "basis": "multipart接口返回200及实际解析文本",
+  "data_source": "local",
+  "changed_parameter": null
+}

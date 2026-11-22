@@ -1,0 +1,23 @@
+{
+  "tool": "parse_paper_pdf",
+  "case": "encrypted",
+  "arguments": {
+    "filename": "encrypted.pdf",
+    "content_ref": "encrypted.pdf",
+    "size_bytes": 1166,
+    "sha256": "91e970a48b940dc8217a5be53eac6ef41de0cecc1e22801cb276cece3210c43e",
+    "start_page": 1,
+    "end_page": 1
+  },
+  "returned": null,
+  "error": {
+    "code": "ENCRYPTED_PDF",
+    "message": "不支持加密 PDF，请先提供未加密的副本",
+    "retryable": false,
+    "type": "ToolError"
+  },
+  "passed": true,
+  "basis": "返回ENCRYPTED_PDF，不伪造解析结果",
+  "data_source": "local",
+  "changed_parameter": null
+}

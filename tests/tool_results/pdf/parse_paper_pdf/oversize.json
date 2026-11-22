@@ -1,0 +1,23 @@
+{
+  "tool": "parse_paper_pdf",
+  "case": "oversize",
+  "arguments": {
+    "filename": "large.pdf",
+    "content_ref": "large.pdf",
+    "size_bytes": 20971525,
+    "sha256": "1f7db7466cd40eff4afa4cbaa8250e2fb37bf21f94d8f2219175e1c68f40e64b",
+    "start_page": 1,
+    "end_page": 1
+  },
+  "returned": null,
+  "error": {
+    "code": "FILE_TOO_LARGE",
+    "message": "PDF 不能超过20 MiB，请拆分文件",
+    "retryable": false,
+    "type": "ToolError"
+  },
+  "passed": true,
+  "basis": "返回FILE_TOO_LARGE，不伪造解析结果",
+  "data_source": "local",
+  "changed_parameter": null
+}

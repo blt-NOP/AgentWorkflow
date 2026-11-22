@@ -1,0 +1,23 @@
+{
+  "tool": "parse_paper_pdf",
+  "case": "corrupt",
+  "arguments": {
+    "filename": "broken.pdf",
+    "content_ref": "broken.pdf",
+    "size_bytes": 15,
+    "sha256": "66df0c616619d68a2a449c2ca2b477bbb8919cbcfaa1cd3ce61dc280c94197fe",
+    "start_page": 1,
+    "end_page": 1
+  },
+  "returned": null,
+  "error": {
+    "code": "INVALID_PDF",
+    "message": "PDF 损坏或无法解析，请更换文件或重新导出",
+    "retryable": false,
+    "type": "ToolError"
+  },
+  "passed": true,
+  "basis": "返回INVALID_PDF，不伪造解析结果",
+  "data_source": "local",
+  "changed_parameter": null
+}

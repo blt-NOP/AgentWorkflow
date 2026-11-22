@@ -1,7 +1,8 @@
-"""三项工具：论文检索、材料整理、多轮科研交互。"""
+"""四项工具：论文检索、材料整理、多轮科研交互、PDF解析。"""
 import os
 import httpx
 from .dialogue import research_dialogue
+from .pdf_parser import parse_paper_pdf
 from .tool_contracts import ToolError, check_facts
 
 
@@ -68,4 +69,4 @@ def build_evidence(papers, facts):
 
 # 唯一工具注册表。对话流程、独立接口和测试都从这里取得同一函数。
 TOOL_REGISTRY = {"search_papers": search_papers, "build_evidence": build_evidence,
-                 "research_dialogue": research_dialogue}
+                 "research_dialogue": research_dialogue, "parse_paper_pdf": parse_paper_pdf}

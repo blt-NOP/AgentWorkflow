@@ -1,0 +1,23 @@
+{
+  "tool": "parse_paper_pdf",
+  "case": "api_invalid_range",
+  "arguments": {
+    "content_ref": "sample_paper.pdf",
+    "start_page": 0
+  },
+  "returned": {
+    "status": 422,
+    "body": {
+      "detail": {
+        "code": "INVALID_INPUT",
+        "message": "body.start_page: Input should be greater than or equal to 1",
+        "retryable": false
+      }
+    }
+  },
+  "error": null,
+  "passed": true,
+  "basis": "表单页码0返回422参数校验错误",
+  "data_source": "local",
+  "changed_parameter": null
+}

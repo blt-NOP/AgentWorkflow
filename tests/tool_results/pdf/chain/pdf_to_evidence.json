@@ -1,0 +1,40 @@
+{
+  "tool": "chain",
+  "case": "pdf_to_evidence",
+  "arguments": {
+    "papers": [
+      {
+        "paper_id": "pdf-34625d92a8503b98af970fec17a33a47ae5c1d753944ce12ee4dda5703abb208",
+        "title": "Synthetic PDF teaching fixture",
+        "year": null,
+        "doi": "",
+        "abstract": "[PDF原文摘录，非自动摘要]\n[PDF第1页]\nSynthetic page one: CPU latency baseline.",
+        "notes": ""
+      }
+    ],
+    "facts": {}
+  },
+  "returned": {
+    "facts": {},
+    "rows": [
+      {
+        "id": "Synthetic PDF teaching fixture",
+        "title": "Synthetic PDF teaching fixture",
+        "year": null,
+        "doi": "",
+        "notes": "",
+        "excerpt": "[PDF原文摘录，非自动摘要]\n[PDF第1页]\nSynthetic page one: CPU latency baseline."
+      }
+    ],
+    "gaps": [
+      "缺少算力条件",
+      "缺少可用时间",
+      "缺少数据条件"
+    ]
+  },
+  "error": null,
+  "passed": true,
+  "basis": "parse_paper_pdf真实返回paper原样传入build_evidence；原文和页码保留",
+  "data_source": "local",
+  "changed_parameter": null
+}

@@ -1,0 +1,23 @@
+{
+  "tool": "parse_paper_pdf",
+  "case": "invalid",
+  "arguments": {
+    "filename": "wrong.pdf",
+    "content_ref": "wrong.pdf",
+    "size_bytes": 7,
+    "sha256": "20a105c42970db4adca8aa1fb40c9c67ccec8b18bae090759f8c7f8c7b4b4ee7",
+    "start_page": 1,
+    "end_page": 1
+  },
+  "returned": null,
+  "error": {
+    "code": "INVALID_PDF",
+    "message": "文件内容不是 PDF，请检查文件格式",
+    "retryable": false,
+    "type": "ToolError"
+  },
+  "passed": true,
+  "basis": "返回INVALID_PDF，不伪造解析结果",
+  "data_source": "local",
+  "changed_parameter": null
+}

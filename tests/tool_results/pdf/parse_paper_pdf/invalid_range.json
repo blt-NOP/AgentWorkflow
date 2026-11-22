@@ -1,0 +1,23 @@
+{
+  "tool": "parse_paper_pdf",
+  "case": "invalid_range",
+  "arguments": {
+    "filename": "sample_paper.pdf",
+    "content_ref": "sample_paper.pdf",
+    "size_bytes": 1155,
+    "sha256": "34625d92a8503b98af970fec17a33a47ae5c1d753944ce12ee4dda5703abb208",
+    "start_page": 3,
+    "end_page": 3
+  },
+  "returned": null,
+  "error": {
+    "code": "INVALID_INPUT",
+    "message": "页码超出文件范围，或单次选择超过20页",
+    "retryable": false,
+    "type": "ToolError"
+  },
+  "passed": true,
+  "basis": "页码超出文件范围时明确失败",
+  "data_source": "local",
+  "changed_parameter": null
+}

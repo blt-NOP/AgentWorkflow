@@ -1,0 +1,44 @@
+{
+  "tool": "chain",
+  "case": "search_to_evidence",
+  "arguments": {
+    "papers": [
+      {
+        "title": "Synthetic teaching fixture 1 - not a real paper",
+        "year": 2025,
+        "doi": "10.0000/tool-fixture-1",
+        "abstract": "Synthetic excerpt 1: compare latency and memory."
+      }
+    ],
+    "facts": {
+      "direction": "模型压缩",
+      "compute": "CPU",
+      "weeks": 4,
+      "dataset": "公开数据集"
+    }
+  },
+  "returned": {
+    "facts": {
+      "direction": "模型压缩",
+      "compute": "CPU",
+      "weeks": 4,
+      "dataset": "公开数据集"
+    },
+    "rows": [
+      {
+        "id": "10.0000/tool-fixture-1",
+        "title": "Synthetic teaching fixture 1 - not a real paper",
+        "year": 2025,
+        "doi": "10.0000/tool-fixture-1",
+        "notes": "",
+        "excerpt": "Synthetic excerpt 1: compare latency and memory."
+      }
+    ],
+    "gaps": []
+  },
+  "error": null,
+  "passed": true,
+  "basis": "search_papers.normal.returned[0] 原样传入 papers[0]，验证真实 title/doi 标识",
+  "data_source": "explicit synthetic HTTP fixture",
+  "changed_parameter": null
+}

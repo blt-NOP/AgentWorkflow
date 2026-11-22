@@ -1,4 +1,4 @@
-"""三工具独立验收：保存实参、实际返回/错误、判定依据和单参数对比。"""
+"""四工具独立验收：保存实参、实际返回/错误、判定依据和单参数对比。"""
 import argparse
 from copy import deepcopy
 from datetime import datetime
@@ -15,7 +15,7 @@ sys.path.insert(0, str(ROOT))
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--tool", choices=["all", "search", "evidence", "dialogue"], default="all")
+    parser.add_argument("--tool", choices=["all", "search", "evidence", "dialogue", "pdf"], default="all")
     parser.add_argument("--live", action="store_true", help="正常/单参数检索访问真实 Crossref；其他故障仍明确注入")
     parser.add_argument("--output", type=Path, default=ROOT / "data/tool-check")
     args = parser.parse_args()
@@ -181,7 +181,11 @@ def main():
 
             case("registration", "registry", {}, lambda: http_call("GET", "/api/tools"),
                  lambda value, error: error is None and {item["name"] for item in value["body"]} == set(tools.TOOL_REGISTRY),
-                 "GET /api/tools 列出三项真实函数入口")
+                 "GET /api/tools 列出全部真实函数入口")
+
+            if selected in ("all", "pdf"):
+                from pdf_cases import run_pdf_checks
+                run_pdf_checks(run, case, client, tools)
 
             def api_fixture(query, limit=3):
                 return tools.search_papers(query, limit, transport=fixture)

@@ -1,6 +1,6 @@
-# 三项工具的实现、接口与独立测试
+# 四项工具的实现、接口与独立测试
 
-本说明对应当前统一前后端版本。工具是三个普通 Python 函数；会话管理、论文库 CRUD 和模型 HTTP 适配是支撑模块，不另计为工具。
+本说明对应当前统一前后端版本。工具是四个普通 Python 函数；会话管理、论文库 CRUD 和模型 HTTP 适配是支撑模块，不另计为工具。第四项PDF解析的完整四行说明表、接口、命令和验收见 [pdf_tool.md](pdf_tool.md)。下文原三工具27项历史验收记录保留，不代表新增PDF后的总检查数。
 
 ## 一、后端注册与明确入口
 
@@ -11,6 +11,7 @@
 | search_papers | backend.tools.search_papers | POST /api/tools/search |
 | build_evidence | backend.tools.build_evidence | POST /api/tools/evidence |
 | research_dialogue | backend.dialogue.research_dialogue，由 tools.py 导出 | POST /api/tools/dialogue |
+| parse_paper_pdf | backend.pdf_parser.parse_paper_pdf，由 tools.py 导出 | POST /api/tools/parse-pdf，multipart上传 |
 
 测试文件为 `tests/check_tools.py`。它直接调用注册函数，并用 TestClient 验证真实接口映射；不运行 Uvicorn、不打开前端，也不调用模型。所有用例中的 `model.reply` 都被禁止调用，并在 summary 记录 `model_calls=0`。
 

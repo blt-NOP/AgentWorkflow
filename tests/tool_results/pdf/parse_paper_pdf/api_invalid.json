@@ -1,0 +1,22 @@
+{
+  "tool": "parse_paper_pdf",
+  "case": "api_invalid",
+  "arguments": {
+    "content_ref": "wrong.pdf"
+  },
+  "returned": {
+    "status": 400,
+    "body": {
+      "detail": {
+        "code": "INVALID_PDF",
+        "message": "文件内容不是 PDF，请检查文件格式",
+        "retryable": false
+      }
+    }
+  },
+  "error": null,
+  "passed": true,
+  "basis": "非PDF上传返回400 INVALID_PDF",
+  "data_source": "local",
+  "changed_parameter": null
+}

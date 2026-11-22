@@ -1,0 +1,37 @@
+{
+  "tool": "chain",
+  "case": "pdf_to_library",
+  "arguments": {
+    "paper": {
+      "paper_id": "pdf-34625d92a8503b98af970fec17a33a47ae5c1d753944ce12ee4dda5703abb208",
+      "title": "Synthetic PDF teaching fixture",
+      "year": null,
+      "doi": "",
+      "abstract": "[PDF原文摘录，非自动摘要]\n[PDF第1页]\nSynthetic page one: CPU latency baseline.",
+      "notes": ""
+    }
+  },
+  "returned": {
+    "statuses": [
+      200,
+      200,
+      200
+    ],
+    "paper": {
+      "paper_id": "pdf-34625d92a8503b98af970fec17a33a47ae5c1d753944ce12ee4dda5703abb208",
+      "title": "Synthetic PDF teaching fixture",
+      "year": null,
+      "doi": "",
+      "abstract": "[PDF原文摘录，非自动摘要]\n[PDF第1页]\nSynthetic page one: CPU latency baseline.",
+      "notes": "",
+      "created_at": "2026-11-22T11:17:30",
+      "updated_at": "2026-11-22T11:17:30"
+    },
+    "count": 1
+  },
+  "error": null,
+  "passed": true,
+  "basis": "真实paper经现有接口写入并读取SQLite；重复保存同一ID仍为1篇",
+  "data_source": "local",
+  "changed_parameter": null
+}

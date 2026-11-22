@@ -1,6 +1,6 @@
 # 论文 idea 讨论助手
 
-**三项工具的注册入口、按任务表填写的工具说明、独立测试命令及实际结果见 [docs/tools.md](docs/tools.md)。** 一条命令独立验收（无需前端、服务或模型）：`python -X utf8 tests/check_tools.py`，本次离线与真实检索模式均为 `PASS (27/27 checks)`。
+**工具的注册入口、说明与独立测试见 [docs/tools.md](docs/tools.md)。** 新增第四项工具“论文 PDF 解析”，完整接口与测试说明见 [docs/pdf_tool.md](docs/pdf_tool.md)。独立验收（无需前端、服务或模型）：`python -m backend.run tests/check_tools.py`。新增PDF独立验收16/16通过，四工具完整离线验收42/42通过；原三工具27项历史记录保留。
 ## 1. 目录与阅读顺序
 
 ```text
@@ -8,6 +8,7 @@ AgentWorkflow/
   backend/
     agent.py       核心对话流程，先读这个文件
     tools.py       论文检索、材料整理，导出多轮交互工具
+    pdf_parser.py  PDF文字与元数据解析，可独立命令行运行
     dialogue.py    多轮交互：读取 Skill、接收答案、生成问题/选项
     library.py     SQLite 论文库的查询、保存、导入、删除
     memory.py      JSON 会话和日志
@@ -22,6 +23,7 @@ AgentWorkflow/
     styles.css     页面样式
   data/
     sample_papers.json   明确标记为虚构的测试论文
+    sample_paper.pdf     两页虚构PDF教学样例
     library.sqlite3      运行后生成，个人论文数据库
     sessions/A.json      运行后生成，会话 A 的记忆
     logs/A.jsonl         运行后生成，每轮追加一条执行日志
@@ -207,6 +209,7 @@ python -X utf8 -m backend.cli --session Research --message "我只有CPU，能�
 | 查看工具注册 | GET /api/tools | tools.TOOL_REGISTRY |
 | 独立测试检索工具 | POST /api/tools/search | 注册的 search_papers |
 | 独立测试材料工具 | POST /api/tools/evidence | 注册的 build_evidence |
+| 上传并解析PDF | POST /api/tools/parse-pdf，multipart文件及页码 | 注册的 parse_paper_pdf |
 
 聊天请求示例：`{"session_id":"A","message":"更正为CPU","facts":{"compute":"CPU"},"use_model":false}`。返回 `reply`、`state`、`trace`、`dialogue`。选项回答还可以传 `choice_id`，策略可传 `skill`。
 
@@ -231,12 +234,13 @@ python -X utf8 -m backend.cli --session Research --message "我只有CPU，能�
 
 ## 9. 新增工具：research_dialogue 与 Skill
 
-目前共有三项工具：
+目前共有四项工具：
 
 | 工具入口 | 输入与返回 | 数据/失败行为 |
 | --- | --- | --- |
 | tools.search_papers | query、limit → 实际论文列表 | Crossref，HTTP 超时30秒；失败报错，不伪造论文 |
 | tools.build_evidence | papers、facts → facts、rows、gaps | 读取实际材料，纯本地整理 |
+| tools.parse_paper_pdf | PDF字节、文件名、页码 → 原文、页码、元数据、paper | 不调用模型、不自动入库；网页核对后通过现有文库接口保存 |
 | tools.research_dialogue | state、message、skill_id、use_model → message、question、options、stage、field、target、skill | 读取 Skill 和本会话状态；错误 Skill/过期选项明确报错；启用模型时使用模型超时配置 |
 
 多轮交互的实际入口实现在 `backend/dialogue.py`，由 `tools.py` 导出，并已在 `agent.run_turn` 每轮调用、写入 trace。`accept_answer` 在材料工具执行前接收上一轮答案，因此选中 CPU 后，本轮材料工具就会收到 CPU。

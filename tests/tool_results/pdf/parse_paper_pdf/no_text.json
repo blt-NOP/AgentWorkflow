@@ -1,0 +1,23 @@
+{
+  "tool": "parse_paper_pdf",
+  "case": "no_text",
+  "arguments": {
+    "filename": "blank.pdf",
+    "content_ref": "blank.pdf",
+    "size_bytes": 722,
+    "sha256": "8f1f2da88f66f618bc6d28054010b6ee50adea0a839c4618d669d7eefe2311d7",
+    "start_page": 1,
+    "end_page": 1
+  },
+  "returned": null,
+  "error": {
+    "code": "NO_TEXT",
+    "message": "所选页面没有可提取文字，可能是扫描件；请先 OCR 或更换页码",
+    "retryable": false,
+    "type": "ToolError"
+  },
+  "passed": true,
+  "basis": "返回NO_TEXT，不伪造解析结果",
+  "data_source": "local",
+  "changed_parameter": null
+}
