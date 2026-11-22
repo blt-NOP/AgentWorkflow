@@ -1,0 +1,60 @@
+SESSION A=A-aeee9d2e; SESSION B=B-aeee9d2e
+[读记忆] A-aeee9d2e: {}
+[条件变化] [{"field": "compute", "before": null, "after": "GPU"}, {"field": "weeks", "before": null, "after": 4}, {"field": "dataset", "before": null, "after": "公开数据集"}]
+[工具] build_evidence facts={"compute": "GPU", "weeks": 4, "dataset": "公开数据集"}
+[工具结果] {"facts": {"compute": "GPU", "weeks": 4, "dataset": "公开数据集"}, "rows": [], "gaps": ["暂无论文，请导入已有论文或检索"]}
+[写记忆] A-aeee9d2e: recent=2, full=2
+[回答] [未调用模型] 当前条件：{"compute": "GPU", "weeks": 4, "dataset": "公开数据集"}
+待补充：暂无论文，请导入已有论文或检索
+[读记忆] A-aeee9d2e: {'compute': 'GPU', 'weeks': 4, 'dataset': '公开数据集'}
+[条件变化] []
+[工具] build_evidence facts={"compute": "GPU", "weeks": 4, "dataset": "公开数据集"}
+[工具结果] {"facts": {"compute": "GPU", "weeks": 4, "dataset": "公开数据集"}, "rows": [], "gaps": ["暂无论文，请导入已有论文或检索"]}
+[写记忆] A-aeee9d2e: recent=4, full=4
+[回答] [未调用模型] 当前条件：{"compute": "GPU", "weeks": 4, "dataset": "公开数据集"}
+待补充：暂无论文，请导入已有论文或检索
+[读记忆] A-aeee9d2e: {'compute': 'GPU', 'weeks': 4, 'dataset': '公开数据集'}
+[条件变化] [{"field": "compute", "before": "GPU", "after": "CPU"}]
+[工具] build_evidence facts={"compute": "CPU", "weeks": 4, "dataset": "公开数据集"}
+[工具结果] {"facts": {"compute": "CPU", "weeks": 4, "dataset": "公开数据集"}, "rows": [], "gaps": ["暂无论文，请导入已有论文或检索"]}
+[写记忆] A-aeee9d2e: recent=6, full=6
+[回答] [未调用模型] 当前条件：{"compute": "CPU", "weeks": 4, "dataset": "公开数据集"}
+待补充：暂无论文，请导入已有论文或检索
+[读记忆] A-aeee9d2e: {'compute': 'CPU', 'weeks': 4, 'dataset': '公开数据集'}
+[条件变化] []
+[工具] build_evidence facts={"compute": "CPU", "weeks": 4, "dataset": "公开数据集"}
+[工具结果] {"facts": {"compute": "CPU", "weeks": 4, "dataset": "公开数据集"}, "rows": [], "gaps": ["暂无论文，请导入已有论文或检索"]}
+[写记忆] A-aeee9d2e: recent=6, full=8
+[回答] [未调用模型] 当前条件：{"compute": "CPU", "weeks": 4, "dataset": "公开数据集"}
+待补充：暂无论文，请导入已有论文或检索
+[读记忆] A-aeee9d2e: {'compute': 'CPU', 'weeks': 4, 'dataset': '公开数据集'}
+[条件变化] []
+[工具] build_evidence facts={"compute": "CPU", "weeks": 4, "dataset": "公开数据集"}
+[工具结果] {"facts": {"compute": "CPU", "weeks": 4, "dataset": "公开数据集"}, "rows": [], "gaps": ["暂无论文，请导入已有论文或检索"]}
+[写记忆] A-aeee9d2e: recent=6, full=10
+[回答] [未调用模型] 当前条件：{"compute": "CPU", "weeks": 4, "dataset": "公开数据集"}
+待补充：暂无论文，请导入已有论文或检索
+[读记忆] A-aeee9d2e: {'compute': 'CPU', 'weeks': 4, 'dataset': '公开数据集'}
+[条件变化] []
+[工具] build_evidence facts={"compute": "CPU", "weeks": 4, "dataset": "公开数据集"}
+[工具结果] {"facts": {"compute": "CPU", "weeks": 4, "dataset": "公开数据集"}, "rows": [], "gaps": ["暂无论文，请导入已有论文或检索"]}
+[写记忆] A-aeee9d2e: recent=6, full=12
+[回答] [未调用模型] 当前条件：{"compute": "CPU", "weeks": 4, "dataset": "公开数据集"}
+待补充：暂无论文，请导入已有论文或检索
+[读记忆] B-aeee9d2e: {}
+[条件变化] []
+[工具] build_evidence facts={}
+[工具结果] {"facts": {}, "rows": [], "gaps": ["缺少算力条件", "缺少可用时间", "缺少数据条件", "暂无论文，请导入已有论文或检索"]}
+[写记忆] B-aeee9d2e: recent=2, full=2
+[回答] [未调用模型] 当前条件：{}
+待补充：缺少算力条件；缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索
+[读记忆] A-aeee9d2e: {'compute': 'CPU', 'weeks': 4, 'dataset': '公开数据集'}
+[条件变化] []
+[工具] build_evidence facts={"compute": "CPU", "weeks": 4, "dataset": "公开数据集"}
+[工具结果] {"facts": {"compute": "CPU", "weeks": 4, "dataset": "公开数据集"}, "rows": [], "gaps": ["暂无论文，请导入已有论文或检索"]}
+[写记忆] A-aeee9d2e: recent=6, full=14
+[回答] [未调用模型] 当前条件：{"compute": "CPU", "weeks": 4, "dataset": "公开数据集"}
+待补充：暂无论文，请导入已有论文或检索
+PASS: A=CPU; recent=6; full=14; B has no compute; switched back to A
+JSON: data/cli-check/sessions/A-aeee9d2e.json and B-aeee9d2e.json
+LOGS: data/cli-check/logs/A-aeee9d2e.jsonl and B-aeee9d2e.jsonl

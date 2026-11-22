@@ -3,32 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AgentWorkflow · 论文 idea 助手</title>
+  <title>论文 idea 讨论助手</title>
   <link rel="stylesheet" href="/static/styles.css">
   <script src="/static/app.js" defer></script>
 </head>
 <body>
+  <header><span class="brand">AgentWorkflow</span><h1>论文 idea 讨论助手</h1><p>从已有方向与论文出发，逐步明确研究问题和实践思路。</p><p id="health">正在连接后端…</p></header>
   <main>
-    <header>
-      <p class="eyebrow">AgentWorkflow</p>
-      <h1>论文 idea 讨论助手</h1>
-      <p>从已读论文出发，逐步明确研究问题与实验思路。</p>
-    </header>
-    <section class="panel" aria-label="服务状态">
-      <span id="health" role="status">正在检查后端连接…</span>
-      <p class="muted">当前为初始化框架，论文处理、模型对话和会话保存待接入。</p>
-    </section>
-    <section class="panel" aria-label="研究讨论">
-      <div class="session"><span id="session-label"></span><button id="new-session" type="button">新建讨论</button></div>
-      <div id="messages" role="log" aria-live="polite">
-        <p class="hint">可以从专业方向、最近读过的论文和现有资源开始描述需求。</p>
-      </div>
-      <form id="chat-form">
-        <label for="message">你的研究需求</label>
-        <textarea id="message" rows="5" maxlength="10000" required placeholder="例如：我关注边缘端模型推理，有一张 GPU，希望在四周内验证一个研究想法……"></textarea>
-        <div class="actions"><span class="muted">发送后将显示当前接口状态。</span><button id="send" type="submit">发送</button></div>
-      </form>
-    </section>
+    <aside>
+      <section>
+        <h2>我的讨论</h2>
+        <label>历史会话<select id="sessions" aria-label="历史会话"></select></label>
+        <div class="actions"><button id="new-session">新建讨论</button><button id="delete-session" class="secondary">删除当前讨论</button></div>
+        <p id="session-id" class="muted"></p>
+      </section>
+      <section>
+        <h2>已有论文</h2><p class="muted">个人文献库供各讨论共享；每个讨论的资源条件分别保存。</p>
+        <div id="library"></div>
+        <details><summary>登记 / 编辑论文</summary>
+          <form id="paper-form">
+            <label>论文标题<input id="paper-title" required maxlength="1000"></label>
+            <div class="fields"><label>年份<input id="paper-year" type="number"></label><label>DOI<input id="paper-doi"></label></div>
+            <label>摘要 / 已读段落<textarea id="paper-abstract" rows="4" maxlength="50000"></textarea></label>
+            <button type="submit">保存论文</button><button id="paper-reset" type="button" class="secondary">清空</button>
+          </form>
+        </details>
+        <label>导入论文 JSON<input id="import-papers" type="file" accept=".json"></label>
+      </section>
+    </aside>
+    <div class="workspace">
+      <section>
+        <h2>研究方向与当前条件</h2>
+        <label>专业方向<input id="direction" placeholder="例如：边缘端模型推理" maxlength="1000"></label>
+        <label>当前研究命题<input id="claim" placeholder="尚未确定也可以先留空" maxlength="2000"></label>
+        <div class="fields"><label>时间（周）<input id="weeks" type="number" min="1" max="520"></label><label>算力<input id="compute" placeholder="例如：CPU" maxlength="1000"></label><label>数据条件<input id="dataset" placeholder="例如：公开数据集" maxlength="1000"></label></div>
+        <p class="muted">更正条件时修改这里的值，再发送消息；未修改的条件沿用原值。</p>
+      </section>
+      <section>
+        <h2>多轮讨论</h2><div id="messages" role="log" aria-live="polite"></div>
+        <form id="chat-form">
+          <label>本轮输入<textarea id="message" required rows="3" maxlength="10000" placeholder="说说你的方向、最近读的论文，或继续追问…"></textarea></label>
+          <label>论文检索关键词（可选）<input id="search" maxlength="500" placeholder="填写后，本轮先检索论文；留空则使用已有材料"></label>
+          <div class="actions"><label class="check"><input id="use-model" type="checkbox">调用已配置模型</label><button type="submit">发送</button></div>
+        </form>
+        <p id="status" role="status" class="muted"></p>
+      </section>
+      <section><h2>材料与执行过程</h2><div id="evidence"></div><details><summary>查看本轮工具输入和输出</summary><pre id="trace">尚未执行</pre></details></section>
+    </div>
   </main>
 </body>
 </html>

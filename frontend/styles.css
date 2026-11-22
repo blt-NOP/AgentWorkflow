@@ -1,23 +1,33 @@
-:root { color-scheme: light; font-family: "Segoe UI", "Microsoft YaHei", sans-serif; color: #203145; background: #f3f6f8; }
+:root { font-family: "Microsoft YaHei", system-ui, sans-serif; color: #203633; background: #f3f6f5; line-height: 1.65; }
 * { box-sizing: border-box; }
 body { margin: 0; }
-main { max-width: 900px; margin: 48px auto; padding: 0 24px; }
-header { margin-bottom: 28px; }
-h1 { font-size: clamp(26px, 5vw, 36px); margin: 8px 0 12px; }
-p { line-height: 1.7; }
-.eyebrow { color: #326b66; font-weight: 650; letter-spacing: .08em; }
-.panel { background: white; border: 1px solid #dce4e9; border-radius: 14px; padding: 24px; margin: 18px 0; }
-.muted, .hint { color: #657586; font-size: 14px; }
-.session, .actions { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; }
-#session-label { font-size: 13px; overflow-wrap: anywhere; }
-#messages { min-height: 170px; max-height: 420px; overflow-y: auto; margin: 20px 0; }
-.message { padding: 12px 16px; background: #f0f5f4; border-radius: 9px; white-space: pre-wrap; overflow-wrap: anywhere; }
-.message.system { background: #fff6e8; }
-label { display: block; font-weight: 600; margin-bottom: 10px; }
-textarea { width: 100%; padding: 14px; font: inherit; line-height: 1.6; resize: vertical; border: 1px solid #b7c8d2; border-radius: 8px; }
-textarea:focus, button:focus-visible { outline: 3px solid #aad4ce; outline-offset: 2px; }
-.actions { margin-top: 14px; }
-button { border: 0; border-radius: 7px; padding: 10px 18px; background: #285f59; color: white; cursor: pointer; font: inherit; }
-button:disabled { opacity: .55; cursor: wait; }
-#new-session { background: #eaf1f2; color: #285f59; }
-@media (max-width: 600px) { main { margin-top: 24px; padding: 0 14px; } .panel { padding: 18px; } }
+header { max-width: 1240px; margin: auto; padding: 32px 24px 16px; }
+.brand { font-size: 13px; font-weight: 700; color: #287965; letter-spacing: .08em; }
+h1 { margin: 6px 0; font-size: 30px; }
+header p { margin: 5px 0; }
+main { max-width: 1240px; margin: auto; padding: 12px 24px 48px; display: grid; grid-template-columns: 310px 1fr; gap: 20px; }
+section { padding: 22px; margin-bottom: 20px; background: white; border: 1px solid #dce5e1; border-radius: 12px; }
+h2 { margin: 0 0 14px; font-size: 18px; }
+label { display: block; font-size: 14px; margin: 10px 0; }
+input, select, textarea { display: block; width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #c8d6d0; border-radius: 6px; font: inherit; background: #fff; color: inherit; }
+textarea { resize: vertical; }
+button { padding: 9px 14px; border: 1px solid #226b59; border-radius: 6px; background: #226b59; color: white; font: inherit; font-size: 14px; cursor: pointer; }
+button.secondary { background: white; color: #365b50; border-color: #c8d6d0; }
+button:disabled, input:disabled, select:disabled, textarea:disabled { opacity: .6; cursor: wait; }
+button:hover { filter: brightness(.95); }
+.fields { display: flex; gap: 12px; }
+.fields label { flex: 1; min-width: 0; }
+.actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.check { display: flex; align-items: center; gap: 8px; margin-right: auto; }
+.check input { width: auto; margin: 0; }
+.muted { color: #6b7b75; font-size: 13px; overflow-wrap: anywhere; }
+#messages { max-height: 430px; overflow-y: auto; padding: 2px; }
+.message { padding: 12px 15px; margin: 10px 0; background: #f1f5f3; border-radius: 8px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.message.user { background: #e6f2ec; }
+.paper { padding: 12px 0; border-bottom: 1px solid #e3e9e6; overflow-wrap: anywhere; }
+.paper p { margin: 4px 0 9px; }
+.paper button { padding: 4px 9px; margin-right: 6px; }
+summary { cursor: pointer; color: #226b59; padding: 8px 0; }
+pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 12px; background: #f3f6f5; padding: 14px; max-height: 400px; overflow-y: auto; }
+#status { white-space: pre-wrap; }
+@media (max-width: 800px) { main { grid-template-columns: 1fr; padding: 12px; } header { padding: 24px 16px 8px; } .fields { flex-wrap: wrap; } .fields label { flex-basis: 140px; } }
