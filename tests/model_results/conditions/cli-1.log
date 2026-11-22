@@ -1,0 +1,10 @@
+[开始] request=4083180dbd634407a5c6bd15591d11d5 session=ConditionDemo model=False
+[读记忆] {}
+[当前条件] {"direction": "模型压缩", "weeks": 4, "dataset": "公开数据集"}
+[工具顺序] build_evidence → research_dialogue
+[写记忆] ConditionDemo: recent=2, full=2
+[结束] request=4083180dbd634407a5c6bd15591d11d5 status=WAITING_USER reason=OFFLINE_DEMO
+[回答] [未调用模型] 当前条件：{"direction": "模型压缩", "weeks": 4, "dataset": "公开数据集"}
+材料缺项：缺少算力条件；暂无论文，请导入已有论文或检索
+
+你可以使用哪些计算资源？

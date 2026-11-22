@@ -2,6 +2,8 @@
 
 **当前已接入百炼 qwen3.7-plus：默认模型自主选择工具，支持追问、方案完成及更正后重算。配置、执行上限、结束判断和真实验收见 [模型接入说明](docs/model_agent.md)。离线演示请显式使用 `--no-model`，工具验收脚本仍不调用模型。**
 
+条件有效性已统一：选择“尚未确定”会继续追问，补充CPU后再推进。独立复测：`python -m backend.run tests/check_conditions.py`，实际32项通过，不调用真实模型，完整证据见 `tests/model_results/conditions/`。
+
 **工具的注册入口、说明与独立测试见 [docs/tools.md](docs/tools.md)。** 新增第四项工具“论文 PDF 解析”，完整接口与测试说明见 [docs/pdf_tool.md](docs/pdf_tool.md)。独立验收（无需前端、服务或模型）：`python -m backend.run tests/check_tools.py`。新增PDF独立验收16/16通过，四工具完整离线验收42/42通过；原三工具27项历史记录保留。
 ## 1. 目录与阅读顺序
 

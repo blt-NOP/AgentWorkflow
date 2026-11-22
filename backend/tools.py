@@ -3,7 +3,7 @@ import os
 import httpx
 from .dialogue import research_dialogue
 from .pdf_parser import parse_paper_pdf
-from .tool_contracts import ToolError, check_facts
+from .tool_contracts import ToolError, check_facts, condition_is_valid
 
 
 def search_papers(query, limit=3, *, transport=None):
@@ -61,7 +61,7 @@ def build_evidence(papers, facts):
                      "doi": paper.get("doi", ""), "notes": paper.get("notes", ""),
                      "excerpt": paper.get("abstract") or "缺少摘要，不能据题名推断结论。"})
     gaps = [label for key, label in (("compute", "缺少算力条件"), ("weeks", "缺少可用时间"),
-                                    ("dataset", "缺少数据条件")) if not facts.get(key)]
+                                    ("dataset", "缺少数据条件")) if not condition_is_valid(key, facts.get(key))]
     if not rows:
         gaps.append("暂无论文，请导入已有论文或检索")
     return {"facts": facts.copy(), "rows": rows, "gaps": gaps}

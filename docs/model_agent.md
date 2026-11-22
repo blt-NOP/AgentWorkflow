@@ -54,6 +54,21 @@ qwen3.7系列发送enable_thinking=true；模型推理内容仅在必要的同�
 
 COMPLETED只结束本次任务，不清理会话。更正条件后再次执行时重新决策和检查材料，不直接返回旧方案。回复与proposal、执行轨迹一起保存；近期模型历史继续受HISTORY_LIMIT限制。
 
+### 统一判断条件是否有效
+
+`backend/tool_contracts.py::condition_is_valid(field, value)`是唯一判断入口，追问工具、材料缺项检查和完成守卫共同使用，不再分别判断字符串是否非空。
+
+| 值 | 是否已明确 |
+| --- | --- |
+| 缺失、null、空字符串或纯空白 | 否 |
+| 尚未确定、还不确定、不确定、未知、尚无数据、未确定（忽略首尾空白） | 否，允许保存在记忆中，但不能跳过问题或通过完成守卫 |
+| CPU、GPU等其他非空文本 | 是；这只表示回答明确，不证明资源或方案已经核实 |
+| weeks为1—520的整数 | 是；布尔值、字符串和越界值不算有效周数 |
+
+例如选择compute-2后，facts.compute仍保存“尚未确定”，dialogue.field仍为compute，evidence.gaps仍含“缺少算力条件”。用户在当前问题输入CPU或选择compute-0后，值覆盖为CPU，缺项消失，其他资源齐全时下一题转为goal。只填CPU不代表任务立即完成，还需满足其他Skill问题和真实证据要求。
+
+独立复现：`python -m backend.run tests/check_conditions.py`。实际32项通过，无前端、服务或真实模型调用。覆盖规则边界、真实CLI四轮、工具实参与返回值、未知条件阻止完成、明确更正后允许完成。结果位于`data/model-check/conditions-27bff624/`；固定证据见`tests/model_results/conditions/`，包括cli-rounds.json、completion-guard.json、summary.json、四轮CLI输出和整次运行日志。模型守卫部分使用明确的模型替身；真实CLI部分显式--no-model，不消耗百炼额度。
+
 ## 接口与日志
 
 `POST /api/chat`保留原字段：session_id、message、facts、search、use_model、skill、choice_id。use_model省略时使用MODEL_ENABLED，显式false可离线；不传密钥。返回新增request_id、status、stop_reason、proposal、decisions，并保留reply/state/trace/dialogue。

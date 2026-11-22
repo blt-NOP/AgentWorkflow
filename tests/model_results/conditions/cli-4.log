@@ -1,0 +1,10 @@
+[开始] request=53b54f186049488781d6e4efe1f78006 session=ConditionDemo model=False
+[读记忆] {"direction": "模型压缩", "weeks": 4, "dataset": "公开数据集", "compute": "尚未确定"}
+[当前条件] {"direction": "模型压缩", "weeks": 4, "dataset": "公开数据集", "compute": "CPU"}
+[工具顺序] build_evidence → research_dialogue
+[写记忆] ConditionDemo: recent=6, full=8
+[结束] request=53b54f186049488781d6e4efe1f78006 status=WAITING_USER reason=OFFLINE_DEMO
+[回答] [未调用模型] 当前条件：{"direction": "模型压缩", "weeks": 4, "dataset": "公开数据集", "compute": "CPU"}
+材料缺项：暂无论文，请导入已有论文或检索
+
+你希望优先改善哪个可测量的指标？

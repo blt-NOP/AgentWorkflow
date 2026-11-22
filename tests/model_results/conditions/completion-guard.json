@@ -1,0 +1,760 @@
+{
+  "source": "explicit model fixture; no cloud call",
+  "initial_state": {
+    "session_id": "GuardDemo",
+    "facts": {
+      "direction": "模型压缩",
+      "compute": " 未知 ",
+      "weeks": 4,
+      "dataset": "公开数据集"
+    },
+    "history": [],
+    "messages": [],
+    "papers": [
+      {
+        "title": "Synthetic condition fixture",
+        "doi": "10.0000/condition-fixture",
+        "abstract": "Synthetic test excerpt, not an actual publication."
+      }
+    ],
+    "evidence": {},
+    "reply": "",
+    "trace": [],
+    "answers": {
+      "goal": "推理延迟",
+      "baseline": "已有可复现基线"
+    },
+    "dialogue": {},
+    "skill": "research-dialogue",
+    "status": "WAITING_USER",
+    "proposal": null
+  },
+  "rejected": {
+    "reply": "Synthetic test response",
+    "dialogue": {
+      "skill": "research-dialogue",
+      "stage": "compute",
+      "field": "compute",
+      "target": "facts",
+      "question": "你可以使用哪些计算资源？",
+      "options": [
+        {
+          "id": "compute-0",
+          "label": "只有 CPU",
+          "value": "CPU"
+        },
+        {
+          "id": "compute-1",
+          "label": "可以使用 GPU",
+          "value": "GPU"
+        },
+        {
+          "id": "compute-2",
+          "label": "算力尚未确定",
+          "value": "尚未确定"
+        }
+      ],
+      "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \" 未知 \", \"weeks\": 4, \"dataset\": \"公开数据集\"}\n讨论记录：{\"goal\": \"推理延迟\", \"baseline\": \"已有可复现基线\"}\n材料缺项：缺少算力条件"
+    },
+    "status": "WAITING_USER",
+    "stop_reason": "NEEDS_USER_INPUT",
+    "proposal": null,
+    "request_id": "ea82520720674fe39793a614e65d1e48",
+    "state": {
+      "session_id": "GuardDemo",
+      "facts": {
+        "direction": "模型压缩",
+        "compute": " 未知 ",
+        "weeks": 4,
+        "dataset": "公开数据集"
+      },
+      "history": [
+        {
+          "role": "user",
+          "content": "继续讨论"
+        },
+        {
+          "role": "assistant",
+          "content": "Synthetic test response"
+        }
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "继续讨论"
+        },
+        {
+          "role": "assistant",
+          "content": "Synthetic test response"
+        }
+      ],
+      "papers": [
+        {
+          "title": "Synthetic condition fixture",
+          "doi": "10.0000/condition-fixture",
+          "abstract": "Synthetic test excerpt, not an actual publication."
+        }
+      ],
+      "evidence": {
+        "facts": {
+          "direction": "模型压缩",
+          "compute": " 未知 ",
+          "weeks": 4,
+          "dataset": "公开数据集"
+        },
+        "rows": [
+          {
+            "id": "10.0000/condition-fixture",
+            "title": "Synthetic condition fixture",
+            "year": null,
+            "doi": "10.0000/condition-fixture",
+            "notes": "",
+            "excerpt": "Synthetic test excerpt, not an actual publication."
+          }
+        ],
+        "gaps": [
+          "缺少算力条件"
+        ]
+      },
+      "reply": "Synthetic test response",
+      "trace": [
+        {
+          "request_id": "ea82520720674fe39793a614e65d1e48",
+          "call_id": "test-b3e8b1e2",
+          "tool": "build_evidence",
+          "model_arguments": "{}",
+          "arguments": {
+            "papers": [
+              {
+                "title": "Synthetic condition fixture",
+                "doi": "10.0000/condition-fixture",
+                "abstract": "Synthetic test excerpt, not an actual publication."
+              }
+            ],
+            "facts": {
+              "direction": "模型压缩",
+              "compute": " 未知 ",
+              "weeks": 4,
+              "dataset": "公开数据集"
+            }
+          },
+          "status": "SUCCEEDED",
+          "result": {
+            "facts": {
+              "direction": "模型压缩",
+              "compute": " 未知 ",
+              "weeks": 4,
+              "dataset": "公开数据集"
+            },
+            "rows": [
+              {
+                "id": "10.0000/condition-fixture",
+                "title": "Synthetic condition fixture",
+                "year": null,
+                "doi": "10.0000/condition-fixture",
+                "notes": "",
+                "excerpt": "Synthetic test excerpt, not an actual publication."
+              }
+            ],
+            "gaps": [
+              "缺少算力条件"
+            ]
+          },
+          "duration_ms": 0
+        },
+        {
+          "request_id": "ea82520720674fe39793a614e65d1e48",
+          "call_id": "test-a6034ee1",
+          "tool": "research_dialogue",
+          "model_arguments": "{}",
+          "arguments": {
+            "state": {
+              "facts": {
+                "direction": "模型压缩",
+                "compute": " 未知 ",
+                "weeks": 4,
+                "dataset": "公开数据集"
+              },
+              "answers": {
+                "goal": "推理延迟",
+                "baseline": "已有可复现基线"
+              },
+              "evidence": {
+                "facts": {
+                  "direction": "模型压缩",
+                  "compute": " 未知 ",
+                  "weeks": 4,
+                  "dataset": "公开数据集"
+                },
+                "rows": [
+                  {
+                    "id": "10.0000/condition-fixture",
+                    "title": "Synthetic condition fixture",
+                    "year": null,
+                    "doi": "10.0000/condition-fixture",
+                    "notes": "",
+                    "excerpt": "Synthetic test excerpt, not an actual publication."
+                  }
+                ],
+                "gaps": [
+                  "缺少算力条件"
+                ]
+              },
+              "history": []
+            },
+            "message": "继续讨论",
+            "skill_id": "research-dialogue",
+            "use_model": false
+          },
+          "status": "SUCCEEDED",
+          "result": {
+            "skill": "research-dialogue",
+            "stage": "compute",
+            "field": "compute",
+            "target": "facts",
+            "question": "你可以使用哪些计算资源？",
+            "options": [
+              {
+                "id": "compute-0",
+                "label": "只有 CPU",
+                "value": "CPU"
+              },
+              {
+                "id": "compute-1",
+                "label": "可以使用 GPU",
+                "value": "GPU"
+              },
+              {
+                "id": "compute-2",
+                "label": "算力尚未确定",
+                "value": "尚未确定"
+              }
+            ],
+            "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \" 未知 \", \"weeks\": 4, \"dataset\": \"公开数据集\"}\n讨论记录：{\"goal\": \"推理延迟\", \"baseline\": \"已有可复现基线\"}\n材料缺项：缺少算力条件"
+          },
+          "duration_ms": 1
+        }
+      ],
+      "answers": {
+        "goal": "推理延迟",
+        "baseline": "已有可复现基线"
+      },
+      "dialogue": {
+        "skill": "research-dialogue",
+        "stage": "compute",
+        "field": "compute",
+        "target": "facts",
+        "question": "你可以使用哪些计算资源？",
+        "options": [
+          {
+            "id": "compute-0",
+            "label": "只有 CPU",
+            "value": "CPU"
+          },
+          {
+            "id": "compute-1",
+            "label": "可以使用 GPU",
+            "value": "GPU"
+          },
+          {
+            "id": "compute-2",
+            "label": "算力尚未确定",
+            "value": "尚未确定"
+          }
+        ],
+        "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \" 未知 \", \"weeks\": 4, \"dataset\": \"公开数据集\"}\n讨论记录：{\"goal\": \"推理延迟\", \"baseline\": \"已有可复现基线\"}\n材料缺项：缺少算力条件"
+      },
+      "skill": "research-dialogue",
+      "status": "WAITING_USER",
+      "proposal": null,
+      "decisions": [
+        {
+          "step": 1,
+          "request_id": "ea82520720674fe39793a614e65d1e48",
+          "model": "explicit fixture",
+          "usage": {},
+          "provider_request_id": null,
+          "attempts": 1,
+          "duration_ms": 0,
+          "tool_names": [
+            "build_evidence"
+          ]
+        },
+        {
+          "step": 2,
+          "request_id": "ea82520720674fe39793a614e65d1e48",
+          "model": "explicit fixture",
+          "usage": {},
+          "provider_request_id": null,
+          "attempts": 1,
+          "duration_ms": 0,
+          "tool_names": [],
+          "validation": "FINAL_REJECTED",
+          "validation_errors": [
+            {
+              "field": "completion_guard",
+              "type": "完成条件不足：需回答Skill问题、取得真实原文并在本轮整理材料"
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "request_id": "ea82520720674fe39793a614e65d1e48",
+          "model": "explicit fixture",
+          "usage": {},
+          "provider_request_id": null,
+          "attempts": 1,
+          "duration_ms": 0,
+          "tool_names": [
+            "research_dialogue"
+          ]
+        },
+        {
+          "step": 4,
+          "request_id": "ea82520720674fe39793a614e65d1e48",
+          "model": "explicit fixture",
+          "usage": {},
+          "provider_request_id": null,
+          "attempts": 1,
+          "duration_ms": 0,
+          "tool_names": []
+        }
+      ],
+      "stop_reason": "NEEDS_USER_INPUT",
+      "request_id": "ea82520720674fe39793a614e65d1e48"
+    },
+    "trace": [
+      {
+        "request_id": "ea82520720674fe39793a614e65d1e48",
+        "call_id": "test-b3e8b1e2",
+        "tool": "build_evidence",
+        "model_arguments": "{}",
+        "arguments": {
+          "papers": [
+            {
+              "title": "Synthetic condition fixture",
+              "doi": "10.0000/condition-fixture",
+              "abstract": "Synthetic test excerpt, not an actual publication."
+            }
+          ],
+          "facts": {
+            "direction": "模型压缩",
+            "compute": " 未知 ",
+            "weeks": 4,
+            "dataset": "公开数据集"
+          }
+        },
+        "status": "SUCCEEDED",
+        "result": {
+          "facts": {
+            "direction": "模型压缩",
+            "compute": " 未知 ",
+            "weeks": 4,
+            "dataset": "公开数据集"
+          },
+          "rows": [
+            {
+              "id": "10.0000/condition-fixture",
+              "title": "Synthetic condition fixture",
+              "year": null,
+              "doi": "10.0000/condition-fixture",
+              "notes": "",
+              "excerpt": "Synthetic test excerpt, not an actual publication."
+            }
+          ],
+          "gaps": [
+            "缺少算力条件"
+          ]
+        },
+        "duration_ms": 0
+      },
+      {
+        "request_id": "ea82520720674fe39793a614e65d1e48",
+        "call_id": "test-a6034ee1",
+        "tool": "research_dialogue",
+        "model_arguments": "{}",
+        "arguments": {
+          "state": {
+            "facts": {
+              "direction": "模型压缩",
+              "compute": " 未知 ",
+              "weeks": 4,
+              "dataset": "公开数据集"
+            },
+            "answers": {
+              "goal": "推理延迟",
+              "baseline": "已有可复现基线"
+            },
+            "evidence": {
+              "facts": {
+                "direction": "模型压缩",
+                "compute": " 未知 ",
+                "weeks": 4,
+                "dataset": "公开数据集"
+              },
+              "rows": [
+                {
+                  "id": "10.0000/condition-fixture",
+                  "title": "Synthetic condition fixture",
+                  "year": null,
+                  "doi": "10.0000/condition-fixture",
+                  "notes": "",
+                  "excerpt": "Synthetic test excerpt, not an actual publication."
+                }
+              ],
+              "gaps": [
+                "缺少算力条件"
+              ]
+            },
+            "history": []
+          },
+          "message": "继续讨论",
+          "skill_id": "research-dialogue",
+          "use_model": false
+        },
+        "status": "SUCCEEDED",
+        "result": {
+          "skill": "research-dialogue",
+          "stage": "compute",
+          "field": "compute",
+          "target": "facts",
+          "question": "你可以使用哪些计算资源？",
+          "options": [
+            {
+              "id": "compute-0",
+              "label": "只有 CPU",
+              "value": "CPU"
+            },
+            {
+              "id": "compute-1",
+              "label": "可以使用 GPU",
+              "value": "GPU"
+            },
+            {
+              "id": "compute-2",
+              "label": "算力尚未确定",
+              "value": "尚未确定"
+            }
+          ],
+          "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \" 未知 \", \"weeks\": 4, \"dataset\": \"公开数据集\"}\n讨论记录：{\"goal\": \"推理延迟\", \"baseline\": \"已有可复现基线\"}\n材料缺项：缺少算力条件"
+        },
+        "duration_ms": 1
+      }
+    ],
+    "decisions": [
+      {
+        "step": 1,
+        "request_id": "ea82520720674fe39793a614e65d1e48",
+        "model": "explicit fixture",
+        "usage": {},
+        "provider_request_id": null,
+        "attempts": 1,
+        "duration_ms": 0,
+        "tool_names": [
+          "build_evidence"
+        ]
+      },
+      {
+        "step": 2,
+        "request_id": "ea82520720674fe39793a614e65d1e48",
+        "model": "explicit fixture",
+        "usage": {},
+        "provider_request_id": null,
+        "attempts": 1,
+        "duration_ms": 0,
+        "tool_names": [],
+        "validation": "FINAL_REJECTED",
+        "validation_errors": [
+          {
+            "field": "completion_guard",
+            "type": "完成条件不足：需回答Skill问题、取得真实原文并在本轮整理材料"
+          }
+        ]
+      },
+      {
+        "step": 3,
+        "request_id": "ea82520720674fe39793a614e65d1e48",
+        "model": "explicit fixture",
+        "usage": {},
+        "provider_request_id": null,
+        "attempts": 1,
+        "duration_ms": 0,
+        "tool_names": [
+          "research_dialogue"
+        ]
+      },
+      {
+        "step": 4,
+        "request_id": "ea82520720674fe39793a614e65d1e48",
+        "model": "explicit fixture",
+        "usage": {},
+        "provider_request_id": null,
+        "attempts": 1,
+        "duration_ms": 0,
+        "tool_names": []
+      }
+    ]
+  },
+  "completed": {
+    "reply": "Synthetic test response",
+    "dialogue": {
+      "skill": "research-dialogue",
+      "stage": "completed",
+      "field": null,
+      "target": null,
+      "question": "",
+      "options": []
+    },
+    "status": "COMPLETED",
+    "stop_reason": "TASK_COMPLETED",
+    "proposal": {
+      "research_question": "Synthetic research_question",
+      "hypothesis": "Synthetic hypothesis",
+      "method": "Synthetic method",
+      "experiment": "Synthetic experiment",
+      "metrics": "Synthetic metrics",
+      "risks": "Synthetic risks",
+      "next_steps": "Synthetic next_steps",
+      "references": [
+        "10.0000/condition-fixture"
+      ]
+    },
+    "request_id": "49a72312d31d425b94ff8b29f92b6817",
+    "state": {
+      "session_id": "GuardDemo",
+      "facts": {
+        "direction": "模型压缩",
+        "compute": "CPU",
+        "weeks": 4,
+        "dataset": "公开数据集"
+      },
+      "history": [
+        {
+          "role": "user",
+          "content": "继续讨论"
+        },
+        {
+          "role": "assistant",
+          "content": "Synthetic test response"
+        },
+        {
+          "role": "user",
+          "content": "更正为CPU"
+        },
+        {
+          "role": "assistant",
+          "content": "Synthetic test response"
+        }
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "继续讨论"
+        },
+        {
+          "role": "assistant",
+          "content": "Synthetic test response"
+        },
+        {
+          "role": "user",
+          "content": "更正为CPU"
+        },
+        {
+          "role": "assistant",
+          "content": "Synthetic test response"
+        }
+      ],
+      "papers": [
+        {
+          "title": "Synthetic condition fixture",
+          "doi": "10.0000/condition-fixture",
+          "abstract": "Synthetic test excerpt, not an actual publication."
+        }
+      ],
+      "evidence": {
+        "facts": {
+          "direction": "模型压缩",
+          "compute": "CPU",
+          "weeks": 4,
+          "dataset": "公开数据集"
+        },
+        "rows": [
+          {
+            "id": "10.0000/condition-fixture",
+            "title": "Synthetic condition fixture",
+            "year": null,
+            "doi": "10.0000/condition-fixture",
+            "notes": "",
+            "excerpt": "Synthetic test excerpt, not an actual publication."
+          }
+        ],
+        "gaps": []
+      },
+      "reply": "Synthetic test response",
+      "trace": [
+        {
+          "request_id": "49a72312d31d425b94ff8b29f92b6817",
+          "call_id": "test-4f7809e1",
+          "tool": "build_evidence",
+          "model_arguments": "{}",
+          "arguments": {
+            "papers": [
+              {
+                "title": "Synthetic condition fixture",
+                "doi": "10.0000/condition-fixture",
+                "abstract": "Synthetic test excerpt, not an actual publication."
+              }
+            ],
+            "facts": {
+              "direction": "模型压缩",
+              "compute": "CPU",
+              "weeks": 4,
+              "dataset": "公开数据集"
+            }
+          },
+          "status": "SUCCEEDED",
+          "result": {
+            "facts": {
+              "direction": "模型压缩",
+              "compute": "CPU",
+              "weeks": 4,
+              "dataset": "公开数据集"
+            },
+            "rows": [
+              {
+                "id": "10.0000/condition-fixture",
+                "title": "Synthetic condition fixture",
+                "year": null,
+                "doi": "10.0000/condition-fixture",
+                "notes": "",
+                "excerpt": "Synthetic test excerpt, not an actual publication."
+              }
+            ],
+            "gaps": []
+          },
+          "duration_ms": 0
+        }
+      ],
+      "answers": {
+        "goal": "推理延迟",
+        "baseline": "已有可复现基线"
+      },
+      "dialogue": {
+        "skill": "research-dialogue",
+        "stage": "completed",
+        "field": null,
+        "target": null,
+        "question": "",
+        "options": []
+      },
+      "skill": "research-dialogue",
+      "status": "COMPLETED",
+      "proposal": {
+        "research_question": "Synthetic research_question",
+        "hypothesis": "Synthetic hypothesis",
+        "method": "Synthetic method",
+        "experiment": "Synthetic experiment",
+        "metrics": "Synthetic metrics",
+        "risks": "Synthetic risks",
+        "next_steps": "Synthetic next_steps",
+        "references": [
+          "10.0000/condition-fixture"
+        ]
+      },
+      "decisions": [
+        {
+          "step": 1,
+          "request_id": "49a72312d31d425b94ff8b29f92b6817",
+          "model": "explicit fixture",
+          "usage": {},
+          "provider_request_id": null,
+          "attempts": 1,
+          "duration_ms": 0,
+          "tool_names": [
+            "build_evidence"
+          ]
+        },
+        {
+          "step": 2,
+          "request_id": "49a72312d31d425b94ff8b29f92b6817",
+          "model": "explicit fixture",
+          "usage": {},
+          "provider_request_id": null,
+          "attempts": 1,
+          "duration_ms": 0,
+          "tool_names": []
+        }
+      ],
+      "stop_reason": "TASK_COMPLETED",
+      "request_id": "49a72312d31d425b94ff8b29f92b6817"
+    },
+    "trace": [
+      {
+        "request_id": "49a72312d31d425b94ff8b29f92b6817",
+        "call_id": "test-4f7809e1",
+        "tool": "build_evidence",
+        "model_arguments": "{}",
+        "arguments": {
+          "papers": [
+            {
+              "title": "Synthetic condition fixture",
+              "doi": "10.0000/condition-fixture",
+              "abstract": "Synthetic test excerpt, not an actual publication."
+            }
+          ],
+          "facts": {
+            "direction": "模型压缩",
+            "compute": "CPU",
+            "weeks": 4,
+            "dataset": "公开数据集"
+          }
+        },
+        "status": "SUCCEEDED",
+        "result": {
+          "facts": {
+            "direction": "模型压缩",
+            "compute": "CPU",
+            "weeks": 4,
+            "dataset": "公开数据集"
+          },
+          "rows": [
+            {
+              "id": "10.0000/condition-fixture",
+              "title": "Synthetic condition fixture",
+              "year": null,
+              "doi": "10.0000/condition-fixture",
+              "notes": "",
+              "excerpt": "Synthetic test excerpt, not an actual publication."
+            }
+          ],
+          "gaps": []
+        },
+        "duration_ms": 0
+      }
+    ],
+    "decisions": [
+      {
+        "step": 1,
+        "request_id": "49a72312d31d425b94ff8b29f92b6817",
+        "model": "explicit fixture",
+        "usage": {},
+        "provider_request_id": null,
+        "attempts": 1,
+        "duration_ms": 0,
+        "tool_names": [
+          "build_evidence"
+        ]
+      },
+      {
+        "step": 2,
+        "request_id": "49a72312d31d425b94ff8b29f92b6817",
+        "model": "explicit fixture",
+        "usage": {},
+        "provider_request_id": null,
+        "attempts": 1,
+        "duration_ms": 0,
+        "tool_names": []
+      }
+    ]
+  }
+}

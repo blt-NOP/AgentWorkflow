@@ -3,7 +3,7 @@ import json
 import re
 import httpx
 from . import memory, model
-from .tool_contracts import ToolError, check_facts
+from .tool_contracts import ToolError, check_facts, condition_is_valid
 
 SKILLS = memory.ROOT / "skills"
 
@@ -91,7 +91,7 @@ def research_dialogue(state, message, skill_id="research-dialogue", use_model=Fa
         raise ToolError("INVALID_INPUT", "evidence.gaps 必须为文本列表")
     instructions, config = load_skill(skill_id)
     current = next((item for item in config["questions"]
-                    if not state.get(item["target"], {}).get(item["field"])), None)
+                    if not condition_is_valid(item["field"], state.get(item["target"], {}).get(item["field"]))), None)
     result = {"skill": skill_id, "stage": "discussion", "field": None, "target": None,
               "question": config["final_question"], "options": []}
     if current:

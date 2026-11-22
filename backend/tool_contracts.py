@@ -7,6 +7,16 @@ class ToolError(ValueError):
         self.code, self.message, self.retryable = code, message, retryable
 
 
+UNRESOLVED = {"尚未确定", "还不确定", "不确定", "未知", "尚无数据", "未确定"}
+
+
+def condition_is_valid(field, value):
+    """判断条件是否已明确；允许保存未确定的回答，但不将其视为已满足。"""
+    if field == "weeks":
+        return type(value) is int and 1 <= value <= 520
+    return isinstance(value, str) and bool(value.strip()) and value.strip() not in UNRESOLVED
+
+
 def check_facts(facts):
     if not isinstance(facts, dict):
         raise ToolError("INVALID_INPUT", "facts 必须为对象")

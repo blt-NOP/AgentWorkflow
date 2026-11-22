@@ -6,7 +6,7 @@ from time import perf_counter
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from . import dialogue, library, model, tools
-from .tool_contracts import ToolError
+from .tool_contracts import ToolError, condition_is_valid
 
 
 class SearchArgs(BaseModel):
@@ -182,8 +182,8 @@ proposal必须包含research_question、hypothesis、method、experiment、metri
             if final.status not in ("WAITING_USER", "COMPLETED"):
                 raise ValueError("status无效")
             if final.status == "COMPLETED":
-                missing = [q["field"] for q in config["questions"] if not state.get(q["target"], {}).get(q["field"])
-                           or state.get(q["target"], {}).get(q["field"]) in ("尚未确定", "尚无数据", "还不确定")]
+                missing = [q["field"] for q in config["questions"]
+                           if not condition_is_valid(q["field"], state.get(q["target"], {}).get(q["field"]))]
                 rows = state.get("evidence", {}).get("rows", [])
                 usable = {row["id"] for row in rows if row.get("excerpt") and
                           row["excerpt"] != "缺少摘要，不能据题名推断结论。"}
