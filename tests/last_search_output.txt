@@ -1,8 +1,15 @@
-[读记忆] Search-new: {}
-[条件变化] []
+[读记忆] Search: {}
+[条件变化] [{"field": "direction", "before": null, "after": "模型压缩"}]
 [工具] search_papers query=edge inference model compression
-[工具] build_evidence facts={}
-[工具结果] {"facts": {}, "rows": [{"id": "10.1016/b978-0-12-823817-2.00015-2", "title": "Model compression for on-device inference", "year": 2022, "doi": "10.1016/b978-0-12-823817-2.00015-2", "excerpt": "缺少摘要，不能据题名推断结论。"}, {"id": "10.14711/thesis-991013340351903412", "title": "Bayesian model compression and federated learning via variational inference", "year": null, "doi": "10.14711/thesis-991013340351903412", "excerpt": "缺少摘要，不能据题名推断结论。"}, {"id": "10.1109/dac56929.2023.10248005", "title": "A Memory-Efficient Edge Inference Accelerator with XOR-based Model Compression", "year": 2023, "doi": "10.1109/dac56929.2023.10248005", "excerpt": "缺少摘要，不能据题名推断结论。"}], "gaps": ["缺少算力条件", "缺少可用时间", "缺少数据条件"]}
-[写记忆] Search-new: recent=2, full=2
-[回答] [未调用模型] 当前条件：{}
-待补充：缺少算力条件；缺少可用时间；缺少数据条件
+[工具] build_evidence facts={"direction": "模型压缩"}
+[工具结果] {"facts": {"direction": "模型压缩"}, "rows": [{"id": "10.1016/b978-0-12-823817-2.00015-2", "title": "Model compression for on-device inference", "year": 2022, "doi": "10.1016/b978-0-12-823817-2.00015-2", "notes": "", "excerpt": "缺少摘要，不能据题名推断结论。"}, {"id": "10.14711/thesis-991013340351903412", "title": "Bayesian model compression and federated learning via variational inference", "year": null, "doi": "10.14711/thesis-991013340351903412", "notes": "", "excerpt": "缺少摘要，不能据题名推断结论。"}, {"id": "10.1109/dac56929.2023.10248005", "title": "A Memory-Efficient Edge Inference Accelerator with XOR-based Model Compression", "year": 2023, "doi": "10.1109/dac56929.2023.10248005", "notes": "", "excerpt": "缺少摘要，不能据题名推断结论。"}], "gaps": ["缺少算力条件", "缺少可用时间", "缺少数据条件"]}
+[工具] research_dialogue skill=research-dialogue; stage=compute
+[追问] 你可以使用哪些计算资源？
+[选项] compute-0: 只有 CPU
+[选项] compute-1: 可以使用 GPU
+[选项] compute-2: 算力尚未确定
+[写记忆] Search: recent=2, full=2
+[回答] [未调用模型] 当前条件：{"direction": "模型压缩"}
+材料缺项：缺少算力条件；缺少可用时间；缺少数据条件
+
+你可以使用哪些计算资源？

@@ -30,4 +30,7 @@ button:hover { filter: brightness(.95); }
 summary { cursor: pointer; color: #226b59; padding: 8px 0; }
 pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 12px; background: #f3f6f5; padding: 14px; max-height: 400px; overflow-y: auto; }
 #status { white-space: pre-wrap; }
+.question { margin-bottom: 8px; font-weight: 600; }
+.option-cards { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.option-card { background: #edf6f1; color: #226b59; border-color: #b6d8c9; text-align: left; }
 @media (max-width: 800px) { main { grid-template-columns: 1fr; padding: 12px; } header { padding: 24px 16px 8px; } .fields { flex-wrap: wrap; } .fields label { flex-basis: 140px; } }

@@ -1,4 +1,4 @@
-"""文件存储：每个会话一个 JSON，个人文献库一个 JSON。"""
+"""会话和日志使用 JSON；论文库由 library.py 保存到 SQLite。"""
 import json
 import os
 import re
@@ -25,9 +25,14 @@ def write_json(path, value):
 def load(session_id):
     path = session_path(session_id)
     if path.exists():
-        return json.loads(path.read_text(encoding="utf-8"))
+        state = json.loads(path.read_text(encoding="utf-8"))
+        state.setdefault("answers", {})
+        state.setdefault("dialogue", {})
+        state.setdefault("skill", "research-dialogue")
+        return state
     return {"session_id": session_id, "facts": {}, "history": [], "messages": [],
-            "papers": [], "evidence": {}, "reply": "", "trace": []}
+            "papers": [], "evidence": {}, "reply": "", "trace": [],
+            "answers": {}, "dialogue": {}, "skill": "research-dialogue"}
 
 
 def save(state, log):
@@ -51,12 +56,3 @@ def list_sessions():
 def delete(session_id):
     session_path(session_id).unlink(missing_ok=True)
     (DATA / "logs" / f"{session_id}.jsonl").unlink(missing_ok=True)
-
-
-def library():
-    path = DATA / "library.json"
-    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else []
-
-
-def save_library(papers):
-    write_json(DATA / "library.json", papers)

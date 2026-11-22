@@ -18,13 +18,15 @@
         <p id="session-id" class="muted"></p>
       </section>
       <section>
-        <h2>已有论文</h2><p class="muted">个人文献库供各讨论共享；每个讨论的资源条件分别保存。</p>
+        <h2>已有论文</h2><p class="muted">论文保存在本地 SQLite，供各讨论共享；资源条件分别保存。</p>
+        <div class="actions"><label>查找论文<input id="paper-search" placeholder="标题、DOI 或笔记"></label><button id="find-papers" class="secondary">查找</button></div>
         <div id="library"></div>
         <details><summary>登记 / 编辑论文</summary>
           <form id="paper-form">
             <label>论文标题<input id="paper-title" required maxlength="1000"></label>
             <div class="fields"><label>年份<input id="paper-year" type="number"></label><label>DOI<input id="paper-doi"></label></div>
             <label>摘要 / 已读段落<textarea id="paper-abstract" rows="4" maxlength="50000"></textarea></label>
+            <label>阅读笔记<textarea id="paper-notes" rows="2" maxlength="10000"></textarea></label>
             <button type="submit">保存论文</button><button id="paper-reset" type="button" class="secondary">清空</button>
           </form>
         </details>
@@ -40,7 +42,10 @@
         <p class="muted">更正条件时修改这里的值，再发送消息；未修改的条件沿用原值。</p>
       </section>
       <section>
-        <h2>多轮讨论</h2><div id="messages" role="log" aria-live="polite"></div>
+        <h2>多轮讨论</h2>
+        <label>提问策略 Skill<select id="skill" aria-label="提问策略 Skill"></select></label>
+        <div id="messages" role="log" aria-live="polite"></div>
+        <div id="dialogue" aria-live="polite"></div>
         <form id="chat-form">
           <label>本轮输入<textarea id="message" required rows="3" maxlength="10000" placeholder="说说你的方向、最近读的论文，或继续追问…"></textarea></label>
           <label>论文检索关键词（可选）<input id="search" maxlength="500" placeholder="填写后，本轮先检索论文；留空则使用已有材料"></label>

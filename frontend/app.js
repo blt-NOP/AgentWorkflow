@@ -46,6 +46,28 @@ function showState(data) {
   }
   for (const gap of state.evidence.gaps || []) text($("evidence"), gap, "muted");
   $("trace").textContent = JSON.stringify(state.trace, null, 2);
+  $("skill").value = state.skill || "research-dialogue";
+  $("dialogue").replaceChildren();
+  if (state.dialogue?.question) {
+    text($("dialogue"), "当前问题：" + state.dialogue.question, "question");
+    const options = document.createElement("div"); options.className = "option-cards";
+    options.setAttribute("role", "group"); options.setAttribute("aria-label", "本轮选项");
+    for (const option of state.dialogue.options) {
+      const button = document.createElement("button"); button.type = "button";
+      button.className = "option-card"; button.textContent = option.label;
+      button.onclick = () => run(() => sendMessage(option.label, option.id));
+      options.append(button);
+    }
+    $("dialogue").append(options);
+  }
+}
+
+async function loadSkills() {
+  $("skill").replaceChildren();
+  for (const skill of await api("/api/skills")) {
+    const option = document.createElement("option"); option.value = skill.id; option.textContent = skill.name;
+    $("skill").append(option);
+  }
 }
 
 async function loadSession() {
@@ -73,12 +95,14 @@ function paperButton(parent, label, task) {
 
 async function loadLibrary() {
   $("library").replaceChildren();
-  for (const paper of await api("/api/library")) {
+  for (const paper of await api(`/api/library?q=${encodeURIComponent($("paper-search").value.trim())}`)) {
     const card = document.createElement("article"); card.className = "paper";
     text(card, paper.title);
+    if (paper.notes) text(card, "笔记：" + paper.notes, "muted");
     paperButton(card, "编辑", async () => {
-      editingPaperId = paper.paper_id;
-      for (const key of ["title", "year", "doi", "abstract"]) $("paper-" + key).value = paper[key] ?? "";
+      const saved = await api(`/api/library/papers/${encodeURIComponent(paper.paper_id)}`);
+      editingPaperId = saved.paper_id;
+      for (const key of ["title", "year", "doi", "abstract", "notes"]) $("paper-" + key).value = saved[key] ?? "";
       $("paper-form").closest("details").open = true;
     });
     paperButton(card, "删除", async () => {
@@ -89,9 +113,7 @@ async function loadLibrary() {
   }
 }
 
-$("chat-form").addEventListener("submit", event => {
-  event.preventDefault();
-  run(async () => {
+async function sendMessage(message, choiceId = null) {
     const facts = {};
     for (const key of ["direction", "claim", "compute", "weeks", "dataset"]) {
       const raw = $(key).value.trim();
@@ -99,12 +121,16 @@ $("chat-form").addEventListener("submit", event => {
       if (value !== (state.facts[key] ?? null)) facts[key] = value;
     }
     $("status").textContent = "正在执行工具和对话…";
-    const data = await api("/api/chat", "POST", { session_id: sessionId, message: $("message").value.trim(),
-      facts, search: $("search").value.trim() || null, use_model: $("use-model").checked });
+    const data = await api("/api/chat", "POST", { session_id: sessionId, message,
+      facts, search: $("search").value.trim() || null, use_model: $("use-model").checked,
+      skill: $("skill").value, choice_id: choiceId });
     showState(data.state); await loadSessions();
     $("message").value = ""; $("search").value = "";
     $("status").textContent = `已保存 · 完整记录 ${data.state.messages.length} 条 · 模型近期上下文 ${data.state.history.length} 条`;
-  });
+}
+$("chat-form").addEventListener("submit", event => {
+  event.preventDefault();
+  run(() => sendMessage($("message").value.trim()));
 });
 $("new-session").onclick = () => run(async () => { sessionId = crypto.randomUUID(); await loadSession(); await loadSessions(); });
 $("sessions").onchange = () => run(async () => { sessionId = $("sessions").value; await loadSession(); });
@@ -115,9 +141,10 @@ $("delete-session").onclick = () => run(async () => {
 $("paper-form").onsubmit = event => {
   event.preventDefault();
   run(async () => {
-    await api("/api/library/papers", "POST", { paper_id: editingPaperId, title: $("paper-title").value.trim(),
+    const path = editingPaperId ? `/api/library/papers/${encodeURIComponent(editingPaperId)}` : "/api/library/papers";
+    await api(path, editingPaperId ? "PUT" : "POST", { paper_id: editingPaperId, title: $("paper-title").value.trim(),
       year: $("paper-year").value ? Number($("paper-year").value) : null,
-      doi: $("paper-doi").value.trim(), abstract: $("paper-abstract").value.trim() });
+      doi: $("paper-doi").value.trim(), abstract: $("paper-abstract").value.trim(), notes: $("paper-notes").value.trim() });
     editingPaperId = ""; $("paper-form").reset(); await loadLibrary();
     $("status").textContent = "论文已保存；下次发送时重新整理材料。";
   });
@@ -125,13 +152,15 @@ $("paper-form").onsubmit = event => {
 $("paper-reset").onclick = () => { editingPaperId = ""; $("paper-form").reset(); };
 $("import-papers").onchange = () => run(async () => {
   const file = $("import-papers").files[0]; if (!file) return;
+  if (file.size > 5 * 1024 * 1024) throw new Error("论文 JSON 不能超过5MB");
   const data = JSON.parse(await file.text()); const papers = Array.isArray(data) ? data : data.papers;
   if (!Array.isArray(papers)) throw new Error("JSON 必须是论文列表，或包含 papers 列表的对象。");
-  for (const paper of papers) await api("/api/library/papers", "POST", paper);
+  await api("/api/library/import", "POST", papers);
   await loadLibrary(); $("import-papers").value = ""; $("status").textContent = "材料已导入。";
 });
+$("find-papers").onclick = () => run(loadLibrary);
 run(async () => {
   const health = await api("/api/health");
   $("health").textContent = health.model_configured ? "后端已连接 · 模型配置已填写（未验证连通性）" : "后端已连接 · 暂未配置模型";
-  await loadSession(); await loadSessions(); await loadLibrary();
+  await loadSkills(); await loadSession(); await loadSessions(); await loadLibrary();
 });

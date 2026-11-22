@@ -11,13 +11,13 @@ try {
     $b = "B-$suffix"
     Write-Output "SESSION A=$a; SESSION B=$b"
 
-    & $Python -X utf8 -m backend.cli --data-dir data/cli-check --session $a --message '登记约束' --compute GPU --weeks 4 --dataset '公开数据集'
+    & $Python -X utf8 -m backend.cli --data-dir data/cli-check --session $a --message '登记约束' --direction '模型压缩' --compute GPU --weeks 4 --dataset '公开数据集'
     if ($LASTEXITCODE) { throw 'A write failed' }
-    & $Python -X utf8 -m backend.cli --data-dir data/cli-check --session $a --message '追问一次'
+    & $Python -X utf8 -m backend.cli --data-dir data/cli-check --session $a --message '推理延迟'
     if ($LASTEXITCODE) { throw 'A follow-up failed' }
     & $Python -X utf8 -m backend.cli --data-dir data/cli-check --session $a --message '更正为CPU' --compute CPU
     if ($LASTEXITCODE) { throw 'A correction failed' }
-    & $Python -X utf8 -m backend.cli --data-dir data/cli-check --session $a --message '根据新条件继续'
+    & $Python -X utf8 -m backend.cli --data-dir data/cli-check --session $a --message '需要先查找基线'
     if ($LASTEXITCODE) { throw 'A next request failed' }
     & $Python -X utf8 -m backend.cli --data-dir data/cli-check --session $a --message '继续直到裁剪更正消息'
     if ($LASTEXITCODE) { throw 'A history test failed' }
@@ -34,6 +34,7 @@ try {
     if ($stateA.facts.compute -ne 'CPU' -or $stateA.history.Count -ne 6 -or $stateA.messages.Count -ne 14) { throw 'A memory mismatch' }
     if ($null -ne $stateB.facts.compute) { throw 'B inherited A constraint' }
     if ($stateA.trace[0].arguments.facts.compute -ne 'CPU') { throw 'Tool used old constraint' }
+    if ($stateA.trace[1].tool -ne 'research_dialogue') { throw 'Dialogue tool did not execute' }
     Write-Output "PASS: A=CPU; recent=6; full=14; B has no compute; switched back to A"
     Write-Output "JSON: data/cli-check/sessions/$a.json and $b.json"
     Write-Output "LOGS: data/cli-check/logs/$a.jsonl and $b.jsonl"

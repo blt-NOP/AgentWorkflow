@@ -1,10 +1,9 @@
 """网页入口：只做参数校验、接口映射和静态文件服务。"""
-from uuid import uuid4
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
-from . import agent, memory, model
+from . import agent, memory, model, library, dialogue, tools
 
 app = FastAPI(title="论文 idea 助手")
 
@@ -23,6 +22,8 @@ class ChatInput(BaseModel):
     facts: Facts = Field(default_factory=Facts)
     search: str | None = Field(default=None, max_length=500)
     use_model: bool = False
+    skill: str | None = None
+    choice_id: str | None = None
 
 
 class Paper(BaseModel):
@@ -31,6 +32,15 @@ class Paper(BaseModel):
     year: int | None = None
     doi: str = ""
     abstract: str = Field(default="", max_length=50000)
+    notes: str = Field(default="", max_length=10000)
+
+
+class DialogueInput(BaseModel):
+    facts: Facts = Field(default_factory=Facts)
+    answers: dict[str, str] = Field(default_factory=dict)
+    message: str = "讨论科研选题"
+    skill: str = "research-dialogue"
+    use_model: bool = False
 
 
 @app.exception_handler(ValueError)
@@ -47,7 +57,7 @@ def health():
 def chat(data: ChatInput):
     try:
         return agent.run_turn(data.session_id, data.message, data.facts.model_dump(exclude_unset=True),
-                              data.search, data.use_model)
+                              data.search, data.use_model, skill=data.skill, choice_id=data.choice_id)
     except ValueError:
         raise
     except Exception as error:
@@ -72,23 +82,54 @@ def delete_session(session_id: str):
 
 
 @app.get("/api/library")
-def library():
-    return memory.library()
+def list_library(q: str = ""):
+    return library.list_papers(q)
+
+
+@app.get("/api/library/papers/{paper_id}")
+def get_paper(paper_id: str):
+    paper = library.get_paper(paper_id)
+    if paper is None:
+        raise HTTPException(404, "论文不存在")
+    return paper
 
 
 @app.post("/api/library/papers")
 def save_paper(paper: Paper):
-    data = paper.model_dump()
-    data["paper_id"] = data["paper_id"] or str(uuid4())
-    papers = [p for p in memory.library() if p["paper_id"] != data["paper_id"]]
-    memory.save_library(papers + [data])
-    return data
+    return library.save_paper(paper.model_dump())
+
+
+@app.put("/api/library/papers/{paper_id}")
+def update_paper(paper_id: str, paper: Paper):
+    if library.get_paper(paper_id) is None:
+        raise HTTPException(404, "论文不存在")
+    return library.save_paper(dict(paper.model_dump(), paper_id=paper_id))
+
+
+@app.post("/api/library/import")
+def import_papers(papers: list[Paper]):
+    return library.import_papers([paper.model_dump() for paper in papers])
 
 
 @app.delete("/api/library/papers/{paper_id}")
 def delete_paper(paper_id: str):
-    memory.save_library([p for p in memory.library() if p["paper_id"] != paper_id])
+    if not library.delete_paper(paper_id):
+        raise HTTPException(404, "论文不存在")
     return {"deleted": paper_id}
+
+
+@app.get("/api/skills")
+def skills():
+    return dialogue.list_skills()
+
+
+@app.post("/api/tools/dialogue")
+def dialogue_tool(data: DialogueInput):
+    # 无会话副作用的工具测试入口，可不启动前端或模型。
+    facts = data.facts.model_dump(exclude_unset=True)
+    state = {"facts": facts, "answers": data.answers, "history": [],
+             "evidence": tools.build_evidence(library.list_papers(), facts)}
+    return tools.research_dialogue(state, data.message, data.skill, data.use_model)
 
 
 app.mount("/static", StaticFiles(directory=memory.ROOT / "frontend"), name="static")

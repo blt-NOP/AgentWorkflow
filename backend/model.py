@@ -8,7 +8,7 @@ def configured():
     return all(os.getenv(key, "").strip() for key in ("MODEL_BASE_URL", "MODEL_NAME", "MODEL_API_KEY"))
 
 
-def reply(state, message):
+def reply(state, message, skill_instructions="", question=""):
     if not configured():
         raise ValueError("请先在 .env 填写模型地址、名称和密钥，或关闭模型")
     system = (
@@ -17,6 +17,9 @@ def reply(state, message):
         "当前事实优先于历史消息中的旧条件。\n当前事实："
         + json.dumps(state["facts"], ensure_ascii=False)
         + "\n论文材料与缺项：" + json.dumps(state["evidence"], ensure_ascii=False)
+        + "\n讨论答案：" + json.dumps(state.get("answers", {}), ensure_ascii=False)
+        + "\n本轮提问 Skill：\n" + skill_instructions
+        + "\n外层将展示的唯一追问：" + question + "。正文请给出分析，不要另加追问。"
     )
     messages = [{"role": "system", "content": system}] + state["history"]
     messages.append({"role": "user", "content": message})

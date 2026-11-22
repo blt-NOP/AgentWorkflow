@@ -1,6 +1,7 @@
-"""两项工具都是普通函数，可被命令行或网页调用。"""
+"""三项工具：论文检索、材料整理、多轮科研交互。"""
 import os
 import httpx
+from .dialogue import research_dialogue
 
 
 def search_papers(query, limit=3):
@@ -27,7 +28,8 @@ def build_evidence(papers, facts):
         if any(row["id"] == identity for row in rows):
             continue
         rows.append({"id": identity, "title": paper["title"], "year": paper.get("year"),
-                     "doi": paper.get("doi", ""), "excerpt": paper.get("abstract") or "缺少摘要，不能据题名推断结论。"})
+                     "doi": paper.get("doi", ""), "notes": paper.get("notes", ""),
+                     "excerpt": paper.get("abstract") or "缺少摘要，不能据题名推断结论。"})
     gaps = [label for key, label in (("compute", "缺少算力条件"), ("weeks", "缺少可用时间"),
                                     ("dataset", "缺少数据条件")) if not facts.get(key)]
     if not rows:

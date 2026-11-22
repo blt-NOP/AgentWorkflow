@@ -15,6 +15,8 @@ def main():
     parser.add_argument("--dataset")
     parser.add_argument("--search", help="检索关键词；不提供时沿用已有材料")
     parser.add_argument("--model", action="store_true", help="真实调用 .env 配置的模型")
+    parser.add_argument("--skill", help="提问策略 Skill 名称，默认 research-dialogue")
+    parser.add_argument("--choice", help="回答上一轮选项，例如 compute-0")
     parser.add_argument("--show", action="store_true", help="只查看会话 JSON")
     parser.add_argument("--data-dir", help="可选：使用独立测试数据目录")
     args = parser.parse_args()
@@ -31,7 +33,7 @@ def main():
         parser.error("--weeks 范围为1至520")
     facts = {key: getattr(args, key) for key in ("direction", "claim", "compute", "weeks", "dataset")
              if getattr(args, key) is not None}
-    run_turn(args.session, args.message, facts, args.search, args.model)
+    run_turn(args.session, args.message, facts, args.search, args.model, skill=args.skill, choice_id=args.choice)
 
 
 if __name__ == "__main__":

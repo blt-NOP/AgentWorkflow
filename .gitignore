@@ -8,3 +8,5 @@ data/logs/
 data/library.json
 data/cli-check/
 data/api-check/
+data/*.sqlite3*
+data/feature-check/
