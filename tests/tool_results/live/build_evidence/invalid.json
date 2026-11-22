@@ -1,0 +1,28 @@
+{
+  "tool": "build_evidence",
+  "case": "invalid",
+  "arguments": {
+    "papers": [
+      {
+        "abstract": "missing title"
+      }
+    ],
+    "facts": {
+      "direction": "模型压缩",
+      "compute": "CPU",
+      "weeks": 4,
+      "dataset": "公开数据集"
+    }
+  },
+  "returned": null,
+  "error": {
+    "code": "INVALID_INPUT",
+    "message": "每篇论文必须有1至1000字符的非空 title",
+    "retryable": false,
+    "type": "ToolError"
+  },
+  "passed": true,
+  "basis": "缺少必填 title，返回 INVALID_INPUT",
+  "data_source": "local",
+  "changed_parameter": null
+}

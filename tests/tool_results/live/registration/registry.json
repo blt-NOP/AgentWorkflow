@@ -1,0 +1,27 @@
+{
+  "tool": "registration",
+  "case": "registry",
+  "arguments": {},
+  "returned": {
+    "status": 200,
+    "body": [
+      {
+        "name": "search_papers",
+        "entry": "backend.tools.search_papers"
+      },
+      {
+        "name": "build_evidence",
+        "entry": "backend.tools.build_evidence"
+      },
+      {
+        "name": "research_dialogue",
+        "entry": "backend.dialogue.research_dialogue"
+      }
+    ]
+  },
+  "error": null,
+  "passed": true,
+  "basis": "GET /api/tools 列出三项真实函数入口",
+  "data_source": "local",
+  "changed_parameter": null
+}

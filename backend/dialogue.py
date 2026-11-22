@@ -1,29 +1,45 @@
 """多轮交互工具：读取 Skill、接收上轮答案、给出本轮问题与选项。"""
 import json
 import re
+import httpx
 from . import memory, model
+from .tool_contracts import ToolError, check_facts
 
 SKILLS = memory.ROOT / "skills"
 
 
 def load_skill(skill_id):
-    if not re.fullmatch(r"[a-z0-9-]{1,64}", skill_id):
-        raise ValueError("Skill 名称只能包含小写字母、数字和短横线")
+    if not isinstance(skill_id, str) or not re.fullmatch(r"[a-z0-9-]{1,64}", skill_id):
+        raise ToolError("INVALID_INPUT", "Skill 名称只能包含小写字母、数字和短横线")
     path = SKILLS / skill_id / "SKILL.md"
     if not path.exists():
-        raise ValueError(f"找不到 Skill：{skill_id}")
-    text = path.read_text(encoding="utf-8")
-    match = re.search(r"```json\s*(.*?)```", text, re.S)
-    if not match:
-        raise ValueError("Skill 必须包含一个 JSON 提问策略块")
-    config = json.loads(match[1])
-    fields = set()
-    for item in config["questions"]:
-        if item["target"] not in ("facts", "answers") or item["field"] in fields:
-            raise ValueError("Skill 的 target 无效或问题字段重复")
-        if item["target"] == "facts" and item["field"] not in ("direction", "claim", "compute", "weeks", "dataset"):
-            raise ValueError("Skill 使用了不支持的事实字段")
-        fields.add(item["field"])
+        raise ToolError("INVALID_INPUT", f"找不到 Skill：{skill_id}")
+    try:
+        text = path.read_text(encoding="utf-8")
+        match = re.search(r"```json\s*(.*?)```", text, re.S)
+        if not match:
+            raise ValueError("缺少 JSON 提问策略块")
+        config = json.loads(match[1])
+        if not isinstance(config["questions"], list) or not isinstance(config["final_question"], str) or not config["final_question"].strip():
+            raise ValueError("questions 或 final_question 无效")
+        fields = set()
+        for item in config["questions"]:
+            if item["target"] not in ("facts", "answers") or not isinstance(item["field"], str) or item["field"] in fields:
+                raise ValueError("target 无效或问题字段重复")
+            if not isinstance(item["question"], str) or not item["question"].strip() or not isinstance(item["options"], list):
+                raise ValueError("问题或选项列表无效")
+            for option in item["options"]:
+                if not isinstance(option["label"], str) or not option["label"].strip():
+                    raise ValueError("选项标签无效")
+                if item["target"] == "facts":
+                    check_facts({item["field"]: option["value"]})
+                elif not isinstance(option["value"], str):
+                    raise ValueError("讨论答案选项必须为文本")
+            if item["target"] == "facts":
+                check_facts({item["field"]: None})
+            fields.add(item["field"])
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        raise ToolError("INVALID_SKILL", f"Skill 配置无效：{skill_id}；{error}") from error
     return text, config
 
 
@@ -62,6 +78,17 @@ def accept_answer(state, message, choice_id=None):
 
 def research_dialogue(state, message, skill_id="research-dialogue", use_model=False):
     """独立工具入口，返回 message/question/options；调用方负责保存状态。"""
+    if not isinstance(state, dict) or not isinstance(message, str) or not message.strip() or len(message) > 10000 or type(use_model) is not bool:
+        raise ToolError("INVALID_INPUT", "state、message 或 use_model 类型/长度无效")
+    check_facts(state.get("facts"))
+    state = dict(state, answers=state.get("answers", {}), history=state.get("history", []))
+    evidence = state.get("evidence")
+    if not isinstance(state["answers"], dict) or not isinstance(state["history"], list):
+        raise ToolError("INVALID_INPUT", "answers 必须为对象，history 必须为消息列表")
+    if not isinstance(evidence, dict) or not isinstance(evidence.get("rows"), list) or not isinstance(evidence.get("gaps"), list):
+        raise ToolError("INVALID_INPUT", "evidence 必须包含 rows 和 gaps 列表")
+    if any(not isinstance(gap, str) for gap in evidence["gaps"]):
+        raise ToolError("INVALID_INPUT", "evidence.gaps 必须为文本列表")
     instructions, config = load_skill(skill_id)
     current = next((item for item in config["questions"]
                     if not state.get(item["target"], {}).get(item["field"])), None)
@@ -73,7 +100,16 @@ def research_dialogue(state, message, skill_id="research-dialogue", use_model=Fa
                           {"id": f"{current['field']}-{index}", "label": item["label"], "value": item["value"]}
                           for index, item in enumerate(current["options"])])
     if use_model:
-        result["message"] = model.reply(state, message, instructions, result["question"])
+        if not model.configured():
+            raise ToolError("MODEL_NOT_CONFIGURED", "未配置模型，请填写环境变量或设置 use_model=false")
+        try:
+            result["message"] = model.reply(state, message, instructions, result["question"])
+        except httpx.TimeoutException as error:
+            raise ToolError("TIMEOUT", "模型请求超时", True) from error
+        except httpx.RequestError as error:
+            raise ToolError("NETWORK_ERROR", "模型网络请求失败", True) from error
+        except (RuntimeError, ValueError, KeyError, TypeError) as error:
+            raise ToolError("MODEL_ERROR", "模型返回失败或内容无效", True) from error
     else:
         result["message"] = "[未调用模型] 当前条件：" + json.dumps(state["facts"], ensure_ascii=False)
         if state.get("answers"):

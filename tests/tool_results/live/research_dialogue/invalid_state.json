@@ -1,0 +1,49 @@
+{
+  "tool": "research_dialogue",
+  "case": "invalid_state",
+  "arguments": {
+    "state": {
+      "facts": {
+        "direction": "模型压缩",
+        "compute": "CPU",
+        "weeks": 4,
+        "dataset": "公开数据集"
+      },
+      "answers": {},
+      "history": "not a list",
+      "evidence": {
+        "facts": {
+          "direction": "模型压缩",
+          "compute": "CPU",
+          "weeks": 4,
+          "dataset": "公开数据集"
+        },
+        "rows": [
+          {
+            "id": "10.0000/evidence-fixture",
+            "title": "Synthetic evidence fixture",
+            "year": 2025,
+            "doi": "10.0000/evidence-fixture",
+            "notes": "",
+            "excerpt": "Synthetic teaching material: compare a baseline and one variant."
+          }
+        ],
+        "gaps": []
+      }
+    },
+    "message": "请继续讨论研究选题",
+    "skill_id": "research-dialogue",
+    "use_model": false
+  },
+  "returned": null,
+  "error": {
+    "code": "INVALID_INPUT",
+    "message": "answers 必须为对象，history 必须为消息列表",
+    "retryable": false,
+    "type": "ToolError"
+  },
+  "passed": true,
+  "basis": "history 类型错误时返回 INVALID_INPUT",
+  "data_source": "local",
+  "changed_parameter": null
+}

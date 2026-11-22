@@ -1,0 +1,51 @@
+{
+  "tool": "build_evidence",
+  "case": "api_normal",
+  "arguments": {
+    "method": "POST",
+    "path": "/api/tools/evidence",
+    "payload": {
+      "papers": [
+        {
+          "title": "Synthetic evidence fixture",
+          "year": 2025,
+          "doi": "10.0000/evidence-fixture",
+          "abstract": "Synthetic teaching material: compare a baseline and one variant."
+        }
+      ],
+      "facts": {
+        "direction": "模型压缩",
+        "compute": "CPU",
+        "weeks": 4,
+        "dataset": "公开数据集"
+      }
+    }
+  },
+  "returned": {
+    "status": 200,
+    "body": {
+      "facts": {
+        "direction": "模型压缩",
+        "compute": "CPU",
+        "weeks": 4,
+        "dataset": "公开数据集"
+      },
+      "rows": [
+        {
+          "id": "10.0000/evidence-fixture",
+          "title": "Synthetic evidence fixture",
+          "year": 2025,
+          "doi": "10.0000/evidence-fixture",
+          "notes": "",
+          "excerpt": "Synthetic teaching material: compare a baseline and one variant."
+        }
+      ],
+      "gaps": []
+    }
+  },
+  "error": null,
+  "passed": true,
+  "basis": "独立后端入口返回 HTTP 200",
+  "data_source": "in-process API; search HTTP fixture",
+  "changed_parameter": null
+}

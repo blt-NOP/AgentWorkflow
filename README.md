@@ -1,4 +1,6 @@
 # 论文 idea 讨论助手
+
+**三项工具的注册入口、按任务表填写的工具说明、独立测试命令及实际结果见 [docs/tools.md](docs/tools.md)。** 一条命令独立验收（无需前端、服务或模型）：`python -X utf8 tests/check_tools.py`，本次离线与真实检索模式均为 `PASS (27/27 checks)`。
 ## 1. 目录与阅读顺序
 
 ```text
@@ -177,6 +179,9 @@ python -X utf8 -m backend.cli --session Research --message "我只有CPU，能�
 | 删除论文 | DELETE /api/library/papers/{id} | library.delete_paper |
 | 可选提问策略 | GET /api/skills | dialogue.list_skills |
 | 独立测试交互工具 | POST /api/tools/dialogue | tools.research_dialogue |
+| 查看工具注册 | GET /api/tools | tools.TOOL_REGISTRY |
+| 独立测试检索工具 | POST /api/tools/search | 注册的 search_papers |
+| 独立测试材料工具 | POST /api/tools/evidence | 注册的 build_evidence |
 
 聊天请求示例：`{"session_id":"A","message":"更正为CPU","facts":{"compute":"CPU"},"use_model":false}`。返回 `reply`、`state`、`trace`、`dialogue`。选项回答还可以传 `choice_id`，策略可传 `skill`。
 
@@ -244,7 +249,7 @@ python -X utf8 tests/check_features.py
 powershell -NoProfile -File tests/check_memory.ps1
 ```
 
-2026-11-22 新功能离线验收实际输出 `RESULT: PASS (23 checks)`。覆盖旧文库迁移及不重复迁移、增删改查、DOI 去重、批量导入回滚、读取 SQLite 进入工具、多轮按钮/文字回答、历史裁剪、条件更正、会话隔离、替换 Skill 改变提问顺序、Skill 传入模型请求。控制台记录：[tests/last_features_output.txt](tests/last_features_output.txt)。详细响应与摘要：`data/feature-check/run-76dbef54/responses.json` 和 `summary.json`。
+2026-11-22 新功能离线验收实际输出 `RESULT: PASS (23 checks)`。覆盖旧文库迁移及不重复迁移、增删改查、DOI 去重、批量导入回滚、读取 SQLite 进入工具、多轮按钮/文字回答、历史裁剪、条件更正、会话隔离、替换 Skill 改变提问顺序、Skill 传入模型请求。控制台记录：[tests/last_features_output.txt](tests/last_features_output.txt)。增加独立工具入口后复测仍为23项通过，最新详细响应与摘要：`data/feature-check/run-2d532b53/responses.json` 和 `summary.json`。
 
 浏览器实际验证了新增/编辑论文笔记、点击 CPU → 4周 → 公开数据集 → 推理延迟、下一问推进到基线、切换会话后恢复选项。测试数据为虚构材料，独立 SQLite 位于 `data/feature-check/ui-20261122/library.sqlite3`。本次未调用真实模型；模型请求的 Skill 和消息组装由明确 HTTP 替身验证。Skill 格式校验输出 `Skill is valid!`。
 

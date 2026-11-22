@@ -1,0 +1,19 @@
+{
+  "tool": "search_papers",
+  "case": "invalid_response",
+  "arguments": {
+    "query": "edge inference model compression",
+    "limit": 1
+  },
+  "returned": null,
+  "error": {
+    "code": "INVALID_RESPONSE",
+    "message": "Crossref 响应格式无效",
+    "retryable": true,
+    "type": "ToolError"
+  },
+  "passed": true,
+  "basis": "明确注入故障，返回 INVALID_RESPONSE，可重试",
+  "data_source": "explicit HTTP fault fixture",
+  "changed_parameter": null
+}

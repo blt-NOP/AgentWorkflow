@@ -1,0 +1,21 @@
+{
+  "tool": "search_papers",
+  "case": "normal",
+  "arguments": {
+    "query": "edge inference model compression",
+    "limit": 1
+  },
+  "returned": [
+    {
+      "title": "Synthetic teaching fixture 1 - not a real paper",
+      "year": 2025,
+      "doi": "10.0000/tool-fixture-1",
+      "abstract": "Synthetic excerpt 1: compare latency and memory."
+    }
+  ],
+  "error": null,
+  "passed": true,
+  "basis": "limit=1 返回1篇，包含实际解析的 title/doi/year/abstract",
+  "data_source": "explicit synthetic HTTP fixture",
+  "changed_parameter": null
+}

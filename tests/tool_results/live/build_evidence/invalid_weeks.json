@@ -1,0 +1,28 @@
+{
+  "tool": "build_evidence",
+  "case": "invalid_weeks",
+  "arguments": {
+    "papers": [
+      {
+        "title": "Synthetic evidence fixture",
+        "year": 2025,
+        "doi": "10.0000/evidence-fixture",
+        "abstract": "Synthetic teaching material: compare a baseline and one variant."
+      }
+    ],
+    "facts": {
+      "weeks": 0
+    }
+  },
+  "returned": null,
+  "error": {
+    "code": "INVALID_INPUT",
+    "message": "weeks 必须为1至520的整数或 null，单位为周",
+    "retryable": false,
+    "type": "ToolError"
+  },
+  "passed": true,
+  "basis": "weeks=0 超出1至520周范围",
+  "data_source": "local",
+  "changed_parameter": null
+}

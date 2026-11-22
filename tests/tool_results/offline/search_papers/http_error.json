@@ -1,0 +1,19 @@
+{
+  "tool": "search_papers",
+  "case": "http_error",
+  "arguments": {
+    "query": "edge inference model compression",
+    "limit": 1
+  },
+  "returned": null,
+  "error": {
+    "code": "EXTERNAL_ERROR",
+    "message": "Crossref 返回 HTTP 503",
+    "retryable": true,
+    "type": "ToolError"
+  },
+  "passed": true,
+  "basis": "明确注入故障，返回 EXTERNAL_ERROR，可重试",
+  "data_source": "explicit HTTP fault fixture",
+  "changed_parameter": null
+}

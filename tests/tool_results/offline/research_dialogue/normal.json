@@ -1,0 +1,68 @@
+{
+  "tool": "research_dialogue",
+  "case": "normal",
+  "arguments": {
+    "state": {
+      "facts": {
+        "direction": "模型压缩",
+        "compute": "CPU",
+        "weeks": 4,
+        "dataset": "公开数据集"
+      },
+      "answers": {},
+      "history": [],
+      "evidence": {
+        "facts": {
+          "direction": "模型压缩",
+          "compute": "CPU",
+          "weeks": 4,
+          "dataset": "公开数据集"
+        },
+        "rows": [
+          {
+            "id": "10.0000/evidence-fixture",
+            "title": "Synthetic evidence fixture",
+            "year": 2025,
+            "doi": "10.0000/evidence-fixture",
+            "notes": "",
+            "excerpt": "Synthetic teaching material: compare a baseline and one variant."
+          }
+        ],
+        "gaps": []
+      }
+    },
+    "message": "请继续讨论研究选题",
+    "skill_id": "research-dialogue",
+    "use_model": false
+  },
+  "returned": {
+    "skill": "research-dialogue",
+    "stage": "goal",
+    "field": "goal",
+    "target": "answers",
+    "question": "你希望优先改善哪个可测量的指标？",
+    "options": [
+      {
+        "id": "goal-0",
+        "label": "推理延迟",
+        "value": "推理延迟"
+      },
+      {
+        "id": "goal-1",
+        "label": "模型效果",
+        "value": "模型效果"
+      },
+      {
+        "id": "goal-2",
+        "label": "内存占用",
+        "value": "内存占用"
+      }
+    ],
+    "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"CPU\", \"weeks\": 4, \"dataset\": \"公开数据集\"}"
+  },
+  "error": null,
+  "passed": true,
+  "basis": "资源条件完整、研究目标未答：追问目标并返回3个选项",
+  "data_source": "local",
+  "changed_parameter": null
+}

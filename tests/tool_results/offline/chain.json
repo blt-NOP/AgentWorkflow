@@ -1,0 +1,8 @@
+{
+  "source_file": "search_papers/normal.json",
+  "source_field": "returned[0]",
+  "target_file": "chain/search_to_evidence.json",
+  "target_field": "arguments.papers[0]",
+  "exact_match": true,
+  "next_target": "chain/evidence_to_dialogue.json:arguments.state.evidence"
+}

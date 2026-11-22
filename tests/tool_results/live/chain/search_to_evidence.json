@@ -1,0 +1,44 @@
+{
+  "tool": "chain",
+  "case": "search_to_evidence",
+  "arguments": {
+    "papers": [
+      {
+        "title": "Model compression for on-device inference",
+        "year": 2022,
+        "doi": "10.1016/b978-0-12-823817-2.00015-2",
+        "abstract": ""
+      }
+    ],
+    "facts": {
+      "direction": "模型压缩",
+      "compute": "CPU",
+      "weeks": 4,
+      "dataset": "公开数据集"
+    }
+  },
+  "returned": {
+    "facts": {
+      "direction": "模型压缩",
+      "compute": "CPU",
+      "weeks": 4,
+      "dataset": "公开数据集"
+    },
+    "rows": [
+      {
+        "id": "10.1016/b978-0-12-823817-2.00015-2",
+        "title": "Model compression for on-device inference",
+        "year": 2022,
+        "doi": "10.1016/b978-0-12-823817-2.00015-2",
+        "notes": "",
+        "excerpt": "缺少摘要，不能据题名推断结论。"
+      }
+    ],
+    "gaps": []
+  },
+  "error": null,
+  "passed": true,
+  "basis": "search_papers.normal.returned[0] 原样传入 papers[0]，验证真实 title/doi 标识",
+  "data_source": "real Crossref HTTP",
+  "changed_parameter": null
+}

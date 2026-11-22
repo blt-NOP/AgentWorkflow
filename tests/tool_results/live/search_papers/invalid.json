@@ -1,0 +1,19 @@
+{
+  "tool": "search_papers",
+  "case": "invalid",
+  "arguments": {
+    "query": " ",
+    "limit": 1
+  },
+  "returned": null,
+  "error": {
+    "code": "INVALID_INPUT",
+    "message": "query 必须为1至500字符的非空文本",
+    "retryable": false,
+    "type": "ToolError"
+  },
+  "passed": true,
+  "basis": "空白 query 在发起HTTP前被拒绝",
+  "data_source": "local",
+  "changed_parameter": null
+}

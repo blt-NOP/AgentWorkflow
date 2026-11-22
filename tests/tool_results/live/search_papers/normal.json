@@ -1,0 +1,21 @@
+{
+  "tool": "search_papers",
+  "case": "normal",
+  "arguments": {
+    "query": "edge inference model compression",
+    "limit": 1
+  },
+  "returned": [
+    {
+      "title": "Model compression for on-device inference",
+      "year": 2022,
+      "doi": "10.1016/b978-0-12-823817-2.00015-2",
+      "abstract": ""
+    }
+  ],
+  "error": null,
+  "passed": true,
+  "basis": "limit=1 返回1篇，包含实际解析的 title/doi/year/abstract",
+  "data_source": "real Crossref HTTP",
+  "changed_parameter": null
+}

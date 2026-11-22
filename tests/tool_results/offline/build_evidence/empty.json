@@ -1,0 +1,30 @@
+{
+  "tool": "build_evidence",
+  "case": "empty",
+  "arguments": {
+    "papers": [],
+    "facts": {
+      "direction": "模型压缩",
+      "compute": "CPU",
+      "weeks": 4,
+      "dataset": "公开数据集"
+    }
+  },
+  "returned": {
+    "facts": {
+      "direction": "模型压缩",
+      "compute": "CPU",
+      "weeks": 4,
+      "dataset": "公开数据集"
+    },
+    "rows": [],
+    "gaps": [
+      "暂无论文，请导入已有论文或检索"
+    ]
+  },
+  "error": null,
+  "passed": true,
+  "basis": "无论文仍成功返回空行与材料缺项",
+  "data_source": "local",
+  "changed_parameter": null
+}

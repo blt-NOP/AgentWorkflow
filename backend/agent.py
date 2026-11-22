@@ -33,10 +33,10 @@ def run_turn(session_id, message, facts=None, search=None, use_model=False, skil
     trace = []
     if search:
         print(f"[工具] search_papers query={search}", flush=True)
-        state["papers"] = tools.search_papers(search)
+        state["papers"] = tools.TOOL_REGISTRY["search_papers"](search)
         trace.append({"tool": "search_papers", "arguments": {"query": search}, "result": state["papers"]})
     papers = library.list_papers() + state["papers"]
-    state["evidence"] = tools.build_evidence(papers, state["facts"])
+    state["evidence"] = tools.TOOL_REGISTRY["build_evidence"](papers, state["facts"])
     trace.append({"tool": "build_evidence", "arguments": {"facts": state["facts"].copy(), "papers": papers},
                   "result": state["evidence"]})
     print("[工具] build_evidence facts=" + json.dumps(state["facts"], ensure_ascii=False), flush=True)
@@ -45,7 +45,7 @@ def run_turn(session_id, message, facts=None, search=None, use_model=False, skil
     # 4. 多轮交互工具按 Skill 追问；启用模型时在工具内部生成研究分析。
     arguments = {"message": message, "facts": state["facts"].copy(), "answers": state["answers"].copy(),
                  "skill": selected_skill, "use_model": use_model, "choice_id": choice_id}
-    interaction = tools.research_dialogue(state, message, selected_skill, use_model)
+    interaction = tools.TOOL_REGISTRY["research_dialogue"](state, message, selected_skill, use_model)
     trace.append({"tool": "research_dialogue", "arguments": arguments, "result": interaction})
     state["dialogue"] = interaction
     answer = interaction["message"] + "\n\n" + interaction["question"]

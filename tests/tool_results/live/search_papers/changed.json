@@ -1,0 +1,37 @@
+{
+  "tool": "search_papers",
+  "case": "changed",
+  "arguments": {
+    "query": "edge inference model compression",
+    "limit": 3
+  },
+  "returned": [
+    {
+      "title": "Model compression for on-device inference",
+      "year": 2022,
+      "doi": "10.1016/b978-0-12-823817-2.00015-2",
+      "abstract": ""
+    },
+    {
+      "title": "Bayesian model compression and federated learning via variational inference",
+      "year": null,
+      "doi": "10.14711/thesis-991013340351903412",
+      "abstract": ""
+    },
+    {
+      "title": "A Memory-Efficient Edge Inference Accelerator with XOR-based Model Compression",
+      "year": 2023,
+      "doi": "10.1109/dac56929.2023.10248005",
+      "abstract": ""
+    }
+  ],
+  "error": null,
+  "passed": true,
+  "basis": "仅 limit 从1变3，返回数量从1变3；排序/论文内容由数据源决定",
+  "data_source": "real Crossref HTTP",
+  "changed_parameter": {
+    "path": "limit",
+    "before": 1,
+    "after": 3
+  }
+}

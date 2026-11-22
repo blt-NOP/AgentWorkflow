@@ -1,0 +1,50 @@
+{
+  "tool": "build_evidence",
+  "case": "changed",
+  "arguments": {
+    "papers": [
+      {
+        "title": "Synthetic evidence fixture",
+        "year": 2025,
+        "doi": "10.0000/evidence-fixture",
+        "abstract": "Synthetic teaching material: compare a baseline and one variant."
+      }
+    ],
+    "facts": {
+      "direction": "模型压缩",
+      "compute": null,
+      "weeks": 4,
+      "dataset": "公开数据集"
+    }
+  },
+  "returned": {
+    "facts": {
+      "direction": "模型压缩",
+      "compute": null,
+      "weeks": 4,
+      "dataset": "公开数据集"
+    },
+    "rows": [
+      {
+        "id": "10.0000/evidence-fixture",
+        "title": "Synthetic evidence fixture",
+        "year": 2025,
+        "doi": "10.0000/evidence-fixture",
+        "notes": "",
+        "excerpt": "Synthetic teaching material: compare a baseline and one variant."
+      }
+    ],
+    "gaps": [
+      "缺少算力条件"
+    ]
+  },
+  "error": null,
+  "passed": true,
+  "basis": "仅 facts.compute 从CPU变null；论文行不变，新增算力缺项",
+  "data_source": "explicit synthetic papers",
+  "changed_parameter": {
+    "path": "facts.compute",
+    "before": "CPU",
+    "after": null
+  }
+}

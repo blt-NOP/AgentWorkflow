@@ -1,0 +1,51 @@
+{
+  "tool": "research_dialogue",
+  "case": "api_invalid",
+  "arguments": {
+    "method": "POST",
+    "path": "/api/tools/dialogue",
+    "payload": {
+      "facts": {
+        "direction": "模型压缩",
+        "compute": "CPU",
+        "weeks": 4,
+        "dataset": "公开数据集"
+      },
+      "skill": "../invalid",
+      "evidence": {
+        "facts": {
+          "direction": "模型压缩",
+          "compute": "CPU",
+          "weeks": 4,
+          "dataset": "公开数据集"
+        },
+        "rows": [
+          {
+            "id": "10.0000/evidence-fixture",
+            "title": "Synthetic evidence fixture",
+            "year": 2025,
+            "doi": "10.0000/evidence-fixture",
+            "notes": "",
+            "excerpt": "Synthetic teaching material: compare a baseline and one variant."
+          }
+        ],
+        "gaps": []
+      }
+    }
+  },
+  "returned": {
+    "status": 400,
+    "body": {
+      "detail": {
+        "code": "INVALID_INPUT",
+        "message": "Skill 名称只能包含小写字母、数字和短横线",
+        "retryable": false
+      }
+    }
+  },
+  "error": null,
+  "passed": true,
+  "basis": "非法参数返回400/422及 INVALID_INPUT，不冒充无结果",
+  "data_source": "in-process API",
+  "changed_parameter": null
+}

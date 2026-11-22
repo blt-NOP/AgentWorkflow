@@ -1,0 +1,14 @@
+{
+  "tool": "search_papers",
+  "case": "empty",
+  "arguments": {
+    "query": "empty-fixture",
+    "limit": 1
+  },
+  "returned": [],
+  "error": null,
+  "passed": true,
+  "basis": "无结果返回 []，与调用失败区分",
+  "data_source": "explicit empty HTTP fixture",
+  "changed_parameter": null
+}

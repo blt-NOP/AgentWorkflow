@@ -128,4 +128,4 @@ PASS: model receives Skill instructions and selected question
 PASS: dialogue tool uses model response
 PASS: SQLite schema contains paper and reading fields
 RESULT: PASS (23 checks)
-ARTIFACTS: D:\Learning_materials\西工大\课程\边云智能实践\AgentWorkflow\data\feature-check\run-76dbef54
+ARTIFACTS: D:\Learning_materials\西工大\课程\边云智能实践\AgentWorkflow\data\feature-check\run-2d532b53

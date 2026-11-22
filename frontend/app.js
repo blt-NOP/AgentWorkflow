@@ -9,7 +9,7 @@ async function api(path, method = "GET", body) {
   const response = await fetch(path, { method, headers: { "Content-Type": "application/json" },
     body: body === undefined ? undefined : JSON.stringify(body) });
   const data = await response.json();
-  if (!response.ok) throw new Error(typeof data.detail === "string" ? data.detail : "输入格式无效，请检查字段。");
+  if (!response.ok) throw new Error(typeof data.detail === "string" ? data.detail : data.detail?.message || "输入格式无效，请检查字段。");
   return data;
 }
 

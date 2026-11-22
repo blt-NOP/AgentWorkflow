@@ -1,0 +1,27 @@
+{
+  "tool": "search_papers",
+  "case": "api_invalid",
+  "arguments": {
+    "method": "POST",
+    "path": "/api/tools/search",
+    "payload": {
+      "query": "edge",
+      "limit": 0
+    }
+  },
+  "returned": {
+    "status": 422,
+    "body": {
+      "detail": {
+        "code": "INVALID_INPUT",
+        "message": "body.limit: Input should be greater than or equal to 1",
+        "retryable": false
+      }
+    }
+  },
+  "error": null,
+  "passed": true,
+  "basis": "非法参数返回400/422及 INVALID_INPUT，不冒充无结果",
+  "data_source": "in-process API",
+  "changed_parameter": null
+}

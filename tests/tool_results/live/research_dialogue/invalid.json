@@ -1,0 +1,49 @@
+{
+  "tool": "research_dialogue",
+  "case": "invalid",
+  "arguments": {
+    "state": {
+      "facts": {
+        "direction": "模型压缩",
+        "compute": "CPU",
+        "weeks": 4,
+        "dataset": "公开数据集"
+      },
+      "answers": {},
+      "history": [],
+      "evidence": {
+        "facts": {
+          "direction": "模型压缩",
+          "compute": "CPU",
+          "weeks": 4,
+          "dataset": "公开数据集"
+        },
+        "rows": [
+          {
+            "id": "10.0000/evidence-fixture",
+            "title": "Synthetic evidence fixture",
+            "year": 2025,
+            "doi": "10.0000/evidence-fixture",
+            "notes": "",
+            "excerpt": "Synthetic teaching material: compare a baseline and one variant."
+          }
+        ],
+        "gaps": []
+      }
+    },
+    "message": "请继续讨论研究选题",
+    "skill_id": "../invalid",
+    "use_model": false
+  },
+  "returned": null,
+  "error": {
+    "code": "INVALID_INPUT",
+    "message": "Skill 名称只能包含小写字母、数字和短横线",
+    "retryable": false,
+    "type": "ToolError"
+  },
+  "passed": true,
+  "basis": "非法 Skill 名称被拒绝，不读取目录外文件",
+  "data_source": "local",
+  "changed_parameter": null
+}

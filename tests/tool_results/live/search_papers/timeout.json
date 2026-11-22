@@ -1,0 +1,19 @@
+{
+  "tool": "search_papers",
+  "case": "timeout",
+  "arguments": {
+    "query": "edge inference model compression",
+    "limit": 1
+  },
+  "returned": null,
+  "error": {
+    "code": "TIMEOUT",
+    "message": "Crossref 请求超时（单次网络操作上限30秒）",
+    "retryable": true,
+    "type": "ToolError"
+  },
+  "passed": true,
+  "basis": "明确注入故障，返回 TIMEOUT，可重试",
+  "data_source": "explicit HTTP fault fixture",
+  "changed_parameter": null
+}

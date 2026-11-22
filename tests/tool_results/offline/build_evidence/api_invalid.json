@@ -1,0 +1,36 @@
+{
+  "tool": "build_evidence",
+  "case": "api_invalid",
+  "arguments": {
+    "method": "POST",
+    "path": "/api/tools/evidence",
+    "payload": {
+      "papers": [
+        {
+          "title": ""
+        }
+      ],
+      "facts": {
+        "direction": "模型压缩",
+        "compute": "CPU",
+        "weeks": 4,
+        "dataset": "公开数据集"
+      }
+    }
+  },
+  "returned": {
+    "status": 422,
+    "body": {
+      "detail": {
+        "code": "INVALID_INPUT",
+        "message": "body.papers.0.title: String should have at least 1 character",
+        "retryable": false
+      }
+    }
+  },
+  "error": null,
+  "passed": true,
+  "basis": "非法参数返回400/422及 INVALID_INPUT，不冒充无结果",
+  "data_source": "in-process API",
+  "changed_parameter": null
+}

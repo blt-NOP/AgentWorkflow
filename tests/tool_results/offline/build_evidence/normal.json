@@ -1,0 +1,44 @@
+{
+  "tool": "build_evidence",
+  "case": "normal",
+  "arguments": {
+    "papers": [
+      {
+        "title": "Synthetic evidence fixture",
+        "year": 2025,
+        "doi": "10.0000/evidence-fixture",
+        "abstract": "Synthetic teaching material: compare a baseline and one variant."
+      }
+    ],
+    "facts": {
+      "direction": "模型压缩",
+      "compute": "CPU",
+      "weeks": 4,
+      "dataset": "公开数据集"
+    }
+  },
+  "returned": {
+    "facts": {
+      "direction": "模型压缩",
+      "compute": "CPU",
+      "weeks": 4,
+      "dataset": "公开数据集"
+    },
+    "rows": [
+      {
+        "id": "10.0000/evidence-fixture",
+        "title": "Synthetic evidence fixture",
+        "year": 2025,
+        "doi": "10.0000/evidence-fixture",
+        "notes": "",
+        "excerpt": "Synthetic teaching material: compare a baseline and one variant."
+      }
+    ],
+    "gaps": []
+  },
+  "error": null,
+  "passed": true,
+  "basis": "1篇有摘要材料+完整条件，返回1行证据且无条件缺项",
+  "data_source": "explicit synthetic papers",
+  "changed_parameter": null
+}

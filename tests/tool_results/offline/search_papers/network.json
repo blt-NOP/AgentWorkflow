@@ -1,0 +1,19 @@
+{
+  "tool": "search_papers",
+  "case": "network",
+  "arguments": {
+    "query": "edge inference model compression",
+    "limit": 1
+  },
+  "returned": null,
+  "error": {
+    "code": "NETWORK_ERROR",
+    "message": "无法连接 Crossref，请检查网络或代理",
+    "retryable": true,
+    "type": "ToolError"
+  },
+  "passed": true,
+  "basis": "明确注入故障，返回 NETWORK_ERROR，可重试",
+  "data_source": "explicit HTTP fault fixture",
+  "changed_parameter": null
+}

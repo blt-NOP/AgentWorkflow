@@ -1,0 +1,74 @@
+{
+  "tool": "research_dialogue",
+  "case": "changed",
+  "arguments": {
+    "state": {
+      "facts": {
+        "direction": "模型压缩",
+        "compute": "CPU",
+        "weeks": 4,
+        "dataset": "公开数据集"
+      },
+      "answers": {
+        "goal": "推理延迟"
+      },
+      "history": [],
+      "evidence": {
+        "facts": {
+          "direction": "模型压缩",
+          "compute": "CPU",
+          "weeks": 4,
+          "dataset": "公开数据集"
+        },
+        "rows": [
+          {
+            "id": "10.0000/evidence-fixture",
+            "title": "Synthetic evidence fixture",
+            "year": 2025,
+            "doi": "10.0000/evidence-fixture",
+            "notes": "",
+            "excerpt": "Synthetic teaching material: compare a baseline and one variant."
+          }
+        ],
+        "gaps": []
+      }
+    },
+    "message": "请继续讨论研究选题",
+    "skill_id": "research-dialogue",
+    "use_model": false
+  },
+  "returned": {
+    "skill": "research-dialogue",
+    "stage": "baseline",
+    "field": "baseline",
+    "target": "answers",
+    "question": "针对这个目标，目前是否有可复现的对照基线？",
+    "options": [
+      {
+        "id": "baseline-0",
+        "label": "已有可复现基线",
+        "value": "已有可复现基线"
+      },
+      {
+        "id": "baseline-1",
+        "label": "需要先查找基线",
+        "value": "需要先查找基线"
+      },
+      {
+        "id": "baseline-2",
+        "label": "还不确定",
+        "value": "还不确定"
+      }
+    ],
+    "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"CPU\", \"weeks\": 4, \"dataset\": \"公开数据集\"}\n讨论记录：{\"goal\": \"推理延迟\"}"
+  },
+  "error": null,
+  "passed": true,
+  "basis": "仅添加 state.answers.goal，问题从研究目标推进到对照基线",
+  "data_source": "local Skill + synthetic state",
+  "changed_parameter": {
+    "path": "state.answers.goal",
+    "before": "absent",
+    "after": "推理延迟"
+  }
+}

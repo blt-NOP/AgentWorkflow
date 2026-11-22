@@ -1,0 +1,28 @@
+{
+  "tool": "search_papers",
+  "case": "api_normal",
+  "arguments": {
+    "method": "POST",
+    "path": "/api/tools/search",
+    "payload": {
+      "query": "edge inference",
+      "limit": 1
+    }
+  },
+  "returned": {
+    "status": 200,
+    "body": [
+      {
+        "title": "Synthetic teaching fixture 1 - not a real paper",
+        "year": 2025,
+        "doi": "10.0000/tool-fixture-1",
+        "abstract": "Synthetic excerpt 1: compare latency and memory."
+      }
+    ]
+  },
+  "error": null,
+  "passed": true,
+  "basis": "独立后端入口返回 HTTP 200",
+  "data_source": "in-process API; search HTTP fixture",
+  "changed_parameter": null
+}
