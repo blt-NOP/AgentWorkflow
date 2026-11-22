@@ -1,0 +1,124 @@
+{
+  "session_id": "B-068ee582",
+  "facts": {},
+  "history": [
+    {
+      "role": "user",
+      "content": "新会话不传算力"
+    },
+    {
+      "role": "assistant",
+      "content": "[未调用模型] 当前条件：{}\n材料缺项：缺少算力条件；缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你目前主要关注哪个研究方向？"
+    }
+  ],
+  "messages": [
+    {
+      "role": "user",
+      "content": "新会话不传算力"
+    },
+    {
+      "role": "assistant",
+      "content": "[未调用模型] 当前条件：{}\n材料缺项：缺少算力条件；缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你目前主要关注哪个研究方向？"
+    }
+  ],
+  "papers": [],
+  "evidence": {
+    "facts": {},
+    "rows": [],
+    "gaps": [
+      "缺少算力条件",
+      "缺少可用时间",
+      "缺少数据条件",
+      "暂无论文，请导入已有论文或检索"
+    ]
+  },
+  "reply": "[未调用模型] 当前条件：{}\n材料缺项：缺少算力条件；缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你目前主要关注哪个研究方向？",
+  "trace": [
+    {
+      "tool": "build_evidence",
+      "arguments": {
+        "papers": [],
+        "facts": {}
+      },
+      "result": {
+        "facts": {},
+        "rows": [],
+        "gaps": [
+          "缺少算力条件",
+          "缺少可用时间",
+          "缺少数据条件",
+          "暂无论文，请导入已有论文或检索"
+        ]
+      },
+      "request_id": "4dcbd22ffaed4f8db870eadc8605ff85"
+    },
+    {
+      "tool": "research_dialogue",
+      "arguments": {
+        "message": "新会话不传算力",
+        "facts": {},
+        "answers": {},
+        "skill": "research-dialogue",
+        "use_model": false
+      },
+      "result": {
+        "skill": "research-dialogue",
+        "stage": "direction",
+        "field": "direction",
+        "target": "facts",
+        "question": "你目前主要关注哪个研究方向？",
+        "options": [
+          {
+            "id": "direction-0",
+            "label": "边缘端推理",
+            "value": "边缘端推理"
+          },
+          {
+            "id": "direction-1",
+            "label": "模型压缩",
+            "value": "模型压缩"
+          },
+          {
+            "id": "direction-2",
+            "label": "检索增强生成",
+            "value": "检索增强生成"
+          }
+        ],
+        "message": "[未调用模型] 当前条件：{}\n材料缺项：缺少算力条件；缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+      },
+      "request_id": "4dcbd22ffaed4f8db870eadc8605ff85"
+    }
+  ],
+  "answers": {},
+  "dialogue": {
+    "skill": "research-dialogue",
+    "stage": "direction",
+    "field": "direction",
+    "target": "facts",
+    "question": "你目前主要关注哪个研究方向？",
+    "options": [
+      {
+        "id": "direction-0",
+        "label": "边缘端推理",
+        "value": "边缘端推理"
+      },
+      {
+        "id": "direction-1",
+        "label": "模型压缩",
+        "value": "模型压缩"
+      },
+      {
+        "id": "direction-2",
+        "label": "检索增强生成",
+        "value": "检索增强生成"
+      }
+    ],
+    "message": "[未调用模型] 当前条件：{}\n材料缺项：缺少算力条件；缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+  },
+  "skill": "research-dialogue",
+  "status": "WAITING_USER",
+  "proposal": null,
+  "decisions": [],
+  "stop_reason": "OFFLINE_DEMO",
+  "request_id": "4dcbd22ffaed4f8db870eadc8605ff85"
+}

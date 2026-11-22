@@ -104,6 +104,8 @@ def research_dialogue(state, message, skill_id="research-dialogue", use_model=Fa
             raise ToolError("MODEL_NOT_CONFIGURED", "未配置模型，请填写环境变量或设置 use_model=false")
         try:
             result["message"] = model.reply(state, message, instructions, result["question"])
+        except ToolError:
+            raise
         except httpx.TimeoutException as error:
             raise ToolError("TIMEOUT", "模型请求超时", True) from error
         except httpx.RequestError as error:

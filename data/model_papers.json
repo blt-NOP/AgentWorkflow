@@ -1,0 +1,10 @@
+[
+  {
+    "paper_id": "gptq-arxiv-2210-17323",
+    "title": "GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers",
+    "year": 2022,
+    "doi": "10.48550/arxiv.2210.17323",
+    "abstract": "摘要要点的中文转述：GPTQ是一种一次性权重量化方法，利用近似二阶信息降低生成式预训练Transformer的权重精度。原文报告了大模型3或4比特量化及GPU推理实验。这里没有证据保证同样方法在CPU、小模型或不同数据集上获得相同收益，迁移实验需要重新验证。",
+    "notes": "来源：https://arxiv.org/abs/2210.17323，2026-11-22核对。以上为摘要要点转述，不是全文或逐字引文。课程演示只将其作为方法背景；具体基线、数据和硬件表现仍需实验核实。"
+  }
+]

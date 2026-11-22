@@ -11,7 +11,10 @@ async function api(path, method = "GET", body) {
   const response = await fetch(path, { method, headers: multipart ? {} : { "Content-Type": "application/json" },
     body: multipart ? body : body === undefined ? undefined : JSON.stringify(body) });
   const data = await response.json();
-  if (!response.ok) throw new Error(typeof data.detail === "string" ? data.detail : data.detail?.message || "输入格式无效，请检查字段。");
+  if (!response.ok) {
+    const message = typeof data.detail === "string" ? data.detail : data.detail?.message || "输入格式无效，请检查字段。";
+    throw new Error(message + (data.detail?.request_id ? `（请求 ${data.detail.request_id}）` : ""));
+  }
   return data;
 }
 
@@ -48,6 +51,13 @@ function showState(data) {
   }
   for (const gap of state.evidence.gaps || []) text($("evidence"), gap, "muted");
   $("trace").textContent = JSON.stringify(state.trace, null, 2);
+  const labels = { WAITING_USER: "等待补充或继续讨论", COMPLETED: "研究方案已完成", STOPPED: "本轮已停止" };
+  $("execution-status").textContent = `${labels[state.status] || "尚未执行"}${state.request_id ? " · 请求 " + state.request_id : ""}${state.stop_reason ? " · " + state.stop_reason : ""}`;
+  $("proposal").replaceChildren();
+  if (state.proposal) {
+    const fields = {research_question: "研究问题", hypothesis: "待验证假设", method: "方法路线", experiment: "实验设计", metrics: "评价指标", risks: "风险", next_steps: "下一步", references: "证据标识"};
+    for (const [key, label] of Object.entries(fields)) text($("proposal"), `${label}：${Array.isArray(state.proposal[key]) ? state.proposal[key].join("；") : state.proposal[key]}`);
+  }
   $("skill").value = state.skill || "research-dialogue";
   $("dialogue").replaceChildren();
   if (state.dialogue?.question) {
@@ -129,7 +139,7 @@ async function sendMessage(message, choiceId = null) {
       skill: $("skill").value, choice_id: choiceId });
     showState(data.state); await loadSessions();
     $("message").value = ""; $("search").value = "";
-    $("status").textContent = `已保存 · 完整记录 ${data.state.messages.length} 条 · 模型近期上下文 ${data.state.history.length} 条`;
+    $("status").textContent = `${data.status} · 请求 ${data.request_id} · 已保存 ${data.state.messages.length} 条消息`;
 }
 $("chat-form").addEventListener("submit", event => {
   event.preventDefault();
@@ -183,6 +193,7 @@ $("import-papers").onchange = () => run(async () => {
 $("find-papers").onclick = () => run(loadLibrary);
 run(async () => {
   const health = await api("/api/health");
+  $("use-model").checked = health.model_enabled;
   $("health").textContent = health.model_configured ? "后端已连接 · 模型配置已填写（未验证连通性）" : "后端已连接 · 暂未配置模型";
   await loadSkills(); await loadSession(); await loadSessions(); await loadLibrary();
 });

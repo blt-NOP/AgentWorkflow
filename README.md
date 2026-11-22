@@ -1,5 +1,7 @@
 # 论文 idea 讨论助手
 
+**当前已接入百炼 qwen3.7-plus：默认模型自主选择工具，支持追问、方案完成及更正后重算。配置、执行上限、结束判断和真实验收见 [模型接入说明](docs/model_agent.md)。离线演示请显式使用 `--no-model`，工具验收脚本仍不调用模型。**
+
 **工具的注册入口、说明与独立测试见 [docs/tools.md](docs/tools.md)。** 新增第四项工具“论文 PDF 解析”，完整接口与测试说明见 [docs/pdf_tool.md](docs/pdf_tool.md)。独立验收（无需前端、服务或模型）：`python -m backend.run tests/check_tools.py`。新增PDF独立验收16/16通过，四工具完整离线验收42/42通过；原三工具27项历史记录保留。
 ## 1. 目录与阅读顺序
 
@@ -7,12 +9,13 @@
 AgentWorkflow/
   backend/
     agent.py       核心对话流程，先读这个文件
+    planner.py     模型工具决策、参数校验与任务完成守卫
     tools.py       论文检索、材料整理，导出多轮交互工具
     pdf_parser.py  PDF文字与元数据解析，可独立命令行运行
     dialogue.py    多轮交互：读取 Skill、接收答案、生成问题/选项
     library.py     SQLite 论文库的查询、保存、导入、删除
     memory.py      JSON 会话和日志
-    model.py       一次模型 HTTP 请求
+    model.py       模型HTTP适配、工具协议、usage与有限重试
     main.py        前端调用的 FastAPI 接口
     cli.py         命令行入口，同样调用 agent.run_turn
     run.py         同时显示并保存每次运行的终端日志
@@ -60,7 +63,7 @@ python -m backend.run
 # 启动服务并自动保存日志；Ctrl+C 停止
 python -m backend.run
 # 只运行一次命令行后端，不启动网页或服务
-python -m backend.run -m backend.cli --session A --message "继续讨论"
+python -m backend.run -m backend.cli --no-model --session A --message "继续讨论"
 # 运行独立工具测试，同样自动保存整次输出
 python -m backend.run tests/check_tools.py
 # 查看最近一次运行日志
@@ -113,7 +116,7 @@ HISTORY_LIMIT=6
 
 `agent.py` 的五段注释与这条流程对应。`main.py` 和 `cli.py` 只负责接收参数，不另写一套对话逻辑。
 
-检索由用户操作触发：网页填写检索关键词或命令行传 `--search` 才检索；材料整理和多轮交互每轮执行。`research_dialogue` 按 Skill 选择当前问题、生成选项；启用模型时将同一份 Skill、材料和历史交给模型生成分析。没有额外的模型自动规划层。
+启用模型时，模型结合当前条件、Skill和实际文库，通过原生tool_calls选择检索、材料整理或追问；工具实际结果携带调用标识回传，随后继续决策或结束。`--search` 是提供给模型的检索意图，不再保证固定工具顺序。PDF解析仍由文件上传入口执行。离线模式保留固定材料整理和Skill追问，方便独立检查记忆。
 
 关闭模型时，回答明确标记为“未调用模型”，展示事实、缺项和 Skill 配置的追问；点击选项仍会真正更新条件或讨论答案，推进下一轮。它不代替模型进行科研语义分析。模型请求失败会报错，不伪装成功。
 
@@ -134,24 +137,24 @@ HISTORY_LIMIT=6
 
 ```powershell
 # A 写入约束
-python -X utf8 -m backend.cli --session A --message "研究模型压缩" --direction "模型压缩" --compute GPU --weeks 4 --dataset "公开数据集"
+python -X utf8 -m backend.cli --no-model --session A --message "研究模型压缩" --direction "模型压缩" --compute GPU --weeks 4 --dataset "公开数据集"
 # A 追问
-python -X utf8 -m backend.cli --session A --message "继续讨论"
+python -X utf8 -m backend.cli --no-model --session A --message "继续讨论"
 # A 明确更正
-python -X utf8 -m backend.cli --session A --message "更正为CPU" --compute CPU
+python -X utf8 -m backend.cli --no-model --session A --message "更正为CPU" --compute CPU
 # 下一轮工具实参和结果应采用 CPU
-python -X utf8 -m backend.cli --session A --message "根据当前条件继续"
+python -X utf8 -m backend.cli --no-model --session A --message "根据当前条件继续"
 # B 不提供约束
-python -X utf8 -m backend.cli --session B --message "开始新的讨论"
+python -X utf8 -m backend.cli --no-model --session B --message "开始新的讨论"
 # 返回 A，仍保留 CPU
-python -X utf8 -m backend.cli --session A --message "返回原会话继续"
+python -X utf8 -m backend.cli --no-model --session A --message "返回原会话继续"
 # 查看真正保存的记忆和日志
-python -X utf8 -m backend.cli --session A --show
+python -X utf8 -m backend.cli --no-model --session A --show
 Get-Content data/sessions/A.json -Encoding UTF8
 Get-Content data/logs/A.jsonl -Encoding UTF8 | Select-Object -Last 1
 ```
 
-这组命令默认不调用模型、不检索网络。网页和 CLI 默认读写同一个 DATA_DIR，因此用 CLI 创建的 A 也能从网页打开。
+上面显式带 --no-model 的命令不调用模型、不检索网络。网页和 CLI 默认读写同一个 DATA_DIR，因此用 CLI 创建的 A 也能从网页打开。
 
 继续执行 A 直到消息数超过 HISTORY_LIMIT，终端会显示近期条数不再增长，但完整消息数继续增加；事实仍保留。为了不依赖你已有的 `.env` 和日常数据，下面的脚本固定历史上限为 6、使用 `data/cli-check`、生成新的 A/B 测试标识：
 
@@ -163,12 +166,12 @@ powershell -NoProfile -File tests/check_memory.ps1
 
 ```powershell
 # 真实联网检索 -> 材料整理 -> 写回记忆，不调用模型
-python -X utf8 -m backend.cli --session Research --message "请整理相关论文" --search "edge inference model compression"
-# 追加 --model 才实际调用模型
+python -X utf8 -m backend.cli --no-model --session Research --message "请整理相关论文" --search "edge inference model compression"
+# 启用模型生成分析；当前默认启用，也可显式指定 --model
 python -X utf8 -m backend.cli --session Research --message "我只有CPU，能否给出一个最小验证思路并追问缺失条件？" --compute CPU --model
 ```
 
-预期工具顺序为 `search_papers → build_evidence → research_dialogue`；无检索关键词则为 `build_evidence → research_dialogue`。第三项工具在启用模型时调用 `model.reply`。
+启用模型后的工具顺序由实际条件决定，不能预先承诺固定顺序；可从trace和decisions核对。离线演示有检索词时为search_papers → build_evidence → research_dialogue，否则为build_evidence → research_dialogue。
 
 ## 6. 记忆分类与覆盖规则
 
@@ -180,9 +183,9 @@ python -X utf8 -m backend.cli --session Research --message "我只有CPU，能�
 | `answers`：研究目标、基线等讨论答案 | 回答当前科研问题时保存 | 后续 Skill 问题选择、模型分析 | 切换 Skill 时重置；删会话清除；不随 history 裁剪 |
 | `dialogue` 与 `skill`：待答问题、选项及策略名 | 每轮交互工具执行后保存 | 选项反馈、会话恢复 | 新轮问题替换；切换 Skill 重置问题；删会话清除 |
 | `papers`：本会话检索资料 | 检索完成后保存 | 下轮材料整理 | 下次检索整体替换；删会话清除 |
-| `evidence`：材料整理结果 | 每轮按当前事实、文献库及检索资料重算 | 模型、网页、日志 | 每轮替换；删会话清除。文献库改动在下一次请求重算 |
+| `evidence`：材料整理结果 | 调用材料工具时按当前事实和实际论文重算 | 模型、网页、日志 | 条件变化时使旧矩阵失效；重新执行材料工具后替换；完成守卫要求本轮重算 |
 | `trace`：最新工具实参和结果 | 每轮工具完成后保存 | 网页展开、CLI 日志 | 下一轮替换；删会话清除 |
-| `logs/*.jsonl`：逐轮执行档案 | 每轮成功后追加一行 | 命令行人工查看 | 不裁剪；删会话时同步清除 |
+| `logs/*.jsonl`：逐轮执行档案 | 成功或失败均追加一行，失败不覆盖会话 | 按request_id查看轨迹和结束原因 | 不裁剪；删会话时同步清除 |
 | `library.sqlite3`：个人已读材料 | 登记、编辑或导入论文 | 每轮材料整理、论文列表与详情 | SQL 删除论文；不随会话删除 |
 
 选择“近期历史 + 独立事实”的理由：控制模型上下文长度，同时使仍有效的条件不随旧消息消失。日志记录 before、changes 和执行后的 state；不记录密钥。
@@ -243,7 +246,7 @@ python -X utf8 -m backend.cli --session Research --message "我只有CPU，能�
 | tools.parse_paper_pdf | PDF字节、文件名、页码 → 原文、页码、元数据、paper | 不调用模型、不自动入库；网页核对后通过现有文库接口保存 |
 | tools.research_dialogue | state、message、skill_id、use_model → message、question、options、stage、field、target、skill | 读取 Skill 和本会话状态；错误 Skill/过期选项明确报错；启用模型时使用模型超时配置 |
 
-多轮交互的实际入口实现在 `backend/dialogue.py`，由 `tools.py` 导出，并已在 `agent.run_turn` 每轮调用、写入 trace。`accept_answer` 在材料工具执行前接收上一轮答案，因此选中 CPU 后，本轮材料工具就会收到 CPU。
+多轮交互的实际入口实现在 `backend/dialogue.py`，由 `tools.py` 导出。模型模式按实际需要选择调用并写入trace；离线模式每轮调用。`accept_answer` 在工具执行前接收上一轮答案，因此选中CPU后，后续材料工具使用最新CPU条件。
 
 - `facts` 保存算力、时间等条件；`answers` 保存研究目标和基线等讨论答案。
 - `dialogue` 保存当前问题和选项，网页恢复会话后仍可点击。
@@ -260,11 +263,11 @@ Skill 的 Markdown 指令影响模型分析方式；JSON 块中的 `questions` �
 
 ```powershell
 # 第一次会询问算力，并打印 compute-0 等选项编号；重复演示时换一个新会话名。
-python -X utf8 -m backend.cli --session IdeaDemo --direction "模型压缩" --message "请帮助我确定选题" --skill research-dialogue
+python -X utf8 -m backend.cli --no-model --session IdeaDemo --direction "模型压缩" --message "请帮助我确定选题" --skill research-dialogue
 # 选 CPU，随后自动询问时间；选择值会进入 facts
-python -X utf8 -m backend.cli --session IdeaDemo --message "只有 CPU" --choice compute-0
+python -X utf8 -m backend.cli --no-model --session IdeaDemo --message "只有 CPU" --choice compute-0
 # 再选4周，自动进入数据问题
-python -X utf8 -m backend.cli --session IdeaDemo --message "4 周" --choice weeks-1
+python -X utf8 -m backend.cli --no-model --session IdeaDemo --message "4 周" --choice weeks-1
 ```
 
 网页点击选项就是发送相同的 message 和 choice_id。开启模型后，Skill 先确定追问，模型负责基于真实材料分析，工具将分析、问题和选项一并返回。

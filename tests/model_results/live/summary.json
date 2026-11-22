@@ -1,0 +1,35 @@
+{
+  "result": "PASS",
+  "session_id": "Live-8ef68532",
+  "rounds": 4,
+  "statuses": [
+    "WAITING_USER",
+    "WAITING_USER",
+    "COMPLETED",
+    "COMPLETED"
+  ],
+  "request_ids": [
+    "04270a492f2e48c0813e4ad81549a390",
+    "2d538dfcd76f46fabf572a3e2fd4d021",
+    "ef218479ddc54a9c87e1d80ce1887026",
+    "3c1a2046164442f5937276e69d57fe18"
+  ],
+  "tool_sequences": [
+    [
+      "build_evidence",
+      "research_dialogue"
+    ],
+    [
+      "research_dialogue"
+    ],
+    [
+      "build_evidence"
+    ],
+    [
+      "build_evidence"
+    ]
+  ],
+  "total_tokens": 39300,
+  "notice": "真实百炼模型；文库来自已核对的arXiv摘要要点转述。方案不是已验证的科研成果。",
+  "artifacts": "D:\\Learning_materials\\西工大\\课程\\边云智能实践\\AgentWorkflow\\data\\model-check\\live-a56dc0ea"
+}

@@ -56,11 +56,11 @@
         <form id="chat-form">
           <label>本轮输入<textarea id="message" required rows="3" maxlength="10000" placeholder="说说你的方向、最近读的论文，或继续追问…"></textarea></label>
           <label>论文检索关键词（可选）<input id="search" maxlength="500" placeholder="填写后，本轮先检索论文；留空则使用已有材料"></label>
-          <div class="actions"><label class="check"><input id="use-model" type="checkbox">调用已配置模型</label><button type="submit">发送</button></div>
+          <div class="actions"><label class="check"><input id="use-model" type="checkbox" checked>调用已配置模型（关闭仅做离线演示）</label><button type="submit">发送</button></div>
         </form>
         <p id="status" role="status" class="muted"></p>
       </section>
-      <section><h2>材料与执行过程</h2><div id="evidence"></div><details><summary>查看本轮工具输入和输出</summary><pre id="trace">尚未执行</pre></details></section>
+      <section><h2>材料与执行过程</h2><p id="execution-status" class="muted"></p><div id="proposal"></div><div id="evidence"></div><details><summary>查看本轮工具输入和输出</summary><pre id="trace">尚未执行</pre></details></section>
     </div>
   </main>
 </body>

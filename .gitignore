@@ -11,3 +11,4 @@ data/api-check/
 data/*.sqlite3*
 data/feature-check/
 data/tool-check/
+data/model-check/

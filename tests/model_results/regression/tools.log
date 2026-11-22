@@ -1,0 +1,51 @@
+[日志] D:\Learning_materials\西工大\课程\边云智能实践\AgentWorkflow\data\logs\runs\20261122_114347_006207_33728.log
+[开始] 2026-11-22T11:43:47
+D:\Learning_materials\西工大\课程\边云智能实践\AgentWorkflow\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+MODE: offline_http_fixture; frontend/server/model=disabled
+PASS search_papers.normal: limit=1 返回1篇，包含实际解析的 title/doi/year/abstract
+PASS search_papers.changed: 仅 limit 从1变3，返回数量从1变3；排序/论文内容由数据源决定
+PASS search_papers.invalid: 空白 query 在发起HTTP前被拒绝
+PASS search_papers.empty: 无结果返回 []，与调用失败区分
+PASS search_papers.timeout: 明确注入故障，返回 TIMEOUT，可重试
+PASS search_papers.network: 明确注入故障，返回 NETWORK_ERROR，可重试
+PASS search_papers.http_error: 明确注入故障，返回 EXTERNAL_ERROR，可重试
+PASS search_papers.invalid_response: 明确注入故障，返回 INVALID_RESPONSE，可重试
+PASS build_evidence.normal: 1篇有摘要材料+完整条件，返回1行证据且无条件缺项
+PASS build_evidence.invalid: 缺少必填 title，返回 INVALID_INPUT
+PASS build_evidence.changed: 仅 facts.compute 从CPU变null；论文行不变，新增算力缺项
+PASS build_evidence.empty: 无论文仍成功返回空行与材料缺项
+PASS build_evidence.invalid_weeks: weeks=0 超出1至520周范围
+PASS research_dialogue.normal: 资源条件完整、研究目标未答：追问目标并返回3个选项
+PASS research_dialogue.invalid: 非法 Skill 名称被拒绝，不读取目录外文件
+PASS research_dialogue.changed: 仅添加 state.answers.goal，问题从研究目标推进到对照基线
+PASS research_dialogue.all_answered: 配置问题全部回答后进入开放讨论；无选项不是失败
+PASS research_dialogue.invalid_state: history 类型错误时返回 INVALID_INPUT
+PASS chain.search_to_evidence: search_papers.normal.returned[0] 原样传入 papers[0]，验证真实 title/doi 标识
+PASS chain.evidence_to_dialogue: 第二工具实际 evidence 返回作为第三工具 state.evidence
+PASS registration.registry: GET /api/tools 列出全部真实函数入口
+PASS parse_paper_pdf.normal: 两页PDF只选择第1页，提取实际文字和页码
+PASS parse_paper_pdf.changed: 仅end_page由1改2，新增第2页原文
+PASS parse_paper_pdf.invalid: 返回INVALID_PDF，不伪造解析结果
+EOF marker not found
+PASS parse_paper_pdf.corrupt: 返回INVALID_PDF，不伪造解析结果
+PASS parse_paper_pdf.encrypted: 返回ENCRYPTED_PDF，不伪造解析结果
+PASS parse_paper_pdf.no_text: 返回NO_TEXT，不伪造解析结果
+PASS parse_paper_pdf.oversize: 返回FILE_TOO_LARGE，不伪造解析结果
+PASS parse_paper_pdf.invalid_range: 页码超出文件范围时明确失败
+PASS parse_paper_pdf.repeat: 相同PDF及参数返回一致，不写入数据库
+PASS chain.pdf_to_evidence: parse_paper_pdf真实返回paper原样传入build_evidence；原文和页码保留
+PASS parse_paper_pdf.api_normal: multipart接口返回200及实际解析文本
+PASS parse_paper_pdf.api_invalid: 非PDF上传返回400 INVALID_PDF
+PASS parse_paper_pdf.api_no_text: 无文字页面返回422并提示OCR
+PASS parse_paper_pdf.api_invalid_range: 表单页码0返回422参数校验错误
+PASS chain.pdf_to_library: 真实paper经现有接口写入并读取SQLite；重复保存同一ID仍为1篇
+PASS search_papers.api_normal: 独立后端入口返回 HTTP 200
+PASS search_papers.api_invalid: 非法参数返回400/422及 INVALID_INPUT，不冒充无结果
+PASS build_evidence.api_normal: 独立后端入口返回 HTTP 200
+PASS build_evidence.api_invalid: 非法参数返回400/422及 INVALID_INPUT，不冒充无结果
+PASS research_dialogue.api_normal: 独立后端入口返回 HTTP 200
+PASS research_dialogue.api_invalid: 非法参数返回400/422及 INVALID_INPUT，不冒充无结果
+RESULT: PASS (42/42 checks)
+ARTIFACTS: D:\Learning_materials\西工大\课程\边云智能实践\AgentWorkflow\data\tool-check\run-6c388a77
+[结束] 2026-11-22T11:43:47 exit_code=0

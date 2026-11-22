@@ -11,21 +11,21 @@ try {
     $b = "B-$suffix"
     Write-Output "SESSION A=$a; SESSION B=$b"
 
-    & $Python -X utf8 -m backend.cli --data-dir data/cli-check --session $a --message '登记约束' --direction '模型压缩' --compute GPU --weeks 4 --dataset '公开数据集'
+    & $Python -X utf8 -m backend.cli --no-model --data-dir data/cli-check --session $a --message '登记约束' --direction '模型压缩' --compute GPU --weeks 4 --dataset '公开数据集'
     if ($LASTEXITCODE) { throw 'A write failed' }
-    & $Python -X utf8 -m backend.cli --data-dir data/cli-check --session $a --message '推理延迟'
+    & $Python -X utf8 -m backend.cli --no-model --data-dir data/cli-check --session $a --message '推理延迟'
     if ($LASTEXITCODE) { throw 'A follow-up failed' }
-    & $Python -X utf8 -m backend.cli --data-dir data/cli-check --session $a --message '更正为CPU' --compute CPU
+    & $Python -X utf8 -m backend.cli --no-model --data-dir data/cli-check --session $a --message '更正为CPU' --compute CPU
     if ($LASTEXITCODE) { throw 'A correction failed' }
-    & $Python -X utf8 -m backend.cli --data-dir data/cli-check --session $a --message '需要先查找基线'
+    & $Python -X utf8 -m backend.cli --no-model --data-dir data/cli-check --session $a --message '需要先查找基线'
     if ($LASTEXITCODE) { throw 'A next request failed' }
-    & $Python -X utf8 -m backend.cli --data-dir data/cli-check --session $a --message '继续直到裁剪更正消息'
+    & $Python -X utf8 -m backend.cli --no-model --data-dir data/cli-check --session $a --message '继续直到裁剪更正消息'
     if ($LASTEXITCODE) { throw 'A history test failed' }
-    & $Python -X utf8 -m backend.cli --data-dir data/cli-check --session $a --message '再继续一轮'
+    & $Python -X utf8 -m backend.cli --no-model --data-dir data/cli-check --session $a --message '再继续一轮'
     if ($LASTEXITCODE) { throw 'A history test failed' }
-    & $Python -X utf8 -m backend.cli --data-dir data/cli-check --session $b --message '新会话不传算力'
+    & $Python -X utf8 -m backend.cli --no-model --data-dir data/cli-check --session $b --message '新会话不传算力'
     if ($LASTEXITCODE) { throw 'B request failed' }
-    & $Python -X utf8 -m backend.cli --data-dir data/cli-check --session $a --message '返回A继续'
+    & $Python -X utf8 -m backend.cli --no-model --data-dir data/cli-check --session $a --message '返回A继续'
     if ($LASTEXITCODE) { throw 'A resume failed' }
 
     # 从磁盘读文件确认，不只检查打印出来的变量。

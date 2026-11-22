@@ -36,6 +36,8 @@ def main():
     responses = []
     with TestClient(app) as client:
         def call(method, path, data=None, status=200):
+            if path == "/api/chat" and isinstance(data, dict):
+                data = {"use_model": False, **data}
             response = client.request(method, path, json=data)
             if response.status_code != status:
                 raise AssertionError(f"{method} {path}: {response.status_code} {response.text}")

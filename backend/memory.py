@@ -29,15 +29,22 @@ def load(session_id):
         state.setdefault("answers", {})
         state.setdefault("dialogue", {})
         state.setdefault("skill", "research-dialogue")
+        state.setdefault("status", "WAITING_USER")
+        state.setdefault("proposal", None)
         return state
     return {"session_id": session_id, "facts": {}, "history": [], "messages": [],
             "papers": [], "evidence": {}, "reply": "", "trace": [],
-            "answers": {}, "dialogue": {}, "skill": "research-dialogue"}
+            "answers": {}, "dialogue": {}, "skill": "research-dialogue", "status": "WAITING_USER", "proposal": None}
 
 
 def save(state, log):
     write_json(session_path(state["session_id"]), state)
-    path = DATA / "logs" / f"{state['session_id']}.jsonl"
+    append_log(state["session_id"], log)
+
+
+def append_log(session_id, log):
+    session_path(session_id)
+    path = DATA / "logs" / f"{session_id}.jsonl"
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a", encoding="utf-8") as file:
         file.write(json.dumps(log, ensure_ascii=False) + "\n")

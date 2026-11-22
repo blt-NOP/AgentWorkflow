@@ -24,7 +24,7 @@ class ChatInput(BaseModel):
     message: str = Field(min_length=1, max_length=10000)
     facts: Facts = Field(default_factory=Facts)
     search: str | None = Field(default=None, max_length=500)
-    use_model: bool = False
+    use_model: bool | None = None
     skill: str | None = None
     choice_id: str | None = None
 
@@ -64,7 +64,8 @@ def tool_error(request: Request, error: ToolError):
               "INVALID_RESPONSE": 502, "MODEL_ERROR": 502, "INVALID_SKILL": 500,
               "FILE_TOO_LARGE": 413, "PDF_LIMIT": 413, "NO_TEXT": 422}.get(error.code, 400)
     return JSONResponse(status_code=status, content={"detail": {
-        "code": error.code, "message": error.message, "retryable": error.retryable}})
+        "code": error.code, "message": error.message, "retryable": error.retryable,
+        "request_id": getattr(error, "request_id", None)}})
 
 
 @app.exception_handler(RequestValidationError)
@@ -77,12 +78,13 @@ def invalid_schema(request: Request, error: RequestValidationError):
 
 @app.exception_handler(ValueError)
 def invalid_input(request: Request, error: ValueError):
-    return JSONResponse(status_code=400, content={"detail": str(error)})
+    return JSONResponse(status_code=400, content={"detail": {"code": "INVALID_INPUT", "message": str(error),
+        "retryable": False, "request_id": getattr(error, "request_id", None)}})
 
 
 @app.get("/api/health")
 def health():
-    return {"status": "ok", "model_configured": model.configured()}
+    return {"status": "ok", "model_configured": model.configured(), "model_enabled": model.enabled()}
 
 
 @app.post("/api/chat")
@@ -94,7 +96,8 @@ def chat(data: ChatInput):
         raise
     except Exception as error:
         print(f"[失败] {type(error).__name__}", flush=True)
-        raise HTTPException(502, "本轮执行失败，请检查终端日志、网络及 .env 配置。") from error
+        raise HTTPException(502, {"code": "EXECUTION_ERROR", "message": "本轮执行失败，请按request_id检查日志后重试。",
+                                   "request_id": getattr(error, "request_id", None), "retryable": True}) from error
 
 
 @app.get("/api/sessions")
