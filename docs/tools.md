@@ -51,7 +51,7 @@
 | 用途与选择条件 | 提取用户上传的文字型论文PDF原文、页码和元数据，为材料整理、文库保存及研究讨论提供真实输入。要求未加密且具有可提取文字；不执行OCR、论文总结、表格或公式识别，不判断创新性。 |
 | 参数与返回 | `content: bytes`必填，非空且最多20MiB；`filename: str`默认paper.pdf，最长255字符且以.pdf结尾；`start_page: int`默认1；`end_page: int或None`默认None。页码从1开始、闭区间、每次最多20页；结束页省略时从起始页读取最多20页。文件最多500页，最多提取48000字符，截断时明确标记。返回filename、sha256、total_pages、start_page、end_page、pages（page_number/text/truncated）、text、truncated、warnings、metadata（title/author）、paper。第二工具直接读取 `papers=[result.paper]`，其中paper.abstract为带页码的PDF原文摘录，明确标注“非自动摘要”。 |
 | 数据与副作用 | 来源为上传文件实际字节和元数据；不猜测年份或DOI。解析不保存原文件、不写会话或数据库；相同输入返回一致。paper_id由文件SHA256生成。核对后通过POST /api/library/papers显式保存到SQLite；同ID重复保存更新原记录，不新增；不同页码保存同文件会替换旧摘录，提交字段会覆盖旧值，不自动合并。 |
-| 失败行为 | 空文件/非法页码为INVALID_INPUT；格式不符或损坏为INVALID_PDF；加密为ENCRYPTED_PDF；所选页无文字为NO_TEXT并提示OCR或更换页码；超20MiB为FILE_TOO_LARGE；超过500页为PDF_LIMIT。均retryable=false，修正输入后再试。HTTP分别为400/422、400、400、422、413、413。无外部调用或自动重试；尚未实现本地解析进程的墙钟超时。 |
+| 失败行为 | 空文件/非法页码为INVALID_INPUT；格式不符或损坏为INVALID_PDF；加密为ENCRYPTED_PDF；所选页无文字为NO_TEXT并提示OCR或更换页码；超20MiB为FILE_TOO_LARGE；超过500页为PDF_LIMIT。均retryable=false，修正输入后再试。HTTP分别为400/422、400、400、422、413、413。无外部调用或自动重试；独立进程默认20秒超时（PDF_TIMEOUT_SECONDS），超时终止回收并返回TIMEOUT、retryable=true、HTTP504。完整恢复见[恢复验收](recovery.md)。 |
 
 完整用例、接口请求与实测记录见 [PDF工具报告](pdf_tool.md)。
 

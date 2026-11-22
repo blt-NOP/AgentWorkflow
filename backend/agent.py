@@ -3,7 +3,12 @@ from datetime import datetime
 import json
 from time import perf_counter
 from uuid import uuid4
+from threading import Lock
 from . import memory, library, dialogue, tools, model
+from .tool_contracts import ToolError
+
+_session_locks = {}  # 单进程课程服务：防止超时后重试与原请求同时改写同一会话。
+_locks_guard = Lock()
 
 
 def offline_turn(state, message, search, emit):
@@ -56,8 +61,14 @@ def run_turn(session_id, message, facts=None, search=None, use_model=None, skill
             on_event(event)
 
     print(f"[开始] request={request_id} session={session_id} model={use_model}", flush=True)
+    with _locks_guard:
+        lock = _session_locks.setdefault(session_id, Lock())
+    acquired = False
     try:
         emit("started", {"use_model": use_model})
+        acquired = lock.acquire(blocking=False)
+        if not acquired:
+            raise ToolError("SESSION_BUSY", "原会话仍在执行上一请求，请稍后点击重试以核对结果。", True)
         state = memory.load(session_id)
         before = state["facts"].copy()
         state["trace"], state["decisions"] = [], []
@@ -116,3 +127,6 @@ def run_turn(session_id, message, facts=None, search=None, use_model=None, skill
         print("[失败] " + json.dumps(record, ensure_ascii=False), flush=True)
         error.request_id = request_id
         raise
+    finally:
+        if acquired:
+            lock.release()

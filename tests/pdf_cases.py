@@ -27,6 +27,7 @@ def make_pdf(texts, encrypted=False):
 
 
 def run_pdf_checks(run, case, client, tools):
+    from unittest.mock import patch
     from backend.pdf_parser import MAX_BYTES
     sample = make_pdf(["Synthetic page one: CPU latency baseline.", "Synthetic page two: compare memory usage."])
     fixtures = run / "fixtures"
@@ -93,6 +94,16 @@ def run_pdf_checks(run, case, client, tools):
     case("parse_paper_pdf", "api_invalid_range", {"content_ref": "sample_paper.pdf", "start_page": 0}, api,
          lambda value, error: error is None and value["status"] == 422 and value["body"]["detail"]["code"] == "INVALID_INPUT",
          "表单页码0返回422参数校验错误")
+    with patch.dict("os.environ", {"PDF_TIMEOUT_SECONDS": "0.001"}):
+        case("parse_paper_pdf", "timeout", arguments(), parse, error_is("TIMEOUT"),
+             "解析期限缩短到1毫秒，独立进程被终止并返回可重试TIMEOUT")
+        case("parse_paper_pdf", "api_timeout", {"content_ref": "sample_paper.pdf"}, api,
+             lambda value, error: error is None and value["status"] == 504 and
+                 value["body"]["detail"]["code"] == "TIMEOUT" and value["body"]["detail"]["retryable"],
+             "解析超时返回HTTP504、明确原因和retryable=true")
+    case("parse_paper_pdf", "timeout_recovery", arguments(), parse,
+         lambda value, error: error is None and value == normal,
+         "恢复默认期限后相同文件与页码成功，输出与故障前一致")
     # 同一个返回对象通过现有文库接口持久化；相同paper_id重试不会新增记录。
     def store(paper):
         first = client.post("/api/library/papers", json=paper)

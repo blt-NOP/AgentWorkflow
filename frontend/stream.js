@@ -3,7 +3,7 @@ const ResearchStream = {
   belongsTo(event, request) {
     return event.session_id === request.session_id && event.request_id === request.request_id;
   },
-  async read(response, request, receive) {
+  async read(response, request, receive, idleMs = 45000) {
     if (!response.body) throw new Error("浏览器不支持流式读取。");
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
@@ -24,7 +24,10 @@ const ResearchStream = {
     }
     try {
       while (true) {
-        const { value, done } = await reader.read();
+        let timer;
+        const { value, done } = await Promise.race([reader.read(), new Promise((_, reject) => {
+          timer = setTimeout(() => reject(new Error("连接长时间没有数据，已停止等待；请重试核对原会话。")), idleMs);
+        })]).finally(() => clearTimeout(timer));
         buffer += done ? decoder.decode() : decoder.decode(value, { stream: true });
         buffer = buffer.replace(/\r\n/g, "\n");
         let end;
@@ -32,14 +35,14 @@ const ResearchStream = {
           frame(buffer.slice(0, end)); buffer = buffer.slice(end + 2);
         }
         if (buffer.length > 8 * 1024 * 1024) throw new Error("单个事件过大，请重新打开会话查看结果。");
-        if (done) break;
+        if (terminal || done) break;
       }
-      if (buffer.trim()) frame(buffer);
+      if (!terminal && buffer.trim()) frame(buffer);
       if (!terminal) throw new Error("连接已中断，尚未收到结束事件；请返回原会话核对是否已保存。");
     } catch (error) {
       await reader.cancel().catch(() => {});
       throw error;
-    } finally { reader.releaseLock(); }
+    } finally { await reader.cancel().catch(() => {}); reader.releaseLock(); }
   }
 };
 if (typeof module !== "undefined") module.exports = ResearchStream;

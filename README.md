@@ -1,12 +1,14 @@
 # 论文 idea 讨论助手
 
+前端超时、固定原输入重试、响应归属和PDF解析超时已补齐；完整“故障→页面结束等待→恢复依赖→原会话成功”的命令、实际输出与截图见 [恢复验收](docs/recovery.md)。
+
 **当前已接入百炼 qwen3.7-plus：默认模型自主选择工具，支持追问、方案完成及更正后重算。配置、执行上限、结束判断和真实验收见 [模型接入说明](docs/model_agent.md)。离线演示请显式使用 `--no-model`，工具验收脚本仍不调用模型。**
 
 条件有效性已统一：选择“尚未确定”会继续追问，补充CPU后再推进。独立复测：`python -m backend.run tests/check_conditions.py`，实际32项通过，不调用真实模型，完整证据见 `tests/model_results/conditions/`。
 
 任务五第2项与任务六第2项已接入：网页通过SSE显示实时执行阶段及真实模型正文增量，支持执行中切换会话；协议、测试和截图见 [事件与执行进度](docs/events.md)。后端验收：`python -m backend.run tests/check_events.py`；前端协议验收：`node tests/check_stream_frontend.js`。
 
-**工具的注册入口、说明与独立测试见 [docs/tools.md](docs/tools.md)。** 新增第四项工具“论文 PDF 解析”，完整接口与测试说明见 [docs/pdf_tool.md](docs/pdf_tool.md)。独立验收（无需前端、服务或模型）：`python -m backend.run tests/check_tools.py`。新增PDF独立验收16/16通过，四工具完整离线验收42/42通过；原三工具27项历史记录保留。
+**工具的注册入口、说明与独立测试见 [docs/tools.md](docs/tools.md)。** 新增第四项工具“论文 PDF 解析”，完整接口与测试说明见 [docs/pdf_tool.md](docs/pdf_tool.md)。独立验收（无需前端、服务或模型）：`python -m backend.run tests/check_tools.py`。PDF新增3项超时/恢复检查，四工具完整离线验收45/45通过；原三工具27项历史记录保留。
 ## 1. 目录与阅读顺序
 
 ```text

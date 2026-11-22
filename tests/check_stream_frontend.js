@@ -31,5 +31,10 @@ function response(events) {
   await stream.read(response([make(1, "started"), make(2, "failed", {message: "失败"})]), request, e => failed.push(e));
   assert.equal(failed.at(-1).type, "failed");
   console.log("PASS: 失败事件正常结束读取并交给页面处理");
-  console.log("RESULT: PASS (7 checks)");
+  let cancelled = false;
+  const stalled = new Response(new ReadableStream({cancel() { cancelled = true; }}));
+  await assert.rejects(stream.read(stalled, request, () => {}, 20), /长时间没有数据/);
+  assert.ok(cancelled);
+  console.log("PASS: 无数据连接超时并取消读取，不无限等待");
+  console.log("RESULT: PASS (8 checks)");
 })().catch(error => { console.error(error); process.exitCode = 1; });

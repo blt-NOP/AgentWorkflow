@@ -1,0 +1,80 @@
+{
+  "result": "PASS",
+  "checks": [
+    "失败原因可见、停止等待、重试可用",
+    "重试固定原会话和原输入，使用新请求编号",
+    "依赖恢复后原页面成功展示结果",
+    "总期限到达后解除等待并说明可核对重试",
+    "提前重试失败后仍能识别更早原请求的迟到结果，避免重复执行",
+    "迟到结果已保存时直接找回，不重复提交",
+    "A的晚到超时不覆盖B的页面或重试入口",
+    "返回A可继续处理A的失败请求"
+  ],
+  "requests": [
+    {
+      "session_id": "A",
+      "message": "继续",
+      "facts": {
+        "compute": "CPU"
+      },
+      "search": null,
+      "use_model": false,
+      "skill": "research-dialogue",
+      "choice_id": null,
+      "request_id": "request-1"
+    },
+    {
+      "session_id": "A",
+      "message": "继续",
+      "facts": {
+        "compute": "CPU"
+      },
+      "search": null,
+      "use_model": false,
+      "skill": "research-dialogue",
+      "choice_id": null,
+      "request_id": "request-2"
+    },
+    {
+      "session_id": "A",
+      "message": "继续",
+      "facts": {},
+      "search": null,
+      "use_model": false,
+      "skill": "research-dialogue",
+      "choice_id": null,
+      "request_id": "request-3"
+    },
+    {
+      "session_id": "A",
+      "message": "继续",
+      "facts": {},
+      "search": null,
+      "use_model": false,
+      "skill": "research-dialogue",
+      "choice_id": null,
+      "request_id": "request-4"
+    },
+    {
+      "session_id": "A",
+      "message": "继续",
+      "facts": {},
+      "search": null,
+      "use_model": false,
+      "skill": "research-dialogue",
+      "choice_id": null,
+      "request_id": "request-5"
+    },
+    {
+      "session_id": "A",
+      "message": "继续",
+      "facts": {},
+      "search": null,
+      "use_model": false,
+      "skill": "research-dialogue",
+      "choice_id": null,
+      "request_id": "request-6"
+    }
+  ],
+  "notice": "DOM/HTTP替身测试，非真实浏览器；真实截图同目录。"
+}

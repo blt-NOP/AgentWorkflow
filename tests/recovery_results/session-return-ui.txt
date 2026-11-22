@@ -1,0 +1,128 @@
+Browser tab: 6, Title: "论文 idea 讨论助手", URL: "http://127.0.0.1:8014/".
+0 AXWebArea 论文 idea 讨论助手, URL: 127.0.0.1:8014/
+	1 container
+		2 text AgentWorkflow
+		3 heading 论文 idea 讨论助手, Value: 1
+			4 text 论文 idea 讨论助手
+		5 text 从已有方向与论文出发，逐步明确研究问题和实践思路。
+		6 text 后端已连接 · 模型配置已填写（未验证连通性）
+	7 container
+		8 container
+			9 heading 我的讨论, Value: 2
+				10 text 我的讨论
+			11 text 历史会话
+			12 pop up button (collapsed, settable) Description: 历史会话, Value: 根据当前条件继续, ID: sessions, Secondary Actions: Expand
+				13 menu
+					87 新讨论
+					88 (selected) 根据当前条件继续
+			15 button 新建讨论, ID: new-session
+			16 button 删除当前讨论, ID: delete-session
+			89 text 当前会话：8d8897b3-03fc-41ee-935c-99d9998eac17
+		18 container
+			19 heading 已有论文, Value: 2
+				20 text 已有论文
+			21 text 论文保存在本地 SQLite，供各讨论共享；资源条件分别保存。 查找论文
+			22 text field (settable) 查找论文, ID: paper-search
+			23 button 查找, ID: find-papers
+			24 button (collapsed) 登记 / 编辑论文, Secondary Actions: Expand
+				25 text 登记 / 编辑论文
+			26 text 导入论文 JSON
+			27 button 导入论文 JSON, ID: import-papers
+			28 button (collapsed) 解析论文 PDF, Secondary Actions: Expand
+				29 text 解析论文 PDF
+		30 heading 研究方向与当前条件, Value: 2
+			31 text 研究方向与当前条件
+		32 container
+			33 text 专业方向
+			34 text field (settable) 专业方向, Value: 模型压缩, ID: direction
+		35 container
+			36 text 当前研究命题
+			37 text field (settable) 当前研究命题, ID: claim
+		38 container
+			39 text 时间（周）
+			40 stepper (settable) 时间（周）, ID: weeks
+		41 container
+			42 text 算力
+			43 text field (settable) 算力, Value: CPU, ID: compute
+		44 container
+			45 text 数据条件
+			46 text field (settable) 数据条件, ID: dataset
+		47 text 更正条件时修改这里的值，再发送消息；未修改的条件沿用原值。
+		48 heading 多轮讨论, Value: 2
+			49 text 多轮讨论
+		50 container
+			51 text 提问策略 Skill
+			52 pop up button (collapsed, settable) Description: 提问策略 Skill, Value: research-dialogue, ID: skill, Secondary Actions: Expand
+				53 menu
+					54 (selected) research-dialogue
+		90 container messages
+			91 text 你：根据当前条件继续
+			92 text 助手：[未调用模型] 当前条件：{"direction": "模型压缩", "compute": "CPU"}
+材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索
+
+你计划投入多少周完成最小验证？
+			93 text 你：根据当前条件继续
+			94 text 助手：[未调用模型] 当前条件：{"direction": "模型压缩", "compute": "CPU"}
+材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索
+
+你计划投入多少周完成最小验证？
+			95 text 你：根据当前条件继续
+			96 text 助手：[未调用模型] 当前条件：{"direction": "模型压缩", "compute": "CPU"}
+材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索
+
+你计划投入多少周完成最小验证？
+			97 text 你：根据当前条件继续
+			98 text 助手：[未调用模型] 当前条件：{"direction": "模型压缩", "compute": "CPU"}
+材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索
+
+你计划投入多少周完成最小验证？
+			99 text 你：根据当前条件继续
+			100 text 助手：[未调用模型] 当前条件：{"direction": "模型压缩", "compute": "CPU"}
+材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索
+
+你计划投入多少周完成最小验证？
+			101 text 你：根据当前条件继续
+			102 text 助手：[未调用模型] 当前条件：{"direction": "模型压缩", "compute": "CPU"}
+材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索
+
+你计划投入多少周完成最小验证？
+			103 text 你：根据当前条件继续
+			104 text 助手：[未调用模型] 当前条件：{"direction": "模型压缩", "compute": "CPU"}
+材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索
+
+你计划投入多少周完成最小验证？
+		105 container dialogue
+			106 text 当前问题：你计划投入多少周完成最小验证？
+			107 container 本轮选项
+				108 button 2 周
+				109 button 4 周
+				110 button 8 周
+		68 content list Description: 本轮执行进度, ID: progress
+			111 container
+				112 AXListMarker 1.
+				113 text 开始执行
+			114 container
+				115 AXListMarker 2.
+				116 text 正在执行：材料整理
+		69 container chat-form
+			70 container
+				71 text 本轮输入
+				72 text entry area (settable) 本轮输入, ID: message
+			73 container
+				74 text 论文检索关键词（可选）
+				75 text field (settable) 论文检索关键词（可选）, ID: search
+			76 checkbox (settable, integer) Description: 调用已配置模型（关闭仅做离线演示）, Value: 0, ID: use-model
+			77 button 发送
+		117 text 本轮等待超过 2 秒，已停止等待。后端可能仍在执行，请点击重试核对原会话。（请求 ca5809cc-48c1-4ce7-9723-5d786d125ccb）
+		118 button 核对原会话并重试, ID: retry-chat
+		78 heading 材料与执行过程, Value: 2
+			79 text 材料与执行过程
+		119 text 本轮未成功 · 请求 ca5809cc-48c1-4ce7-9723-5d786d125ccb
+		120 container evidence
+			121 text 缺少可用时间
+			122 text 缺少数据条件
+			123 text 暂无论文，请导入已有论文或检索
+		85 button (collapsed) 查看本轮工具输入和输出, Secondary Actions: Expand
+			86 text 查看本轮工具输入和输出
+
+The focused UI element is 0 AXWebArea 论文 idea 讨论助手, URL: 127.0.0.1:8014/

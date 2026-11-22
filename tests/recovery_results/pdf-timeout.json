@@ -1,0 +1,23 @@
+{
+  "tool": "parse_paper_pdf",
+  "case": "timeout",
+  "arguments": {
+    "filename": "sample_paper.pdf",
+    "content_ref": "sample_paper.pdf",
+    "size_bytes": 1155,
+    "sha256": "34625d92a8503b98af970fec17a33a47ae5c1d753944ce12ee4dda5703abb208",
+    "start_page": 1,
+    "end_page": 1
+  },
+  "returned": null,
+  "error": {
+    "code": "TIMEOUT",
+    "message": "PDF 解析超过 0.001 秒，已停止；请缩小页码范围或重新导出后重试",
+    "retryable": true,
+    "type": "ToolError"
+  },
+  "passed": true,
+  "basis": "解析期限缩短到1毫秒，独立进程被终止并返回可重试TIMEOUT",
+  "data_source": "local",
+  "changed_parameter": null
+}

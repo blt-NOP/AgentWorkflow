@@ -113,3 +113,6 @@ HTTP测试使用门闩阻止材料工具结束：客户端先收到started与too
 固定证据：`tests/event_results/http/`保存实参、逐项事件与汇总；`frontend-output.txt`保存前端协议测试输出；`ui/live-state.json`保存真实模型状态，`ui/cpu-state.json`保存页面继续后的状态，`ui/progress.png`为实际截图。运行日志在`data/logs/runs/`，隔离原始数据在`data/model-check/events-4b5c6347/`和`events-ui/`。本次验证覆盖本任务的进度和归属，不宣称已完成任务七全部窄屏、故障和源码复现验收。
 
 依据：[百炼流式输出协议](https://help.aliyun.com/zh/model-studio/stream)。
+
+
+前端总期限、无数据超时、手动重试、晚到结果核对与真实浏览器故障恢复已补齐，见[恢复验收](recovery.md)。新增前端恢复测试8项、SSE读取测试现8项；四工具验收现45项，历史记录仍保留。

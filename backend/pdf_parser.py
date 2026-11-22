@@ -2,6 +2,9 @@
 from hashlib import sha256
 from io import BytesIO
 from pathlib import Path
+import multiprocessing as mp
+import os
+from time import monotonic
 
 from pypdf import PdfReader
 
@@ -10,7 +13,7 @@ from .tool_contracts import ToolError
 MAX_BYTES = 20 * 1024 * 1024
 
 
-def parse_paper_pdf(content, filename="paper.pdf", start_page=1, end_page=None):
+def _parse_pdf(content, filename="paper.pdf", start_page=1, end_page=None):
     """content 为 PDF bytes；页码从1开始，闭区间，单次最多20页。"""
     if not isinstance(content, bytes) or not content:
         raise ToolError("INVALID_INPUT", "请上传非空 PDF 文件")
@@ -67,6 +70,50 @@ def parse_paper_pdf(content, filename="paper.pdf", start_page=1, end_page=None):
             "metadata": {"title": title, "author": author},
             "paper": {"paper_id": "pdf-" + digest, "title": title, "year": None, "doi": "",
                       "abstract": "[PDF原文摘录，非自动摘要]\n" + text, "notes": ""}}
+
+
+def _worker(connection, arguments):
+    try:
+        connection.send((True, _parse_pdf(*arguments)))
+    except ToolError as error:
+        connection.send((False, (error.code, str(error), error.retryable)))
+    except Exception:
+        connection.send((False, ("INVALID_PDF", "PDF 解析进程失败，请重新导出文件", False)))
+    finally:
+        connection.close()
+
+
+def parse_paper_pdf(content, filename="paper.pdf", start_page=1, end_page=None):
+    """在独立进程解析；计时包含启动、解析和返回，超时强制终止，不留后台解析。"""
+    # 大小先检查，避免把超大文件复制到子进程。
+    if not isinstance(content, bytes) or not content:
+        raise ToolError("INVALID_INPUT", "请上传非空 PDF 文件")
+    if len(content) > MAX_BYTES:
+        raise ToolError("FILE_TOO_LARGE", "PDF 不能超过20 MiB，请拆分文件")
+    seconds = max(0.001, min(120, float(os.getenv("PDF_TIMEOUT_SECONDS", "20"))))
+    context = mp.get_context("spawn")
+    receive, send = context.Pipe(duplex=False)
+    process = context.Process(target=_worker, args=(send, (content, filename, start_page, end_page)), daemon=True)
+    deadline = monotonic() + seconds
+    try:
+        process.start()
+        send.close()
+        if not receive.poll(max(0, deadline - monotonic())):
+            raise ToolError("TIMEOUT", f"PDF 解析超过 {seconds:g} 秒，已停止；请缩小页码范围或重新导出后重试", True)
+        try:
+            success, result = receive.recv()
+        except EOFError as error:
+            raise ToolError("INVALID_PDF", "PDF 解析进程异常结束，请重新导出文件") from error
+        if not success:
+            raise ToolError(*result)
+        return result
+    finally:
+        if process.pid is not None:
+            if process.is_alive():
+                process.terminate()
+            process.join()
+        receive.close()
+        send.close()
 
 
 def main():

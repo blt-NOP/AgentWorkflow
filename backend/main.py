@@ -6,6 +6,7 @@ from fastapi.exceptions import RequestValidationError
 from pydantic import BaseModel, Field
 from . import agent, memory, model, library, dialogue, tools
 from .tool_contracts import ToolError
+import os
 
 app = FastAPI(title="论文 idea 助手")
 
@@ -85,7 +86,9 @@ def invalid_input(request: Request, error: ValueError):
 
 @app.get("/api/health")
 def health():
-    return {"status": "ok", "model_configured": model.configured(), "model_enabled": model.enabled()}
+    return {"status": "ok", "model_configured": model.configured(), "model_enabled": model.enabled(),
+            "chat_timeout_seconds": max(1, min(900, float(os.getenv("CHAT_TIMEOUT_SECONDS", "180")))),
+            "stream_idle_seconds": max(1, min(120, float(os.getenv("STREAM_IDLE_SECONDS", "45"))))}
 
 
 @app.post("/api/chat")

@@ -1,0 +1,2561 @@
+{
+  "result": "PASS",
+  "checks": [
+    "失败结束事件给出可显示原因，不等待completed",
+    "失败不覆盖原会话事实或历史",
+    "恢复依赖后原会话成功并更新条件",
+    "失败没有半条消息，恢复仅追加一轮",
+    "尚在执行时拒绝同会话并发重试",
+    "会话B独立执行且不读取A条件",
+    "原请求完成后保存原会话，未被提前重试覆盖",
+    "锁释放后原会话可以继续成功交互"
+  ],
+  "records": [
+    {
+      "arguments": {
+        "session_id": "RecoveryA",
+        "request_id": "initial",
+        "message": "根据当前条件继续",
+        "use_model": false,
+        "facts": {
+          "direction": "模型压缩",
+          "compute": "CPU"
+        }
+      },
+      "events": [
+        {
+          "type": "started",
+          "seq": 1,
+          "request_id": "initial",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.441",
+          "data": {
+            "use_model": false
+          }
+        },
+        {
+          "type": "tool_started",
+          "seq": 2,
+          "request_id": "initial",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.455",
+          "data": {
+            "tool": "build_evidence",
+            "call_id": "3a105518f7ec4aa497bec0e66c7683bc"
+          }
+        },
+        {
+          "type": "tool_result",
+          "seq": 3,
+          "request_id": "initial",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.455",
+          "data": {
+            "tool": "build_evidence",
+            "call_id": "3a105518f7ec4aa497bec0e66c7683bc",
+            "result": {
+              "facts": {
+                "direction": "模型压缩",
+                "compute": "CPU"
+              },
+              "rows": [],
+              "gaps": [
+                "缺少可用时间",
+                "缺少数据条件",
+                "暂无论文，请导入已有论文或检索"
+              ]
+            },
+            "duration_ms": 0
+          }
+        },
+        {
+          "type": "tool_started",
+          "seq": 4,
+          "request_id": "initial",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.455",
+          "data": {
+            "tool": "research_dialogue",
+            "call_id": "ebca967c436949b69609bd84260d8785"
+          }
+        },
+        {
+          "type": "tool_result",
+          "seq": 5,
+          "request_id": "initial",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.456",
+          "data": {
+            "tool": "research_dialogue",
+            "call_id": "ebca967c436949b69609bd84260d8785",
+            "result": {
+              "skill": "research-dialogue",
+              "stage": "weeks",
+              "field": "weeks",
+              "target": "facts",
+              "question": "你计划投入多少周完成最小验证？",
+              "options": [
+                {
+                  "id": "weeks-0",
+                  "label": "2 周",
+                  "value": 2
+                },
+                {
+                  "id": "weeks-1",
+                  "label": "4 周",
+                  "value": 4
+                },
+                {
+                  "id": "weeks-2",
+                  "label": "8 周",
+                  "value": 8
+                }
+              ],
+              "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"CPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+            },
+            "duration_ms": 2
+          }
+        },
+        {
+          "type": "reply_ready",
+          "seq": 6,
+          "request_id": "initial",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.456",
+          "data": {
+            "reply": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"CPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？",
+            "status": "WAITING_USER"
+          }
+        },
+        {
+          "type": "completed",
+          "seq": 7,
+          "request_id": "initial",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.458",
+          "data": {
+            "reply": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"CPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？",
+            "dialogue": {
+              "skill": "research-dialogue",
+              "stage": "weeks",
+              "field": "weeks",
+              "target": "facts",
+              "question": "你计划投入多少周完成最小验证？",
+              "options": [
+                {
+                  "id": "weeks-0",
+                  "label": "2 周",
+                  "value": 2
+                },
+                {
+                  "id": "weeks-1",
+                  "label": "4 周",
+                  "value": 4
+                },
+                {
+                  "id": "weeks-2",
+                  "label": "8 周",
+                  "value": 8
+                }
+              ],
+              "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"CPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+            },
+            "status": "WAITING_USER",
+            "stop_reason": "OFFLINE_DEMO",
+            "proposal": null,
+            "request_id": "initial",
+            "state": {
+              "session_id": "RecoveryA",
+              "facts": {
+                "direction": "模型压缩",
+                "compute": "CPU"
+              },
+              "history": [
+                {
+                  "role": "user",
+                  "content": "根据当前条件继续"
+                },
+                {
+                  "role": "assistant",
+                  "content": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"CPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？"
+                }
+              ],
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "根据当前条件继续"
+                },
+                {
+                  "role": "assistant",
+                  "content": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"CPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？"
+                }
+              ],
+              "papers": [],
+              "evidence": {
+                "facts": {
+                  "direction": "模型压缩",
+                  "compute": "CPU"
+                },
+                "rows": [],
+                "gaps": [
+                  "缺少可用时间",
+                  "缺少数据条件",
+                  "暂无论文，请导入已有论文或检索"
+                ]
+              },
+              "reply": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"CPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？",
+              "trace": [
+                {
+                  "tool": "build_evidence",
+                  "call_id": "3a105518f7ec4aa497bec0e66c7683bc",
+                  "arguments": {
+                    "papers": [],
+                    "facts": {
+                      "direction": "模型压缩",
+                      "compute": "CPU"
+                    }
+                  },
+                  "status": "SUCCEEDED",
+                  "result": {
+                    "facts": {
+                      "direction": "模型压缩",
+                      "compute": "CPU"
+                    },
+                    "rows": [],
+                    "gaps": [
+                      "缺少可用时间",
+                      "缺少数据条件",
+                      "暂无论文，请导入已有论文或检索"
+                    ]
+                  },
+                  "duration_ms": 0,
+                  "request_id": "initial"
+                },
+                {
+                  "tool": "research_dialogue",
+                  "call_id": "ebca967c436949b69609bd84260d8785",
+                  "arguments": {
+                    "message": "根据当前条件继续",
+                    "facts": {
+                      "direction": "模型压缩",
+                      "compute": "CPU"
+                    },
+                    "answers": {},
+                    "skill": "research-dialogue",
+                    "use_model": false
+                  },
+                  "status": "SUCCEEDED",
+                  "result": {
+                    "skill": "research-dialogue",
+                    "stage": "weeks",
+                    "field": "weeks",
+                    "target": "facts",
+                    "question": "你计划投入多少周完成最小验证？",
+                    "options": [
+                      {
+                        "id": "weeks-0",
+                        "label": "2 周",
+                        "value": 2
+                      },
+                      {
+                        "id": "weeks-1",
+                        "label": "4 周",
+                        "value": 4
+                      },
+                      {
+                        "id": "weeks-2",
+                        "label": "8 周",
+                        "value": 8
+                      }
+                    ],
+                    "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"CPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+                  },
+                  "duration_ms": 2,
+                  "request_id": "initial"
+                }
+              ],
+              "answers": {},
+              "dialogue": {
+                "skill": "research-dialogue",
+                "stage": "weeks",
+                "field": "weeks",
+                "target": "facts",
+                "question": "你计划投入多少周完成最小验证？",
+                "options": [
+                  {
+                    "id": "weeks-0",
+                    "label": "2 周",
+                    "value": 2
+                  },
+                  {
+                    "id": "weeks-1",
+                    "label": "4 周",
+                    "value": 4
+                  },
+                  {
+                    "id": "weeks-2",
+                    "label": "8 周",
+                    "value": 8
+                  }
+                ],
+                "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"CPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+              },
+              "skill": "research-dialogue",
+              "status": "WAITING_USER",
+              "proposal": null,
+              "decisions": [],
+              "stop_reason": "OFFLINE_DEMO",
+              "request_id": "initial",
+              "events": [
+                {
+                  "type": "started",
+                  "seq": 1,
+                  "request_id": "initial",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.441",
+                  "data": {
+                    "use_model": false
+                  }
+                },
+                {
+                  "type": "tool_started",
+                  "seq": 2,
+                  "request_id": "initial",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.455",
+                  "data": {
+                    "tool": "build_evidence",
+                    "call_id": "3a105518f7ec4aa497bec0e66c7683bc"
+                  }
+                },
+                {
+                  "type": "tool_result",
+                  "seq": 3,
+                  "request_id": "initial",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.455",
+                  "data": {
+                    "tool": "build_evidence",
+                    "call_id": "3a105518f7ec4aa497bec0e66c7683bc",
+                    "result": {
+                      "facts": {
+                        "direction": "模型压缩",
+                        "compute": "CPU"
+                      },
+                      "rows": [],
+                      "gaps": [
+                        "缺少可用时间",
+                        "缺少数据条件",
+                        "暂无论文，请导入已有论文或检索"
+                      ]
+                    },
+                    "duration_ms": 0
+                  }
+                },
+                {
+                  "type": "tool_started",
+                  "seq": 4,
+                  "request_id": "initial",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.455",
+                  "data": {
+                    "tool": "research_dialogue",
+                    "call_id": "ebca967c436949b69609bd84260d8785"
+                  }
+                },
+                {
+                  "type": "tool_result",
+                  "seq": 5,
+                  "request_id": "initial",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.456",
+                  "data": {
+                    "tool": "research_dialogue",
+                    "call_id": "ebca967c436949b69609bd84260d8785",
+                    "result": {
+                      "skill": "research-dialogue",
+                      "stage": "weeks",
+                      "field": "weeks",
+                      "target": "facts",
+                      "question": "你计划投入多少周完成最小验证？",
+                      "options": [
+                        {
+                          "id": "weeks-0",
+                          "label": "2 周",
+                          "value": 2
+                        },
+                        {
+                          "id": "weeks-1",
+                          "label": "4 周",
+                          "value": 4
+                        },
+                        {
+                          "id": "weeks-2",
+                          "label": "8 周",
+                          "value": 8
+                        }
+                      ],
+                      "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"CPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+                    },
+                    "duration_ms": 2
+                  }
+                },
+                {
+                  "type": "reply_ready",
+                  "seq": 6,
+                  "request_id": "initial",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.456",
+                  "data": {
+                    "reply": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"CPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？",
+                    "status": "WAITING_USER"
+                  }
+                }
+              ]
+            },
+            "trace": [
+              {
+                "tool": "build_evidence",
+                "call_id": "3a105518f7ec4aa497bec0e66c7683bc",
+                "arguments": {
+                  "papers": [],
+                  "facts": {
+                    "direction": "模型压缩",
+                    "compute": "CPU"
+                  }
+                },
+                "status": "SUCCEEDED",
+                "result": {
+                  "facts": {
+                    "direction": "模型压缩",
+                    "compute": "CPU"
+                  },
+                  "rows": [],
+                  "gaps": [
+                    "缺少可用时间",
+                    "缺少数据条件",
+                    "暂无论文，请导入已有论文或检索"
+                  ]
+                },
+                "duration_ms": 0,
+                "request_id": "initial"
+              },
+              {
+                "tool": "research_dialogue",
+                "call_id": "ebca967c436949b69609bd84260d8785",
+                "arguments": {
+                  "message": "根据当前条件继续",
+                  "facts": {
+                    "direction": "模型压缩",
+                    "compute": "CPU"
+                  },
+                  "answers": {},
+                  "skill": "research-dialogue",
+                  "use_model": false
+                },
+                "status": "SUCCEEDED",
+                "result": {
+                  "skill": "research-dialogue",
+                  "stage": "weeks",
+                  "field": "weeks",
+                  "target": "facts",
+                  "question": "你计划投入多少周完成最小验证？",
+                  "options": [
+                    {
+                      "id": "weeks-0",
+                      "label": "2 周",
+                      "value": 2
+                    },
+                    {
+                      "id": "weeks-1",
+                      "label": "4 周",
+                      "value": 4
+                    },
+                    {
+                      "id": "weeks-2",
+                      "label": "8 周",
+                      "value": 8
+                    }
+                  ],
+                  "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"CPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+                },
+                "duration_ms": 2,
+                "request_id": "initial"
+              }
+            ],
+            "decisions": []
+          }
+        }
+      ]
+    },
+    {
+      "arguments": {
+        "session_id": "RecoveryA",
+        "request_id": "failure",
+        "message": "根据当前条件继续",
+        "use_model": false,
+        "facts": {
+          "compute": "GPU"
+        }
+      },
+      "events": [
+        {
+          "type": "started",
+          "seq": 1,
+          "request_id": "failure",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.483",
+          "data": {
+            "use_model": false
+          }
+        },
+        {
+          "type": "tool_started",
+          "seq": 2,
+          "request_id": "failure",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.486",
+          "data": {
+            "tool": "build_evidence",
+            "call_id": "39fced7ff45942649a8a84c07336f9de"
+          }
+        },
+        {
+          "type": "tool_failed",
+          "seq": 3,
+          "request_id": "failure",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.486",
+          "data": {
+            "tool": "build_evidence",
+            "call_id": "39fced7ff45942649a8a84c07336f9de",
+            "code": "TIMEOUT"
+          }
+        },
+        {
+          "type": "reply_reset",
+          "seq": 4,
+          "request_id": "failure",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.486",
+          "data": {
+            "reason": "FAILED"
+          }
+        },
+        {
+          "type": "failed",
+          "seq": 5,
+          "request_id": "failure",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.486",
+          "data": {
+            "code": "TIMEOUT",
+            "message": "测试注入：依赖超时，恢复后可重试",
+            "retryable": true
+          }
+        }
+      ]
+    },
+    {
+      "arguments": {
+        "session_id": "RecoveryA",
+        "request_id": "recovered",
+        "message": "根据当前条件继续",
+        "use_model": false,
+        "facts": {
+          "compute": "GPU"
+        }
+      },
+      "events": [
+        {
+          "type": "started",
+          "seq": 1,
+          "request_id": "recovered",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.491",
+          "data": {
+            "use_model": false
+          }
+        },
+        {
+          "type": "tool_started",
+          "seq": 2,
+          "request_id": "recovered",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.493",
+          "data": {
+            "tool": "build_evidence",
+            "call_id": "4d66338b7c8a480980a013a4025318ab"
+          }
+        },
+        {
+          "type": "tool_result",
+          "seq": 3,
+          "request_id": "recovered",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.493",
+          "data": {
+            "tool": "build_evidence",
+            "call_id": "4d66338b7c8a480980a013a4025318ab",
+            "result": {
+              "facts": {
+                "direction": "模型压缩",
+                "compute": "GPU"
+              },
+              "rows": [],
+              "gaps": [
+                "缺少可用时间",
+                "缺少数据条件",
+                "暂无论文，请导入已有论文或检索"
+              ]
+            },
+            "duration_ms": 0
+          }
+        },
+        {
+          "type": "tool_started",
+          "seq": 4,
+          "request_id": "recovered",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.493",
+          "data": {
+            "tool": "research_dialogue",
+            "call_id": "d2e8e89220de475484a2643e63656478"
+          }
+        },
+        {
+          "type": "tool_result",
+          "seq": 5,
+          "request_id": "recovered",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.495",
+          "data": {
+            "tool": "research_dialogue",
+            "call_id": "d2e8e89220de475484a2643e63656478",
+            "result": {
+              "skill": "research-dialogue",
+              "stage": "weeks",
+              "field": "weeks",
+              "target": "facts",
+              "question": "你计划投入多少周完成最小验证？",
+              "options": [
+                {
+                  "id": "weeks-0",
+                  "label": "2 周",
+                  "value": 2
+                },
+                {
+                  "id": "weeks-1",
+                  "label": "4 周",
+                  "value": 4
+                },
+                {
+                  "id": "weeks-2",
+                  "label": "8 周",
+                  "value": 8
+                }
+              ],
+              "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+            },
+            "duration_ms": 2
+          }
+        },
+        {
+          "type": "reply_ready",
+          "seq": 6,
+          "request_id": "recovered",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.495",
+          "data": {
+            "reply": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？",
+            "status": "WAITING_USER"
+          }
+        },
+        {
+          "type": "completed",
+          "seq": 7,
+          "request_id": "recovered",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.497",
+          "data": {
+            "reply": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？",
+            "dialogue": {
+              "skill": "research-dialogue",
+              "stage": "weeks",
+              "field": "weeks",
+              "target": "facts",
+              "question": "你计划投入多少周完成最小验证？",
+              "options": [
+                {
+                  "id": "weeks-0",
+                  "label": "2 周",
+                  "value": 2
+                },
+                {
+                  "id": "weeks-1",
+                  "label": "4 周",
+                  "value": 4
+                },
+                {
+                  "id": "weeks-2",
+                  "label": "8 周",
+                  "value": 8
+                }
+              ],
+              "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+            },
+            "status": "WAITING_USER",
+            "stop_reason": "OFFLINE_DEMO",
+            "proposal": null,
+            "request_id": "recovered",
+            "state": {
+              "session_id": "RecoveryA",
+              "facts": {
+                "direction": "模型压缩",
+                "compute": "GPU"
+              },
+              "history": [
+                {
+                  "role": "user",
+                  "content": "根据当前条件继续"
+                },
+                {
+                  "role": "assistant",
+                  "content": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"CPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？"
+                },
+                {
+                  "role": "user",
+                  "content": "根据当前条件继续"
+                },
+                {
+                  "role": "assistant",
+                  "content": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？"
+                }
+              ],
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "根据当前条件继续"
+                },
+                {
+                  "role": "assistant",
+                  "content": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"CPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？"
+                },
+                {
+                  "role": "user",
+                  "content": "根据当前条件继续"
+                },
+                {
+                  "role": "assistant",
+                  "content": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？"
+                }
+              ],
+              "papers": [],
+              "evidence": {
+                "facts": {
+                  "direction": "模型压缩",
+                  "compute": "GPU"
+                },
+                "rows": [],
+                "gaps": [
+                  "缺少可用时间",
+                  "缺少数据条件",
+                  "暂无论文，请导入已有论文或检索"
+                ]
+              },
+              "reply": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？",
+              "trace": [
+                {
+                  "tool": "build_evidence",
+                  "call_id": "4d66338b7c8a480980a013a4025318ab",
+                  "arguments": {
+                    "papers": [],
+                    "facts": {
+                      "direction": "模型压缩",
+                      "compute": "GPU"
+                    }
+                  },
+                  "status": "SUCCEEDED",
+                  "result": {
+                    "facts": {
+                      "direction": "模型压缩",
+                      "compute": "GPU"
+                    },
+                    "rows": [],
+                    "gaps": [
+                      "缺少可用时间",
+                      "缺少数据条件",
+                      "暂无论文，请导入已有论文或检索"
+                    ]
+                  },
+                  "duration_ms": 0,
+                  "request_id": "recovered"
+                },
+                {
+                  "tool": "research_dialogue",
+                  "call_id": "d2e8e89220de475484a2643e63656478",
+                  "arguments": {
+                    "message": "根据当前条件继续",
+                    "facts": {
+                      "direction": "模型压缩",
+                      "compute": "GPU"
+                    },
+                    "answers": {},
+                    "skill": "research-dialogue",
+                    "use_model": false
+                  },
+                  "status": "SUCCEEDED",
+                  "result": {
+                    "skill": "research-dialogue",
+                    "stage": "weeks",
+                    "field": "weeks",
+                    "target": "facts",
+                    "question": "你计划投入多少周完成最小验证？",
+                    "options": [
+                      {
+                        "id": "weeks-0",
+                        "label": "2 周",
+                        "value": 2
+                      },
+                      {
+                        "id": "weeks-1",
+                        "label": "4 周",
+                        "value": 4
+                      },
+                      {
+                        "id": "weeks-2",
+                        "label": "8 周",
+                        "value": 8
+                      }
+                    ],
+                    "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+                  },
+                  "duration_ms": 2,
+                  "request_id": "recovered"
+                }
+              ],
+              "answers": {},
+              "dialogue": {
+                "skill": "research-dialogue",
+                "stage": "weeks",
+                "field": "weeks",
+                "target": "facts",
+                "question": "你计划投入多少周完成最小验证？",
+                "options": [
+                  {
+                    "id": "weeks-0",
+                    "label": "2 周",
+                    "value": 2
+                  },
+                  {
+                    "id": "weeks-1",
+                    "label": "4 周",
+                    "value": 4
+                  },
+                  {
+                    "id": "weeks-2",
+                    "label": "8 周",
+                    "value": 8
+                  }
+                ],
+                "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+              },
+              "skill": "research-dialogue",
+              "status": "WAITING_USER",
+              "proposal": null,
+              "decisions": [],
+              "stop_reason": "OFFLINE_DEMO",
+              "request_id": "recovered",
+              "events": [
+                {
+                  "type": "started",
+                  "seq": 1,
+                  "request_id": "recovered",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.491",
+                  "data": {
+                    "use_model": false
+                  }
+                },
+                {
+                  "type": "tool_started",
+                  "seq": 2,
+                  "request_id": "recovered",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.493",
+                  "data": {
+                    "tool": "build_evidence",
+                    "call_id": "4d66338b7c8a480980a013a4025318ab"
+                  }
+                },
+                {
+                  "type": "tool_result",
+                  "seq": 3,
+                  "request_id": "recovered",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.493",
+                  "data": {
+                    "tool": "build_evidence",
+                    "call_id": "4d66338b7c8a480980a013a4025318ab",
+                    "result": {
+                      "facts": {
+                        "direction": "模型压缩",
+                        "compute": "GPU"
+                      },
+                      "rows": [],
+                      "gaps": [
+                        "缺少可用时间",
+                        "缺少数据条件",
+                        "暂无论文，请导入已有论文或检索"
+                      ]
+                    },
+                    "duration_ms": 0
+                  }
+                },
+                {
+                  "type": "tool_started",
+                  "seq": 4,
+                  "request_id": "recovered",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.493",
+                  "data": {
+                    "tool": "research_dialogue",
+                    "call_id": "d2e8e89220de475484a2643e63656478"
+                  }
+                },
+                {
+                  "type": "tool_result",
+                  "seq": 5,
+                  "request_id": "recovered",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.495",
+                  "data": {
+                    "tool": "research_dialogue",
+                    "call_id": "d2e8e89220de475484a2643e63656478",
+                    "result": {
+                      "skill": "research-dialogue",
+                      "stage": "weeks",
+                      "field": "weeks",
+                      "target": "facts",
+                      "question": "你计划投入多少周完成最小验证？",
+                      "options": [
+                        {
+                          "id": "weeks-0",
+                          "label": "2 周",
+                          "value": 2
+                        },
+                        {
+                          "id": "weeks-1",
+                          "label": "4 周",
+                          "value": 4
+                        },
+                        {
+                          "id": "weeks-2",
+                          "label": "8 周",
+                          "value": 8
+                        }
+                      ],
+                      "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+                    },
+                    "duration_ms": 2
+                  }
+                },
+                {
+                  "type": "reply_ready",
+                  "seq": 6,
+                  "request_id": "recovered",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.495",
+                  "data": {
+                    "reply": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？",
+                    "status": "WAITING_USER"
+                  }
+                }
+              ]
+            },
+            "trace": [
+              {
+                "tool": "build_evidence",
+                "call_id": "4d66338b7c8a480980a013a4025318ab",
+                "arguments": {
+                  "papers": [],
+                  "facts": {
+                    "direction": "模型压缩",
+                    "compute": "GPU"
+                  }
+                },
+                "status": "SUCCEEDED",
+                "result": {
+                  "facts": {
+                    "direction": "模型压缩",
+                    "compute": "GPU"
+                  },
+                  "rows": [],
+                  "gaps": [
+                    "缺少可用时间",
+                    "缺少数据条件",
+                    "暂无论文，请导入已有论文或检索"
+                  ]
+                },
+                "duration_ms": 0,
+                "request_id": "recovered"
+              },
+              {
+                "tool": "research_dialogue",
+                "call_id": "d2e8e89220de475484a2643e63656478",
+                "arguments": {
+                  "message": "根据当前条件继续",
+                  "facts": {
+                    "direction": "模型压缩",
+                    "compute": "GPU"
+                  },
+                  "answers": {},
+                  "skill": "research-dialogue",
+                  "use_model": false
+                },
+                "status": "SUCCEEDED",
+                "result": {
+                  "skill": "research-dialogue",
+                  "stage": "weeks",
+                  "field": "weeks",
+                  "target": "facts",
+                  "question": "你计划投入多少周完成最小验证？",
+                  "options": [
+                    {
+                      "id": "weeks-0",
+                      "label": "2 周",
+                      "value": 2
+                    },
+                    {
+                      "id": "weeks-1",
+                      "label": "4 周",
+                      "value": 4
+                    },
+                    {
+                      "id": "weeks-2",
+                      "label": "8 周",
+                      "value": 8
+                    }
+                  ],
+                  "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+                },
+                "duration_ms": 2,
+                "request_id": "recovered"
+              }
+            ],
+            "decisions": []
+          }
+        }
+      ]
+    },
+    {
+      "arguments": {
+        "session_id": "RecoveryA",
+        "request_id": "retry-too-early",
+        "message": "根据当前条件继续",
+        "use_model": false
+      },
+      "events": [
+        {
+          "type": "started",
+          "seq": 1,
+          "request_id": "retry-too-early",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.518",
+          "data": {
+            "use_model": false
+          }
+        },
+        {
+          "type": "reply_reset",
+          "seq": 2,
+          "request_id": "retry-too-early",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.518",
+          "data": {
+            "reason": "FAILED"
+          }
+        },
+        {
+          "type": "failed",
+          "seq": 3,
+          "request_id": "retry-too-early",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.518",
+          "data": {
+            "code": "SESSION_BUSY",
+            "message": "原会话仍在执行上一请求，请稍后点击重试以核对结果。",
+            "retryable": true
+          }
+        }
+      ]
+    },
+    {
+      "arguments": {
+        "session_id": "RecoveryB",
+        "request_id": "session-B",
+        "message": "根据当前条件继续",
+        "use_model": false
+      },
+      "events": [
+        {
+          "type": "started",
+          "seq": 1,
+          "request_id": "session-B",
+          "session_id": "RecoveryB",
+          "at": "2026-11-22T15:35:11.522",
+          "data": {
+            "use_model": false
+          }
+        },
+        {
+          "type": "tool_started",
+          "seq": 2,
+          "request_id": "session-B",
+          "session_id": "RecoveryB",
+          "at": "2026-11-22T15:35:11.524",
+          "data": {
+            "tool": "build_evidence",
+            "call_id": "419729805fd84c7695eda9849f81ce11"
+          }
+        },
+        {
+          "type": "tool_result",
+          "seq": 3,
+          "request_id": "session-B",
+          "session_id": "RecoveryB",
+          "at": "2026-11-22T15:35:11.525",
+          "data": {
+            "tool": "build_evidence",
+            "call_id": "419729805fd84c7695eda9849f81ce11",
+            "result": {
+              "facts": {},
+              "rows": [],
+              "gaps": [
+                "缺少算力条件",
+                "缺少可用时间",
+                "缺少数据条件",
+                "暂无论文，请导入已有论文或检索"
+              ]
+            },
+            "duration_ms": 0
+          }
+        },
+        {
+          "type": "tool_started",
+          "seq": 4,
+          "request_id": "session-B",
+          "session_id": "RecoveryB",
+          "at": "2026-11-22T15:35:11.525",
+          "data": {
+            "tool": "research_dialogue",
+            "call_id": "84334d1533f1455ead31d3bd05441029"
+          }
+        },
+        {
+          "type": "tool_result",
+          "seq": 5,
+          "request_id": "session-B",
+          "session_id": "RecoveryB",
+          "at": "2026-11-22T15:35:11.525",
+          "data": {
+            "tool": "research_dialogue",
+            "call_id": "84334d1533f1455ead31d3bd05441029",
+            "result": {
+              "skill": "research-dialogue",
+              "stage": "direction",
+              "field": "direction",
+              "target": "facts",
+              "question": "你目前主要关注哪个研究方向？",
+              "options": [
+                {
+                  "id": "direction-0",
+                  "label": "边缘端推理",
+                  "value": "边缘端推理"
+                },
+                {
+                  "id": "direction-1",
+                  "label": "模型压缩",
+                  "value": "模型压缩"
+                },
+                {
+                  "id": "direction-2",
+                  "label": "检索增强生成",
+                  "value": "检索增强生成"
+                }
+              ],
+              "message": "[未调用模型] 当前条件：{}\n材料缺项：缺少算力条件；缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+            },
+            "duration_ms": 1
+          }
+        },
+        {
+          "type": "reply_ready",
+          "seq": 6,
+          "request_id": "session-B",
+          "session_id": "RecoveryB",
+          "at": "2026-11-22T15:35:11.525",
+          "data": {
+            "reply": "[未调用模型] 当前条件：{}\n材料缺项：缺少算力条件；缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你目前主要关注哪个研究方向？",
+            "status": "WAITING_USER"
+          }
+        },
+        {
+          "type": "completed",
+          "seq": 7,
+          "request_id": "session-B",
+          "session_id": "RecoveryB",
+          "at": "2026-11-22T15:35:11.527",
+          "data": {
+            "reply": "[未调用模型] 当前条件：{}\n材料缺项：缺少算力条件；缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你目前主要关注哪个研究方向？",
+            "dialogue": {
+              "skill": "research-dialogue",
+              "stage": "direction",
+              "field": "direction",
+              "target": "facts",
+              "question": "你目前主要关注哪个研究方向？",
+              "options": [
+                {
+                  "id": "direction-0",
+                  "label": "边缘端推理",
+                  "value": "边缘端推理"
+                },
+                {
+                  "id": "direction-1",
+                  "label": "模型压缩",
+                  "value": "模型压缩"
+                },
+                {
+                  "id": "direction-2",
+                  "label": "检索增强生成",
+                  "value": "检索增强生成"
+                }
+              ],
+              "message": "[未调用模型] 当前条件：{}\n材料缺项：缺少算力条件；缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+            },
+            "status": "WAITING_USER",
+            "stop_reason": "OFFLINE_DEMO",
+            "proposal": null,
+            "request_id": "session-B",
+            "state": {
+              "session_id": "RecoveryB",
+              "facts": {},
+              "history": [
+                {
+                  "role": "user",
+                  "content": "根据当前条件继续"
+                },
+                {
+                  "role": "assistant",
+                  "content": "[未调用模型] 当前条件：{}\n材料缺项：缺少算力条件；缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你目前主要关注哪个研究方向？"
+                }
+              ],
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "根据当前条件继续"
+                },
+                {
+                  "role": "assistant",
+                  "content": "[未调用模型] 当前条件：{}\n材料缺项：缺少算力条件；缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你目前主要关注哪个研究方向？"
+                }
+              ],
+              "papers": [],
+              "evidence": {
+                "facts": {},
+                "rows": [],
+                "gaps": [
+                  "缺少算力条件",
+                  "缺少可用时间",
+                  "缺少数据条件",
+                  "暂无论文，请导入已有论文或检索"
+                ]
+              },
+              "reply": "[未调用模型] 当前条件：{}\n材料缺项：缺少算力条件；缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你目前主要关注哪个研究方向？",
+              "trace": [
+                {
+                  "tool": "build_evidence",
+                  "call_id": "419729805fd84c7695eda9849f81ce11",
+                  "arguments": {
+                    "papers": [],
+                    "facts": {}
+                  },
+                  "status": "SUCCEEDED",
+                  "result": {
+                    "facts": {},
+                    "rows": [],
+                    "gaps": [
+                      "缺少算力条件",
+                      "缺少可用时间",
+                      "缺少数据条件",
+                      "暂无论文，请导入已有论文或检索"
+                    ]
+                  },
+                  "duration_ms": 0,
+                  "request_id": "session-B"
+                },
+                {
+                  "tool": "research_dialogue",
+                  "call_id": "84334d1533f1455ead31d3bd05441029",
+                  "arguments": {
+                    "message": "根据当前条件继续",
+                    "facts": {},
+                    "answers": {},
+                    "skill": "research-dialogue",
+                    "use_model": false
+                  },
+                  "status": "SUCCEEDED",
+                  "result": {
+                    "skill": "research-dialogue",
+                    "stage": "direction",
+                    "field": "direction",
+                    "target": "facts",
+                    "question": "你目前主要关注哪个研究方向？",
+                    "options": [
+                      {
+                        "id": "direction-0",
+                        "label": "边缘端推理",
+                        "value": "边缘端推理"
+                      },
+                      {
+                        "id": "direction-1",
+                        "label": "模型压缩",
+                        "value": "模型压缩"
+                      },
+                      {
+                        "id": "direction-2",
+                        "label": "检索增强生成",
+                        "value": "检索增强生成"
+                      }
+                    ],
+                    "message": "[未调用模型] 当前条件：{}\n材料缺项：缺少算力条件；缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+                  },
+                  "duration_ms": 1,
+                  "request_id": "session-B"
+                }
+              ],
+              "answers": {},
+              "dialogue": {
+                "skill": "research-dialogue",
+                "stage": "direction",
+                "field": "direction",
+                "target": "facts",
+                "question": "你目前主要关注哪个研究方向？",
+                "options": [
+                  {
+                    "id": "direction-0",
+                    "label": "边缘端推理",
+                    "value": "边缘端推理"
+                  },
+                  {
+                    "id": "direction-1",
+                    "label": "模型压缩",
+                    "value": "模型压缩"
+                  },
+                  {
+                    "id": "direction-2",
+                    "label": "检索增强生成",
+                    "value": "检索增强生成"
+                  }
+                ],
+                "message": "[未调用模型] 当前条件：{}\n材料缺项：缺少算力条件；缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+              },
+              "skill": "research-dialogue",
+              "status": "WAITING_USER",
+              "proposal": null,
+              "decisions": [],
+              "stop_reason": "OFFLINE_DEMO",
+              "request_id": "session-B",
+              "events": [
+                {
+                  "type": "started",
+                  "seq": 1,
+                  "request_id": "session-B",
+                  "session_id": "RecoveryB",
+                  "at": "2026-11-22T15:35:11.522",
+                  "data": {
+                    "use_model": false
+                  }
+                },
+                {
+                  "type": "tool_started",
+                  "seq": 2,
+                  "request_id": "session-B",
+                  "session_id": "RecoveryB",
+                  "at": "2026-11-22T15:35:11.524",
+                  "data": {
+                    "tool": "build_evidence",
+                    "call_id": "419729805fd84c7695eda9849f81ce11"
+                  }
+                },
+                {
+                  "type": "tool_result",
+                  "seq": 3,
+                  "request_id": "session-B",
+                  "session_id": "RecoveryB",
+                  "at": "2026-11-22T15:35:11.525",
+                  "data": {
+                    "tool": "build_evidence",
+                    "call_id": "419729805fd84c7695eda9849f81ce11",
+                    "result": {
+                      "facts": {},
+                      "rows": [],
+                      "gaps": [
+                        "缺少算力条件",
+                        "缺少可用时间",
+                        "缺少数据条件",
+                        "暂无论文，请导入已有论文或检索"
+                      ]
+                    },
+                    "duration_ms": 0
+                  }
+                },
+                {
+                  "type": "tool_started",
+                  "seq": 4,
+                  "request_id": "session-B",
+                  "session_id": "RecoveryB",
+                  "at": "2026-11-22T15:35:11.525",
+                  "data": {
+                    "tool": "research_dialogue",
+                    "call_id": "84334d1533f1455ead31d3bd05441029"
+                  }
+                },
+                {
+                  "type": "tool_result",
+                  "seq": 5,
+                  "request_id": "session-B",
+                  "session_id": "RecoveryB",
+                  "at": "2026-11-22T15:35:11.525",
+                  "data": {
+                    "tool": "research_dialogue",
+                    "call_id": "84334d1533f1455ead31d3bd05441029",
+                    "result": {
+                      "skill": "research-dialogue",
+                      "stage": "direction",
+                      "field": "direction",
+                      "target": "facts",
+                      "question": "你目前主要关注哪个研究方向？",
+                      "options": [
+                        {
+                          "id": "direction-0",
+                          "label": "边缘端推理",
+                          "value": "边缘端推理"
+                        },
+                        {
+                          "id": "direction-1",
+                          "label": "模型压缩",
+                          "value": "模型压缩"
+                        },
+                        {
+                          "id": "direction-2",
+                          "label": "检索增强生成",
+                          "value": "检索增强生成"
+                        }
+                      ],
+                      "message": "[未调用模型] 当前条件：{}\n材料缺项：缺少算力条件；缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+                    },
+                    "duration_ms": 1
+                  }
+                },
+                {
+                  "type": "reply_ready",
+                  "seq": 6,
+                  "request_id": "session-B",
+                  "session_id": "RecoveryB",
+                  "at": "2026-11-22T15:35:11.525",
+                  "data": {
+                    "reply": "[未调用模型] 当前条件：{}\n材料缺项：缺少算力条件；缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你目前主要关注哪个研究方向？",
+                    "status": "WAITING_USER"
+                  }
+                }
+              ]
+            },
+            "trace": [
+              {
+                "tool": "build_evidence",
+                "call_id": "419729805fd84c7695eda9849f81ce11",
+                "arguments": {
+                  "papers": [],
+                  "facts": {}
+                },
+                "status": "SUCCEEDED",
+                "result": {
+                  "facts": {},
+                  "rows": [],
+                  "gaps": [
+                    "缺少算力条件",
+                    "缺少可用时间",
+                    "缺少数据条件",
+                    "暂无论文，请导入已有论文或检索"
+                  ]
+                },
+                "duration_ms": 0,
+                "request_id": "session-B"
+              },
+              {
+                "tool": "research_dialogue",
+                "call_id": "84334d1533f1455ead31d3bd05441029",
+                "arguments": {
+                  "message": "根据当前条件继续",
+                  "facts": {},
+                  "answers": {},
+                  "skill": "research-dialogue",
+                  "use_model": false
+                },
+                "status": "SUCCEEDED",
+                "result": {
+                  "skill": "research-dialogue",
+                  "stage": "direction",
+                  "field": "direction",
+                  "target": "facts",
+                  "question": "你目前主要关注哪个研究方向？",
+                  "options": [
+                    {
+                      "id": "direction-0",
+                      "label": "边缘端推理",
+                      "value": "边缘端推理"
+                    },
+                    {
+                      "id": "direction-1",
+                      "label": "模型压缩",
+                      "value": "模型压缩"
+                    },
+                    {
+                      "id": "direction-2",
+                      "label": "检索增强生成",
+                      "value": "检索增强生成"
+                    }
+                  ],
+                  "message": "[未调用模型] 当前条件：{}\n材料缺项：缺少算力条件；缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+                },
+                "duration_ms": 1,
+                "request_id": "session-B"
+              }
+            ],
+            "decisions": []
+          }
+        }
+      ]
+    },
+    {
+      "arguments": {
+        "session_id": "RecoveryA",
+        "request_id": "inflight",
+        "message": "根据当前条件继续",
+        "use_model": false
+      },
+      "events": [
+        {
+          "type": "started",
+          "seq": 1,
+          "request_id": "inflight",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.514",
+          "data": {
+            "use_model": false
+          }
+        },
+        {
+          "type": "tool_started",
+          "seq": 2,
+          "request_id": "inflight",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.515",
+          "data": {
+            "tool": "build_evidence",
+            "call_id": "3f6b1606cb064306adfd26ef426829f8"
+          }
+        },
+        {
+          "type": "tool_result",
+          "seq": 3,
+          "request_id": "inflight",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.528",
+          "data": {
+            "tool": "build_evidence",
+            "call_id": "3f6b1606cb064306adfd26ef426829f8",
+            "result": {
+              "facts": {
+                "direction": "模型压缩",
+                "compute": "GPU"
+              },
+              "rows": [],
+              "gaps": [
+                "缺少可用时间",
+                "缺少数据条件",
+                "暂无论文，请导入已有论文或检索"
+              ]
+            },
+            "duration_ms": 14
+          }
+        },
+        {
+          "type": "tool_started",
+          "seq": 4,
+          "request_id": "inflight",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.528",
+          "data": {
+            "tool": "research_dialogue",
+            "call_id": "6737fe29919841b5a3951fbc99d7076f"
+          }
+        },
+        {
+          "type": "tool_result",
+          "seq": 5,
+          "request_id": "inflight",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.529",
+          "data": {
+            "tool": "research_dialogue",
+            "call_id": "6737fe29919841b5a3951fbc99d7076f",
+            "result": {
+              "skill": "research-dialogue",
+              "stage": "weeks",
+              "field": "weeks",
+              "target": "facts",
+              "question": "你计划投入多少周完成最小验证？",
+              "options": [
+                {
+                  "id": "weeks-0",
+                  "label": "2 周",
+                  "value": 2
+                },
+                {
+                  "id": "weeks-1",
+                  "label": "4 周",
+                  "value": 4
+                },
+                {
+                  "id": "weeks-2",
+                  "label": "8 周",
+                  "value": 8
+                }
+              ],
+              "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+            },
+            "duration_ms": 1
+          }
+        },
+        {
+          "type": "reply_ready",
+          "seq": 6,
+          "request_id": "inflight",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.529",
+          "data": {
+            "reply": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？",
+            "status": "WAITING_USER"
+          }
+        },
+        {
+          "type": "completed",
+          "seq": 7,
+          "request_id": "inflight",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.530",
+          "data": {
+            "reply": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？",
+            "dialogue": {
+              "skill": "research-dialogue",
+              "stage": "weeks",
+              "field": "weeks",
+              "target": "facts",
+              "question": "你计划投入多少周完成最小验证？",
+              "options": [
+                {
+                  "id": "weeks-0",
+                  "label": "2 周",
+                  "value": 2
+                },
+                {
+                  "id": "weeks-1",
+                  "label": "4 周",
+                  "value": 4
+                },
+                {
+                  "id": "weeks-2",
+                  "label": "8 周",
+                  "value": 8
+                }
+              ],
+              "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+            },
+            "status": "WAITING_USER",
+            "stop_reason": "OFFLINE_DEMO",
+            "proposal": null,
+            "request_id": "inflight",
+            "state": {
+              "session_id": "RecoveryA",
+              "facts": {
+                "direction": "模型压缩",
+                "compute": "GPU"
+              },
+              "history": [
+                {
+                  "role": "user",
+                  "content": "根据当前条件继续"
+                },
+                {
+                  "role": "assistant",
+                  "content": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"CPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？"
+                },
+                {
+                  "role": "user",
+                  "content": "根据当前条件继续"
+                },
+                {
+                  "role": "assistant",
+                  "content": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？"
+                },
+                {
+                  "role": "user",
+                  "content": "根据当前条件继续"
+                },
+                {
+                  "role": "assistant",
+                  "content": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？"
+                }
+              ],
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "根据当前条件继续"
+                },
+                {
+                  "role": "assistant",
+                  "content": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"CPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？"
+                },
+                {
+                  "role": "user",
+                  "content": "根据当前条件继续"
+                },
+                {
+                  "role": "assistant",
+                  "content": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？"
+                },
+                {
+                  "role": "user",
+                  "content": "根据当前条件继续"
+                },
+                {
+                  "role": "assistant",
+                  "content": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？"
+                }
+              ],
+              "papers": [],
+              "evidence": {
+                "facts": {
+                  "direction": "模型压缩",
+                  "compute": "GPU"
+                },
+                "rows": [],
+                "gaps": [
+                  "缺少可用时间",
+                  "缺少数据条件",
+                  "暂无论文，请导入已有论文或检索"
+                ]
+              },
+              "reply": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？",
+              "trace": [
+                {
+                  "tool": "build_evidence",
+                  "call_id": "3f6b1606cb064306adfd26ef426829f8",
+                  "arguments": {
+                    "papers": [],
+                    "facts": {
+                      "direction": "模型压缩",
+                      "compute": "GPU"
+                    }
+                  },
+                  "status": "SUCCEEDED",
+                  "result": {
+                    "facts": {
+                      "direction": "模型压缩",
+                      "compute": "GPU"
+                    },
+                    "rows": [],
+                    "gaps": [
+                      "缺少可用时间",
+                      "缺少数据条件",
+                      "暂无论文，请导入已有论文或检索"
+                    ]
+                  },
+                  "duration_ms": 14,
+                  "request_id": "inflight"
+                },
+                {
+                  "tool": "research_dialogue",
+                  "call_id": "6737fe29919841b5a3951fbc99d7076f",
+                  "arguments": {
+                    "message": "根据当前条件继续",
+                    "facts": {
+                      "direction": "模型压缩",
+                      "compute": "GPU"
+                    },
+                    "answers": {},
+                    "skill": "research-dialogue",
+                    "use_model": false
+                  },
+                  "status": "SUCCEEDED",
+                  "result": {
+                    "skill": "research-dialogue",
+                    "stage": "weeks",
+                    "field": "weeks",
+                    "target": "facts",
+                    "question": "你计划投入多少周完成最小验证？",
+                    "options": [
+                      {
+                        "id": "weeks-0",
+                        "label": "2 周",
+                        "value": 2
+                      },
+                      {
+                        "id": "weeks-1",
+                        "label": "4 周",
+                        "value": 4
+                      },
+                      {
+                        "id": "weeks-2",
+                        "label": "8 周",
+                        "value": 8
+                      }
+                    ],
+                    "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+                  },
+                  "duration_ms": 1,
+                  "request_id": "inflight"
+                }
+              ],
+              "answers": {},
+              "dialogue": {
+                "skill": "research-dialogue",
+                "stage": "weeks",
+                "field": "weeks",
+                "target": "facts",
+                "question": "你计划投入多少周完成最小验证？",
+                "options": [
+                  {
+                    "id": "weeks-0",
+                    "label": "2 周",
+                    "value": 2
+                  },
+                  {
+                    "id": "weeks-1",
+                    "label": "4 周",
+                    "value": 4
+                  },
+                  {
+                    "id": "weeks-2",
+                    "label": "8 周",
+                    "value": 8
+                  }
+                ],
+                "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+              },
+              "skill": "research-dialogue",
+              "status": "WAITING_USER",
+              "proposal": null,
+              "decisions": [],
+              "stop_reason": "OFFLINE_DEMO",
+              "request_id": "inflight",
+              "events": [
+                {
+                  "type": "started",
+                  "seq": 1,
+                  "request_id": "inflight",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.514",
+                  "data": {
+                    "use_model": false
+                  }
+                },
+                {
+                  "type": "tool_started",
+                  "seq": 2,
+                  "request_id": "inflight",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.515",
+                  "data": {
+                    "tool": "build_evidence",
+                    "call_id": "3f6b1606cb064306adfd26ef426829f8"
+                  }
+                },
+                {
+                  "type": "tool_result",
+                  "seq": 3,
+                  "request_id": "inflight",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.528",
+                  "data": {
+                    "tool": "build_evidence",
+                    "call_id": "3f6b1606cb064306adfd26ef426829f8",
+                    "result": {
+                      "facts": {
+                        "direction": "模型压缩",
+                        "compute": "GPU"
+                      },
+                      "rows": [],
+                      "gaps": [
+                        "缺少可用时间",
+                        "缺少数据条件",
+                        "暂无论文，请导入已有论文或检索"
+                      ]
+                    },
+                    "duration_ms": 14
+                  }
+                },
+                {
+                  "type": "tool_started",
+                  "seq": 4,
+                  "request_id": "inflight",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.528",
+                  "data": {
+                    "tool": "research_dialogue",
+                    "call_id": "6737fe29919841b5a3951fbc99d7076f"
+                  }
+                },
+                {
+                  "type": "tool_result",
+                  "seq": 5,
+                  "request_id": "inflight",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.529",
+                  "data": {
+                    "tool": "research_dialogue",
+                    "call_id": "6737fe29919841b5a3951fbc99d7076f",
+                    "result": {
+                      "skill": "research-dialogue",
+                      "stage": "weeks",
+                      "field": "weeks",
+                      "target": "facts",
+                      "question": "你计划投入多少周完成最小验证？",
+                      "options": [
+                        {
+                          "id": "weeks-0",
+                          "label": "2 周",
+                          "value": 2
+                        },
+                        {
+                          "id": "weeks-1",
+                          "label": "4 周",
+                          "value": 4
+                        },
+                        {
+                          "id": "weeks-2",
+                          "label": "8 周",
+                          "value": 8
+                        }
+                      ],
+                      "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+                    },
+                    "duration_ms": 1
+                  }
+                },
+                {
+                  "type": "reply_ready",
+                  "seq": 6,
+                  "request_id": "inflight",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.529",
+                  "data": {
+                    "reply": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？",
+                    "status": "WAITING_USER"
+                  }
+                }
+              ]
+            },
+            "trace": [
+              {
+                "tool": "build_evidence",
+                "call_id": "3f6b1606cb064306adfd26ef426829f8",
+                "arguments": {
+                  "papers": [],
+                  "facts": {
+                    "direction": "模型压缩",
+                    "compute": "GPU"
+                  }
+                },
+                "status": "SUCCEEDED",
+                "result": {
+                  "facts": {
+                    "direction": "模型压缩",
+                    "compute": "GPU"
+                  },
+                  "rows": [],
+                  "gaps": [
+                    "缺少可用时间",
+                    "缺少数据条件",
+                    "暂无论文，请导入已有论文或检索"
+                  ]
+                },
+                "duration_ms": 14,
+                "request_id": "inflight"
+              },
+              {
+                "tool": "research_dialogue",
+                "call_id": "6737fe29919841b5a3951fbc99d7076f",
+                "arguments": {
+                  "message": "根据当前条件继续",
+                  "facts": {
+                    "direction": "模型压缩",
+                    "compute": "GPU"
+                  },
+                  "answers": {},
+                  "skill": "research-dialogue",
+                  "use_model": false
+                },
+                "status": "SUCCEEDED",
+                "result": {
+                  "skill": "research-dialogue",
+                  "stage": "weeks",
+                  "field": "weeks",
+                  "target": "facts",
+                  "question": "你计划投入多少周完成最小验证？",
+                  "options": [
+                    {
+                      "id": "weeks-0",
+                      "label": "2 周",
+                      "value": 2
+                    },
+                    {
+                      "id": "weeks-1",
+                      "label": "4 周",
+                      "value": 4
+                    },
+                    {
+                      "id": "weeks-2",
+                      "label": "8 周",
+                      "value": 8
+                    }
+                  ],
+                  "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+                },
+                "duration_ms": 1,
+                "request_id": "inflight"
+              }
+            ],
+            "decisions": []
+          }
+        }
+      ]
+    },
+    {
+      "arguments": {
+        "session_id": "RecoveryA",
+        "request_id": "after-busy",
+        "message": "根据当前条件继续",
+        "use_model": false
+      },
+      "events": [
+        {
+          "type": "started",
+          "seq": 1,
+          "request_id": "after-busy",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.546",
+          "data": {
+            "use_model": false
+          }
+        },
+        {
+          "type": "tool_started",
+          "seq": 2,
+          "request_id": "after-busy",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.547",
+          "data": {
+            "tool": "build_evidence",
+            "call_id": "3947bb55913c400d8d2642bd7634e636"
+          }
+        },
+        {
+          "type": "tool_result",
+          "seq": 3,
+          "request_id": "after-busy",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.547",
+          "data": {
+            "tool": "build_evidence",
+            "call_id": "3947bb55913c400d8d2642bd7634e636",
+            "result": {
+              "facts": {
+                "direction": "模型压缩",
+                "compute": "GPU"
+              },
+              "rows": [],
+              "gaps": [
+                "缺少可用时间",
+                "缺少数据条件",
+                "暂无论文，请导入已有论文或检索"
+              ]
+            },
+            "duration_ms": 0
+          }
+        },
+        {
+          "type": "tool_started",
+          "seq": 4,
+          "request_id": "after-busy",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.547",
+          "data": {
+            "tool": "research_dialogue",
+            "call_id": "2524083164dd4ca2954065e48e543654"
+          }
+        },
+        {
+          "type": "tool_result",
+          "seq": 5,
+          "request_id": "after-busy",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.548",
+          "data": {
+            "tool": "research_dialogue",
+            "call_id": "2524083164dd4ca2954065e48e543654",
+            "result": {
+              "skill": "research-dialogue",
+              "stage": "weeks",
+              "field": "weeks",
+              "target": "facts",
+              "question": "你计划投入多少周完成最小验证？",
+              "options": [
+                {
+                  "id": "weeks-0",
+                  "label": "2 周",
+                  "value": 2
+                },
+                {
+                  "id": "weeks-1",
+                  "label": "4 周",
+                  "value": 4
+                },
+                {
+                  "id": "weeks-2",
+                  "label": "8 周",
+                  "value": 8
+                }
+              ],
+              "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+            },
+            "duration_ms": 0
+          }
+        },
+        {
+          "type": "reply_ready",
+          "seq": 6,
+          "request_id": "after-busy",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.548",
+          "data": {
+            "reply": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？",
+            "status": "WAITING_USER"
+          }
+        },
+        {
+          "type": "completed",
+          "seq": 7,
+          "request_id": "after-busy",
+          "session_id": "RecoveryA",
+          "at": "2026-11-22T15:35:11.550",
+          "data": {
+            "reply": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？",
+            "dialogue": {
+              "skill": "research-dialogue",
+              "stage": "weeks",
+              "field": "weeks",
+              "target": "facts",
+              "question": "你计划投入多少周完成最小验证？",
+              "options": [
+                {
+                  "id": "weeks-0",
+                  "label": "2 周",
+                  "value": 2
+                },
+                {
+                  "id": "weeks-1",
+                  "label": "4 周",
+                  "value": 4
+                },
+                {
+                  "id": "weeks-2",
+                  "label": "8 周",
+                  "value": 8
+                }
+              ],
+              "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+            },
+            "status": "WAITING_USER",
+            "stop_reason": "OFFLINE_DEMO",
+            "proposal": null,
+            "request_id": "after-busy",
+            "state": {
+              "session_id": "RecoveryA",
+              "facts": {
+                "direction": "模型压缩",
+                "compute": "GPU"
+              },
+              "history": [
+                {
+                  "role": "user",
+                  "content": "根据当前条件继续"
+                },
+                {
+                  "role": "assistant",
+                  "content": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？"
+                },
+                {
+                  "role": "user",
+                  "content": "根据当前条件继续"
+                },
+                {
+                  "role": "assistant",
+                  "content": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？"
+                },
+                {
+                  "role": "user",
+                  "content": "根据当前条件继续"
+                },
+                {
+                  "role": "assistant",
+                  "content": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？"
+                }
+              ],
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "根据当前条件继续"
+                },
+                {
+                  "role": "assistant",
+                  "content": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"CPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？"
+                },
+                {
+                  "role": "user",
+                  "content": "根据当前条件继续"
+                },
+                {
+                  "role": "assistant",
+                  "content": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？"
+                },
+                {
+                  "role": "user",
+                  "content": "根据当前条件继续"
+                },
+                {
+                  "role": "assistant",
+                  "content": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？"
+                },
+                {
+                  "role": "user",
+                  "content": "根据当前条件继续"
+                },
+                {
+                  "role": "assistant",
+                  "content": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？"
+                }
+              ],
+              "papers": [],
+              "evidence": {
+                "facts": {
+                  "direction": "模型压缩",
+                  "compute": "GPU"
+                },
+                "rows": [],
+                "gaps": [
+                  "缺少可用时间",
+                  "缺少数据条件",
+                  "暂无论文，请导入已有论文或检索"
+                ]
+              },
+              "reply": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？",
+              "trace": [
+                {
+                  "tool": "build_evidence",
+                  "call_id": "3947bb55913c400d8d2642bd7634e636",
+                  "arguments": {
+                    "papers": [],
+                    "facts": {
+                      "direction": "模型压缩",
+                      "compute": "GPU"
+                    }
+                  },
+                  "status": "SUCCEEDED",
+                  "result": {
+                    "facts": {
+                      "direction": "模型压缩",
+                      "compute": "GPU"
+                    },
+                    "rows": [],
+                    "gaps": [
+                      "缺少可用时间",
+                      "缺少数据条件",
+                      "暂无论文，请导入已有论文或检索"
+                    ]
+                  },
+                  "duration_ms": 0,
+                  "request_id": "after-busy"
+                },
+                {
+                  "tool": "research_dialogue",
+                  "call_id": "2524083164dd4ca2954065e48e543654",
+                  "arguments": {
+                    "message": "根据当前条件继续",
+                    "facts": {
+                      "direction": "模型压缩",
+                      "compute": "GPU"
+                    },
+                    "answers": {},
+                    "skill": "research-dialogue",
+                    "use_model": false
+                  },
+                  "status": "SUCCEEDED",
+                  "result": {
+                    "skill": "research-dialogue",
+                    "stage": "weeks",
+                    "field": "weeks",
+                    "target": "facts",
+                    "question": "你计划投入多少周完成最小验证？",
+                    "options": [
+                      {
+                        "id": "weeks-0",
+                        "label": "2 周",
+                        "value": 2
+                      },
+                      {
+                        "id": "weeks-1",
+                        "label": "4 周",
+                        "value": 4
+                      },
+                      {
+                        "id": "weeks-2",
+                        "label": "8 周",
+                        "value": 8
+                      }
+                    ],
+                    "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+                  },
+                  "duration_ms": 0,
+                  "request_id": "after-busy"
+                }
+              ],
+              "answers": {},
+              "dialogue": {
+                "skill": "research-dialogue",
+                "stage": "weeks",
+                "field": "weeks",
+                "target": "facts",
+                "question": "你计划投入多少周完成最小验证？",
+                "options": [
+                  {
+                    "id": "weeks-0",
+                    "label": "2 周",
+                    "value": 2
+                  },
+                  {
+                    "id": "weeks-1",
+                    "label": "4 周",
+                    "value": 4
+                  },
+                  {
+                    "id": "weeks-2",
+                    "label": "8 周",
+                    "value": 8
+                  }
+                ],
+                "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+              },
+              "skill": "research-dialogue",
+              "status": "WAITING_USER",
+              "proposal": null,
+              "decisions": [],
+              "stop_reason": "OFFLINE_DEMO",
+              "request_id": "after-busy",
+              "events": [
+                {
+                  "type": "started",
+                  "seq": 1,
+                  "request_id": "after-busy",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.546",
+                  "data": {
+                    "use_model": false
+                  }
+                },
+                {
+                  "type": "tool_started",
+                  "seq": 2,
+                  "request_id": "after-busy",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.547",
+                  "data": {
+                    "tool": "build_evidence",
+                    "call_id": "3947bb55913c400d8d2642bd7634e636"
+                  }
+                },
+                {
+                  "type": "tool_result",
+                  "seq": 3,
+                  "request_id": "after-busy",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.547",
+                  "data": {
+                    "tool": "build_evidence",
+                    "call_id": "3947bb55913c400d8d2642bd7634e636",
+                    "result": {
+                      "facts": {
+                        "direction": "模型压缩",
+                        "compute": "GPU"
+                      },
+                      "rows": [],
+                      "gaps": [
+                        "缺少可用时间",
+                        "缺少数据条件",
+                        "暂无论文，请导入已有论文或检索"
+                      ]
+                    },
+                    "duration_ms": 0
+                  }
+                },
+                {
+                  "type": "tool_started",
+                  "seq": 4,
+                  "request_id": "after-busy",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.547",
+                  "data": {
+                    "tool": "research_dialogue",
+                    "call_id": "2524083164dd4ca2954065e48e543654"
+                  }
+                },
+                {
+                  "type": "tool_result",
+                  "seq": 5,
+                  "request_id": "after-busy",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.548",
+                  "data": {
+                    "tool": "research_dialogue",
+                    "call_id": "2524083164dd4ca2954065e48e543654",
+                    "result": {
+                      "skill": "research-dialogue",
+                      "stage": "weeks",
+                      "field": "weeks",
+                      "target": "facts",
+                      "question": "你计划投入多少周完成最小验证？",
+                      "options": [
+                        {
+                          "id": "weeks-0",
+                          "label": "2 周",
+                          "value": 2
+                        },
+                        {
+                          "id": "weeks-1",
+                          "label": "4 周",
+                          "value": 4
+                        },
+                        {
+                          "id": "weeks-2",
+                          "label": "8 周",
+                          "value": 8
+                        }
+                      ],
+                      "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+                    },
+                    "duration_ms": 0
+                  }
+                },
+                {
+                  "type": "reply_ready",
+                  "seq": 6,
+                  "request_id": "after-busy",
+                  "session_id": "RecoveryA",
+                  "at": "2026-11-22T15:35:11.548",
+                  "data": {
+                    "reply": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索\n\n你计划投入多少周完成最小验证？",
+                    "status": "WAITING_USER"
+                  }
+                }
+              ]
+            },
+            "trace": [
+              {
+                "tool": "build_evidence",
+                "call_id": "3947bb55913c400d8d2642bd7634e636",
+                "arguments": {
+                  "papers": [],
+                  "facts": {
+                    "direction": "模型压缩",
+                    "compute": "GPU"
+                  }
+                },
+                "status": "SUCCEEDED",
+                "result": {
+                  "facts": {
+                    "direction": "模型压缩",
+                    "compute": "GPU"
+                  },
+                  "rows": [],
+                  "gaps": [
+                    "缺少可用时间",
+                    "缺少数据条件",
+                    "暂无论文，请导入已有论文或检索"
+                  ]
+                },
+                "duration_ms": 0,
+                "request_id": "after-busy"
+              },
+              {
+                "tool": "research_dialogue",
+                "call_id": "2524083164dd4ca2954065e48e543654",
+                "arguments": {
+                  "message": "根据当前条件继续",
+                  "facts": {
+                    "direction": "模型压缩",
+                    "compute": "GPU"
+                  },
+                  "answers": {},
+                  "skill": "research-dialogue",
+                  "use_model": false
+                },
+                "status": "SUCCEEDED",
+                "result": {
+                  "skill": "research-dialogue",
+                  "stage": "weeks",
+                  "field": "weeks",
+                  "target": "facts",
+                  "question": "你计划投入多少周完成最小验证？",
+                  "options": [
+                    {
+                      "id": "weeks-0",
+                      "label": "2 周",
+                      "value": 2
+                    },
+                    {
+                      "id": "weeks-1",
+                      "label": "4 周",
+                      "value": 4
+                    },
+                    {
+                      "id": "weeks-2",
+                      "label": "8 周",
+                      "value": 8
+                    }
+                  ],
+                  "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\", \"compute\": \"GPU\"}\n材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索"
+                },
+                "duration_ms": 0,
+                "request_id": "after-busy"
+              }
+            ],
+            "decisions": []
+          }
+        }
+      ]
+    }
+  ],
+  "notice": "HTTP/TestClient恢复验收；页面证据另见tests/recovery_results，不把此测试称为浏览器测试。"
+}

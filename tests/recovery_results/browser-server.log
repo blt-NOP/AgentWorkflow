@@ -1,0 +1,111 @@
+[日志] D:\Learning_materials\西工大\课程\边云智能实践\AgentWorkflow\data\logs\runs\20261122_153446_650280_9840.log
+[开始] 2026-11-22T15:34:46
+INFO:     Started server process [34496]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8014 (Press CTRL+C to quit)
+INFO:     127.0.0.1:58024 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58024 - "GET /static/styles.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60192 - "GET /static/stream.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60192 - "GET /static/app.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60192 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60192 - "GET /api/skills HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60192 - "GET /api/sessions/8d8897b3-03fc-41ee-935c-99d9998eac17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60192 - "GET /api/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60192 - "GET /api/library?q= HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60192 - "POST /api/chat/stream HTTP/1.1" 200 OK
+[开始] request=f001228a-ef00-4e26-af9d-41b1e1e2fca0 session=8d8897b3-03fc-41ee-935c-99d9998eac17 model=False
+[读记忆] {"direction": "模型压缩", "compute": "CPU"}
+[当前条件] {"direction": "模型压缩", "compute": "CPU"}
+[工具顺序] build_evidence → research_dialogue
+[写记忆] 8d8897b3-03fc-41ee-935c-99d9998eac17: recent=4, full=4
+[结束] request=f001228a-ef00-4e26-af9d-41b1e1e2fca0 status=WAITING_USER reason=OFFLINE_DEMO
+[回答] [未调用模型] 当前条件：{"direction": "模型压缩", "compute": "CPU"}
+材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索
+
+你计划投入多少周完成最小验证？
+INFO:     127.0.0.1:64683 - "GET /api/sessions/8d8897b3-03fc-41ee-935c-99d9998eac17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58948 - "POST /api/chat/stream HTTP/1.1" 200 OK
+[开始] request=be73ace2-eefe-43ac-a054-eff48824ce8e session=8d8897b3-03fc-41ee-935c-99d9998eac17 model=False
+[读记忆] {"direction": "模型压缩", "compute": "CPU"}
+[当前条件] {"direction": "模型压缩", "compute": "CPU"}
+INFO:     127.0.0.1:61898 - "GET /api/sessions/7fda763e-472d-4fa1-bd4c-ef7e2edd71e1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61898 - "GET /api/sessions HTTP/1.1" 200 OK
+[工具顺序] build_evidence → research_dialogue
+[写记忆] 8d8897b3-03fc-41ee-935c-99d9998eac17: recent=6, full=6
+[结束] request=be73ace2-eefe-43ac-a054-eff48824ce8e status=WAITING_USER reason=OFFLINE_DEMO
+[回答] [未调用模型] 当前条件：{"direction": "模型压缩", "compute": "CPU"}
+材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索
+
+你计划投入多少周完成最小验证？
+INFO:     127.0.0.1:53180 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53180 - "GET /api/sessions/8d8897b3-03fc-41ee-935c-99d9998eac17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65494 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65494 - "GET /static/styles.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:65494 - "GET /static/stream.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65494 - "GET /static/app.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:65494 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65494 - "GET /api/skills HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65494 - "GET /api/sessions/8d8897b3-03fc-41ee-935c-99d9998eac17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65494 - "GET /api/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65494 - "GET /api/library?q= HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55767 - "POST /api/chat/stream HTTP/1.1" 200 OK
+[开始] request=98c21964-b44a-402f-8aad-8bdeb8060468 session=8d8897b3-03fc-41ee-935c-99d9998eac17 model=False
+[读记忆] {"direction": "模型压缩", "compute": "CPU"}
+[当前条件] {"direction": "模型压缩", "compute": "CPU"}
+INFO:     127.0.0.1:55908 - "GET /api/sessions/78b59f16-c6cf-4d85-988c-435e5f514296 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55908 - "GET /api/sessions HTTP/1.1" 200 OK
+[工具顺序] build_evidence → research_dialogue
+[写记忆] 8d8897b3-03fc-41ee-935c-99d9998eac17: recent=6, full=8
+[结束] request=98c21964-b44a-402f-8aad-8bdeb8060468 status=WAITING_USER reason=OFFLINE_DEMO
+[回答] [未调用模型] 当前条件：{"direction": "模型压缩", "compute": "CPU"}
+材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索
+
+你计划投入多少周完成最小验证？
+INFO:     127.0.0.1:64472 - "GET /api/sessions/8d8897b3-03fc-41ee-935c-99d9998eac17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49844 - "GET /api/sessions/8d8897b3-03fc-41ee-935c-99d9998eac17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57255 - "POST /api/chat/stream HTTP/1.1" 200 OK
+[开始] request=acabee88-6823-4d7f-aabb-d7293dbc79c0 session=8d8897b3-03fc-41ee-935c-99d9998eac17 model=False
+[读记忆] {"direction": "模型压缩", "compute": "CPU"}
+[当前条件] {"direction": "模型压缩", "compute": "CPU"}
+[失败] {"at": "2026-11-22T15:41:28", "request_id": "acabee88-6823-4d7f-aabb-d7293dbc79c0", "session_id": "8d8897b3-03fc-41ee-935c-99d9998eac17", "status": "FAILED", "stop_reason": "TIMEOUT", "error_type": "ToolError", "trace": [{"tool": "build_evidence", "call_id": "87a7cd7300f940a7a1958deff5118494", "arguments": {"papers": [], "facts": {"direction": "模型压缩", "compute": "CPU"}}, "status": "FAILED", "error": {"code": "TIMEOUT"}, "duration_ms": 0}], "decisions": [], "events": [{"type": "started", "seq": 1, "request_id": "acabee88-6823-4d7f-aabb-d7293dbc79c0", "session_id": "8d8897b3-03fc-41ee-935c-99d9998eac17", "at": "2026-11-22T15:41:28.491", "data": {"use_model": false}}, {"type": "tool_started", "seq": 2, "request_id": "acabee88-6823-4d7f-aabb-d7293dbc79c0", "session_id": "8d8897b3-03fc-41ee-935c-99d9998eac17", "at": "2026-11-22T15:41:28.492", "data": {"tool": "build_evidence", "call_id": "87a7cd7300f940a7a1958deff5118494"}}, {"type": "tool_failed", "seq": 3, "request_id": "acabee88-6823-4d7f-aabb-d7293dbc79c0", "session_id": "8d8897b3-03fc-41ee-935c-99d9998eac17", "at": "2026-11-22T15:41:28.492", "data": {"tool": "build_evidence", "call_id": "87a7cd7300f940a7a1958deff5118494", "code": "TIMEOUT"}}, {"type": "reply_reset", "seq": 4, "request_id": "acabee88-6823-4d7f-aabb-d7293dbc79c0", "session_id": "8d8897b3-03fc-41ee-935c-99d9998eac17", "at": "2026-11-22T15:41:28.492", "data": {"reason": "FAILED"}}, {"type": "failed", "seq": 5, "request_id": "acabee88-6823-4d7f-aabb-d7293dbc79c0", "session_id": "8d8897b3-03fc-41ee-935c-99d9998eac17", "at": "2026-11-22T15:41:28.492", "data": {"code": "TIMEOUT", "message": "测试注入：文献依赖超时，请恢复依赖后重试。", "retryable": true}}], "duration_ms": 2}
+INFO:     127.0.0.1:59882 - "GET /api/sessions/8d8897b3-03fc-41ee-935c-99d9998eac17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59882 - "POST /api/chat/stream HTTP/1.1" 200 OK
+[开始] request=ff79ccb7-1d5b-41aa-b466-5af656124bd3 session=8d8897b3-03fc-41ee-935c-99d9998eac17 model=False
+[读记忆] {"direction": "模型压缩", "compute": "CPU"}
+[当前条件] {"direction": "模型压缩", "compute": "CPU"}
+[工具顺序] build_evidence → research_dialogue
+[写记忆] 8d8897b3-03fc-41ee-935c-99d9998eac17: recent=6, full=10
+[结束] request=ff79ccb7-1d5b-41aa-b466-5af656124bd3 status=WAITING_USER reason=OFFLINE_DEMO
+[回答] [未调用模型] 当前条件：{"direction": "模型压缩", "compute": "CPU"}
+材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索
+
+你计划投入多少周完成最小验证？
+INFO:     127.0.0.1:59882 - "GET /api/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64579 - "POST /api/chat/stream HTTP/1.1" 200 OK
+[开始] request=2a8f23bb-7f4e-43f7-b525-921d4656f151 session=8d8897b3-03fc-41ee-935c-99d9998eac17 model=False
+[读记忆] {"direction": "模型压缩", "compute": "CPU"}
+[当前条件] {"direction": "模型压缩", "compute": "CPU"}
+[工具顺序] build_evidence → research_dialogue
+[写记忆] 8d8897b3-03fc-41ee-935c-99d9998eac17: recent=6, full=12
+[结束] request=2a8f23bb-7f4e-43f7-b525-921d4656f151 status=WAITING_USER reason=OFFLINE_DEMO
+[回答] [未调用模型] 当前条件：{"direction": "模型压缩", "compute": "CPU"}
+材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索
+
+你计划投入多少周完成最小验证？
+INFO:     127.0.0.1:51697 - "GET /api/sessions/8d8897b3-03fc-41ee-935c-99d9998eac17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60976 - "POST /api/chat/stream HTTP/1.1" 200 OK
+[开始] request=ca5809cc-48c1-4ce7-9723-5d786d125ccb session=8d8897b3-03fc-41ee-935c-99d9998eac17 model=False
+[读记忆] {"direction": "模型压缩", "compute": "CPU"}
+[当前条件] {"direction": "模型压缩", "compute": "CPU"}
+INFO:     127.0.0.1:61855 - "GET /api/sessions/928f3135-8230-4987-915f-e5363efe79ac HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61855 - "GET /api/sessions HTTP/1.1" 200 OK
+[工具顺序] build_evidence → research_dialogue
+[写记忆] 8d8897b3-03fc-41ee-935c-99d9998eac17: recent=6, full=14
+[结束] request=ca5809cc-48c1-4ce7-9723-5d786d125ccb status=WAITING_USER reason=OFFLINE_DEMO
+[回答] [未调用模型] 当前条件：{"direction": "模型压缩", "compute": "CPU"}
+材料缺项：缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索
+
+你计划投入多少周完成最小验证？
+INFO:     127.0.0.1:61295 - "GET /api/sessions/8d8897b3-03fc-41ee-935c-99d9998eac17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61295 - "GET /api/sessions/8d8897b3-03fc-41ee-935c-99d9998eac17 HTTP/1.1" 200 OK

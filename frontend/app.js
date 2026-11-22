@@ -5,6 +5,7 @@ let state = null;
 let editingPaperId = "";
 let parsedPaperId = "";
 let busy = false;
+let chatTimeoutMs = 180000, streamIdleMs = 45000;
 const requests = new Map(); // 请求固定归属原会话；切换页面不会改变它。
 
 function latestRequest(id = sessionId) {
@@ -15,18 +16,26 @@ function refreshChatControls() {
   const pending = latestRequest()?.running;
   document.querySelectorAll("#chat-form button,#chat-form input,#chat-form textarea,#dialogue button,#direction,#claim,#weeks,#compute,#dataset,#skill,#use-model").forEach(node => node.disabled = busy || !!pending);
   $("delete-session").disabled = busy || !!pending;
+  $("retry-chat").disabled = busy || !!pending;
 }
 
 async function api(path, method = "GET", body) {
   const multipart = body instanceof FormData;
-  const response = await fetch(path, { method, headers: multipart ? {} : { "Content-Type": "application/json" },
-    body: multipart ? body : body === undefined ? undefined : JSON.stringify(body) });
-  const data = await response.json();
-  if (!response.ok) {
-    const message = typeof data.detail === "string" ? data.detail : data.detail?.message || "输入格式无效，请检查字段。";
-    throw new Error(message + (data.detail?.request_id ? `（请求 ${data.detail.request_id}）` : ""));
-  }
-  return data;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 30000);
+  try {
+    const response = await fetch(path, { method, headers: multipart ? {} : { "Content-Type": "application/json" },
+      signal: controller.signal, body: multipart ? body : body === undefined ? undefined : JSON.stringify(body) });
+    const data = await response.json();
+    if (!response.ok) {
+      const message = typeof data.detail === "string" ? data.detail : data.detail?.message || "输入格式无效，请检查字段。";
+      throw new Error(message + (data.detail?.request_id ? `（请求 ${data.detail.request_id}）` : ""));
+    }
+    return data;
+  } catch (error) {
+    if (controller.signal.aborted) throw new Error("接口等待超过30秒，已停止等待；请检查后端后重试。");
+    throw error;
+  } finally { clearTimeout(timer); }
 }
 
 function text(parent, content, className = "") {
@@ -85,13 +94,14 @@ function showState(data) {
   }
   const request = latestRequest();
   if (request) renderRequest(request);
-  else { $("progress").replaceChildren(); $("stream-preview").hidden = true; }
+  else { $("progress").replaceChildren(); $("stream-preview").hidden = true; $("retry-chat").hidden = true; }
   refreshChatControls();
 }
 
 function renderRequest(request) {
   if (request.session_id !== sessionId || latestRequest()?.request_id !== request.request_id) return;
   $("progress").replaceChildren();
+  $("retry-chat").hidden = !request.error || request.running;
   for (const item of request.progress) {
     const row = document.createElement("li"); row.textContent = item; $("progress").append(row);
   }
@@ -142,7 +152,11 @@ async function loadSkills() {
 }
 
 async function loadSession() {
-  showState(await api(`/api/sessions/${encodeURIComponent(sessionId)}`));
+  const target = sessionId;
+  const loaded = await api(`/api/sessions/${encodeURIComponent(target)}`);
+  if (sessionId !== target) return; // 晚到的会话读取也不能覆盖切换后的页面。
+  if (loaded.session_id !== target) throw new Error("会话读取结果归属不匹配。");
+  showState(loaded);
   localStorage.setItem("research-session", sessionId);
   $("status").textContent = "";
   if (latestRequest()) renderRequest(latestRequest());
@@ -188,7 +202,7 @@ async function loadLibrary() {
   }
 }
 
-async function sendMessage(message, choiceId = null) {
+async function sendMessage(message, choiceId = null, retryPayload = null, previousIds = []) {
     if (latestRequest()?.running) return; // 同一会话不重复提交。
     const facts = {};
     for (const key of ["direction", "claim", "compute", "weeks", "dataset"]) {
@@ -196,19 +210,22 @@ async function sendMessage(message, choiceId = null) {
       const value = raw ? (key === "weeks" ? Number(raw) : raw) : null;
       if (value !== (state.facts[key] ?? null)) facts[key] = value;
     }
-    const request = {request_id: crypto.randomUUID(), session_id: sessionId, running: true, progress: [], draft: "", ready: false,
-      facts: {...state.facts, ...facts}, inputMessage: $("message").value, inputSearch: $("search").value};
-    const payload = {request_id: request.request_id, session_id: request.session_id, message,
-      facts, search: $("search").value.trim() || null, use_model: $("use-model").checked, skill: $("skill").value, choice_id: choiceId};
+    const payload = {...(retryPayload || {session_id: sessionId, message,
+      facts, search: $("search").value.trim() || null, use_model: $("use-model").checked, skill: $("skill").value, choice_id: choiceId}), request_id: crypto.randomUUID()};
+    const request = {request_id: payload.request_id, session_id: payload.session_id, running: true, progress: [], draft: "", ready: false,
+      facts: {...state.facts, ...payload.facts}, payload, previousIds, inputMessage: $("message").value, inputSearch: $("search").value};
     const inputMessage = $("message").value, inputSearch = $("search").value;
     requests.set(request.request_id, request); refreshChatControls(); renderRequest(request);
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), chatTimeoutMs);
     try {
-      const response = await fetch("/api/chat/stream", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(payload)});
+      const response = await fetch("/api/chat/stream", {method: "POST", signal: controller.signal, headers: {"Content-Type": "application/json"}, body: JSON.stringify(payload)});
       if (!response.ok) {
         const data = await response.json();
         throw new Error(typeof data.detail === "string" ? data.detail : data.detail?.message || "请求无效，请检查输入。");
       }
-      await ResearchStream.read(response, request, event => receiveEvent(request, event));
+      await ResearchStream.read(response, request, event => receiveEvent(request, event), streamIdleMs);
+      clearTimeout(timer);
       if (request.error) throw new Error(request.error);
       await loadSessions();
       if (sessionId === request.session_id && latestRequest()?.request_id === request.request_id) {
@@ -217,9 +234,35 @@ async function sendMessage(message, choiceId = null) {
         $("status").textContent = `${request.result.status} · 请求 ${request.request_id} · 结果已保存`;
       }
     } catch (error) {
-      request.error = error.message; request.draft = "";
-    } finally { request.running = false; renderRequest(request); refreshChatControls(); }
+      request.error = controller.signal.aborted ? `本轮等待超过 ${chatTimeoutMs / 1000} 秒，已停止等待。后端可能仍在执行，请点击重试核对原会话。` : error.message;
+      request.draft = "";
+    } finally { clearTimeout(timer); controller.abort(); request.running = false; renderRequest(request); refreshChatControls(); }
 }
+
+$("retry-chat").onclick = async () => {
+  if (busy) return;
+  const failed = latestRequest();
+  if (!failed?.error || failed.running) return;
+  const originalSession = failed.session_id;
+  let retry = false;
+  await run(async () => {
+    const saved = await api(`/api/sessions/${encodeURIComponent(originalSession)}`);
+    if (sessionId !== originalSession || latestRequest() !== failed) return;
+    if (saved.session_id !== originalSession) throw new Error("会话读取结果归属不匹配。");
+    // 超时不代表后端失败：已保存则直接恢复，避免重复消息和模型消耗。
+    if ([failed.request_id, ...failed.previousIds].includes(saved.request_id)) {
+      failed.error = null; failed.result = {state: saved};
+      failed.progress.push("原请求已保存，已恢复结果，无需重复执行");
+      showState(saved); $("status").textContent = "已恢复原请求的结果。";
+      if ($("message").value === failed.inputMessage) $("message").value = "";
+      if ($("search").value === failed.inputSearch) $("search").value = "";
+      return;
+    }
+    retry = true;
+  });
+  if (retry && sessionId === originalSession && latestRequest() === failed)
+    await sendMessage(failed.payload.message, failed.payload.choice_id, failed.payload, [...failed.previousIds, failed.request_id]);
+};
 
 async function submitChat(message, choiceId = null) {
   if (busy || latestRequest()?.running) return;
@@ -278,6 +321,8 @@ $("import-papers").onchange = () => run(async () => {
 $("find-papers").onclick = () => run(loadLibrary);
 run(async () => {
   const health = await api("/api/health");
+  chatTimeoutMs = health.chat_timeout_seconds * 1000 || chatTimeoutMs;
+  streamIdleMs = health.stream_idle_seconds * 1000 || streamIdleMs;
   $("use-model").checked = health.model_enabled;
   $("health").textContent = health.model_configured ? "后端已连接 · 模型配置已填写（未验证连通性）" : "后端已连接 · 暂未配置模型";
   await loadSkills(); await loadSession(); await loadSessions(); await loadLibrary();

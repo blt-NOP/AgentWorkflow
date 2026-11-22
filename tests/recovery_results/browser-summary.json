@@ -1,0 +1,22 @@
+{
+  "result": "PASS",
+  "method": "real browser UI via local fault-injection server; no cloud model",
+  "session_a": "8d8897b3-03fc-41ee-935c-99d9998eac17",
+  "session_b": "928f3135-8230-4987-915f-e5363efe79ac",
+  "requests": {
+    "failure": "acabee88-6823-4d7f-aabb-d7293dbc79c0",
+    "recovered": "ff79ccb7-1d5b-41aa-b466-5af656124bd3",
+    "timeout": "2a8f23bb-7f4e-43f7-b525-921d4656f151",
+    "late-recovered": "2a8f23bb-7f4e-43f7-b525-921d4656f151",
+    "session-return": "ca5809cc-48c1-4ce7-9723-5d786d125ccb"
+  },
+  "checks": [
+    "fault displayed, controls unlocked",
+    "dependency restored, same session succeeded",
+    "page total timeout displayed",
+    "late saved result recovered without resubmission",
+    "session B remained empty",
+    "return A retains retry entry"
+  ],
+  "note": "Full UI trees and screenshots are captured; saved session and logs confirm request lineage."
+}

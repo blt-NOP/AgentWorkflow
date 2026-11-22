@@ -1,0 +1,23 @@
+{
+  "tool": "parse_paper_pdf",
+  "case": "api_timeout",
+  "arguments": {
+    "content_ref": "sample_paper.pdf"
+  },
+  "returned": {
+    "status": 504,
+    "body": {
+      "detail": {
+        "code": "TIMEOUT",
+        "message": "PDF 解析超过 0.001 秒，已停止；请缩小页码范围或重新导出后重试",
+        "retryable": true,
+        "request_id": null
+      }
+    }
+  },
+  "error": null,
+  "passed": true,
+  "basis": "解析超时返回HTTP504、明确原因和retryable=true",
+  "data_source": "local",
+  "changed_parameter": null
+}

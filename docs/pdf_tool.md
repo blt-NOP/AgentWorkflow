@@ -9,7 +9,7 @@
 | 用途与选择条件 | 从用户实际提供的文字型论文 PDF 提取原文和元数据，供核对、保存和后续研究讨论。需要未加密的 PDF；不执行 OCR、语义总结、公式识别或版面还原，不根据文件名编造论文结论。文字顺序和表格、公式可能失真，应对照原文。 |
 | 参数与返回 | 函数 `parse_paper_pdf(content: bytes, filename: str="paper.pdf", start_page: int=1, end_page: int或None=None)`。内容必填、非空、最多20 MiB；文件名最长255字符且以.pdf结尾。页码为从1开始的闭区间，单次最多20页；不填结束页时读取起始页起最多20页。文件最多500页。返回 filename、sha256、total_pages、start_page、end_page、pages（page_number/text/truncated）、text、truncated、warnings、metadata（title/author）和 paper。paper 兼容现有 Paper 接口及 build_evidence；其中 abstract 明确标注为带页码的PDF原文摘录，不是真正的摘要或模型生成内容。未核实的 year 为null、doi为空，不猜测。 |
 | 数据与副作用 | 数据来自本次PDF字节及其元数据；标题优先使用元数据，缺失时使用文件名，作者仅来自元数据。纯解析函数不保存原始PDF、不写会话或数据库。相同文件的SHA256相同，paper_id=`pdf-`加完整SHA256。核对后可通过现有 POST /api/library/papers 保存；同一paper_id重复保存更新同一记录，不新增。选择不同页码后保存同一文件将替换其旧摘录，不自动合并。重复解析本身不会修改已保存的笔记；显式保存时提交的字段会覆盖旧字段，请先核对。 |
-| 失败行为 | INVALID_INPUT：空内容、文件名/页码错误，HTTP400或参数校验422；INVALID_PDF：格式不符、损坏或解析失败，400；ENCRYPTED_PDF：加密文件，400；NO_TEXT：所选页面无可提取文字，422，提示先OCR或换页；FILE_TOO_LARGE：超过20MiB，413；PDF_LIMIT：超过500页，413。均retryable=false，应修改文件或参数后重试。本工具没有外部网络调用或自动重试；有限制文件大小、页数及返回文字量，但未实现解析进程墙钟超时，不能把输入限额当成耗时保证。 |
+| 失败行为 | INVALID_INPUT：空内容、文件名/页码错误，HTTP400或参数校验422；INVALID_PDF：格式不符、损坏或解析失败，400；ENCRYPTED_PDF：加密文件，400；NO_TEXT：所选页面无可提取文字，422，提示先OCR或换页；FILE_TOO_LARGE：超过20MiB，413；PDF_LIMIT：超过500页，413。均retryable=false，应修改文件或参数后重试。另有TIMEOUT：独立解析进程超过默认20秒（PDF_TIMEOUT_SECONDS），终止并回收后返回HTTP504、retryable=true。没有外部网络调用或自动重试；保留大小、页数、文字量限制。超时与恢复测试见[恢复验收](recovery.md)。 |
 
 全文提取最多返回48000字符，超过后截断并在页面及顶层标记 `truncated=true`。空白页允许夹在有文字的页中；所选页全部无文字才返回 NO_TEXT。默认最多20页不代表已读取整篇论文，warnings会提示未包含全文。元数据可能由文件作者填写错误，界面允许人工修改。
 
