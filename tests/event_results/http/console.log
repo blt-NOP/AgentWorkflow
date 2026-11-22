@@ -1,0 +1,119 @@
+[日志] D:\Learning_materials\西工大\课程\边云智能实践\AgentWorkflow\data\logs\runs\20261122_152016_764706_24680.log
+[开始] 2026-11-22T15:20:16
+[开始] request=Gate session=A model=False
+[读记忆] {}
+[当前条件] {"direction": "模型压缩", "compute": "GPU", "weeks": 4, "dataset": "公开数据集"}
+PASS: 工具尚未结束就收到开始/处理中事件，证明真实HTTP增量传输
+[工具顺序] build_evidence → research_dialogue
+[写记忆] A: recent=2, full=2
+[结束] request=Gate status=WAITING_USER reason=OFFLINE_DEMO
+[回答] [未调用模型] 当前条件：{"direction": "模型压缩", "compute": "GPU", "weeks": 4, "dataset": "公开数据集"}
+材料缺项：暂无论文，请导入已有论文或检索
+
+你希望优先改善哪个可测量的指标？
+PASS: 最终事件交付已保存状态，页面结果可与磁盘核对
+PASS: 离线主任务的事件顺序完整
+[开始] request=Correction session=A model=False
+[读记忆] {"direction": "模型压缩", "compute": "GPU", "weeks": 4, "dataset": "公开数据集"}
+[当前条件] {"direction": "模型压缩", "compute": "CPU", "weeks": 4, "dataset": "公开数据集"}
+PASS: Correction 返回SSE
+[工具顺序] build_evidence → research_dialogue
+[写记忆] A: recent=4, full=4
+[结束] request=Correction status=WAITING_USER reason=OFFLINE_DEMO
+[回答] [未调用模型] 当前条件：{"direction": "模型压缩", "compute": "CPU", "weeks": 4, "dataset": "公开数据集"}
+材料缺项：暂无论文，请导入已有论文或检索
+
+你希望优先改善哪个可测量的指标？
+PASS: Correction 序号连续且归属一致
+PASS: 同会话更正后工具结果采用CPU
+[开始] request=Isolation session=B model=False
+[读记忆] {}
+[当前条件] {}
+PASS: Isolation 返回SSE
+[工具顺序] build_evidence → research_dialogue
+[写记忆] B: recent=2, full=2
+[结束] request=Isolation status=WAITING_USER reason=OFFLINE_DEMO
+[回答] [未调用模型] 当前条件：{}
+材料缺项：缺少算力条件；缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索
+
+你目前主要关注哪个研究方向？
+PASS: Isolation 序号连续且归属一致
+PASS: 切换A/B不会混入约束，返回A仍保留CPU
+[开始] request=ToolFault session=Recovery model=False
+[读记忆] {}
+[当前条件] {}
+PASS: ToolFault 返回SSE
+[失败] {"at": "2026-11-22T15:20:18", "request_id": "ToolFault", "session_id": "Recovery", "status": "FAILED", "stop_reason": "TIMEOUT", "error_type": "ToolError", "trace": [{"tool": "search_papers", "call_id": "a18dd2afc2ea463bbb67c118532a3070", "arguments": {"query": "explicit-fault"}, "status": "FAILED", "error": {"code": "TIMEOUT"}, "duration_ms": 0}], "decisions": [], "events": [{"type": "started", "seq": 1, "request_id": "ToolFault", "session_id": "Recovery", "at": "2026-11-22T15:20:18.046", "data": {"use_model": false}}, {"type": "tool_started", "seq": 2, "request_id": "ToolFault", "session_id": "Recovery", "at": "2026-11-22T15:20:18.047", "data": {"tool": "search_papers", "call_id": "a18dd2afc2ea463bbb67c118532a3070"}}, {"type": "tool_failed", "seq": 3, "request_id": "ToolFault", "session_id": "Recovery", "at": "2026-11-22T15:20:18.047", "data": {"tool": "search_papers", "call_id": "a18dd2afc2ea463bbb67c118532a3070", "code": "TIMEOUT"}}, {"type": "reply_reset", "seq": 4, "request_id": "ToolFault", "session_id": "Recovery", "at": "2026-11-22T15:20:18.047", "data": {"reason": "FAILED"}}, {"type": "failed", "seq": 5, "request_id": "ToolFault", "session_id": "Recovery", "at": "2026-11-22T15:20:18.047", "data": {"code": "TIMEOUT", "message": "测试检索超时", "retryable": true}}], "duration_ms": 1}
+PASS: ToolFault 序号连续且归属一致
+PASS: 工具失败有事件、清除草稿、不交付成功且不写半完成会话
+[开始] request=Recovered session=Recovery model=False
+[读记忆] {}
+[当前条件] {}
+PASS: Recovered 返回SSE
+[工具顺序] build_evidence → research_dialogue
+[写记忆] Recovery: recent=2, full=2
+[结束] request=Recovered status=WAITING_USER reason=OFFLINE_DEMO
+[回答] [未调用模型] 当前条件：{}
+材料缺项：缺少算力条件；缺少可用时间；缺少数据条件；暂无论文，请导入已有论文或检索
+
+你目前主要关注哪个研究方向？
+PASS: Recovered 序号连续且归属一致
+PASS: 故障恢复后同会话可再次成功
+PASS: 无效输入在建流前返回422
+[开始] request=ModelStream session=Model model=True
+PASS: ModelStream 返回SSE
+[读记忆] {}
+[当前条件] {"direction": "模型压缩"}
+[模型决策] request=ModelStream step=1 tools=['research_dialogue'] usage={'total_tokens': 10}
+[工具轨迹] {"request_id": "ModelStream", "call_id": "fixture-call", "tool": "research_dialogue", "model_arguments": "{}", "arguments": {"state": {"facts": {"direction": "模型压缩"}, "answers": {}, "evidence": {"rows": [], "gaps": []}, "history": []}, "message": "继续讨论", "skill_id": "research-dialogue", "use_model": false}, "status": "SUCCEEDED", "result": {"skill": "research-dialogue", "stage": "compute", "field": "compute", "target": "facts", "question": "你可以使用哪些计算资源？", "options": [{"id": "compute-0", "label": "只有 CPU", "value": "CPU"}, {"id": "compute-1", "label": "可以使用 GPU", "value": "GPU"}, {"id": "compute-2", "label": "算力尚未确定", "value": "尚未确定"}], "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\"}"}, "duration_ms": 1}
+[模型决策] request=ModelStream step=2 tools=[] usage={'total_tokens': 10}
+[工具顺序] research_dialogue
+[写记忆] Model: recent=2, full=2
+[结束] request=ModelStream status=WAITING_USER reason=NEEDS_USER_INPUT
+[回答] 第一段
+第二段😀
+PASS: ModelStream 序号连续且归属一致
+PASS: 真实模型协议分片转换为增量正文，正确处理换行与Unicode转义
+PASS: 流式工具名/参数重组后执行并回传同一调用ID
+PASS: 只发送正文草稿，不暴露私有推理，最终正文一致
+[开始] request=ModelComplete session=Complete model=True
+PASS: ModelComplete 返回SSE
+[读记忆] {"direction": "模型压缩", "compute": "CPU", "weeks": 4, "dataset": "公开数据集"}
+[当前条件] {"direction": "模型压缩", "compute": "CPU", "weeks": 4, "dataset": "公开数据集"}
+[模型决策] request=ModelComplete step=1 tools=['build_evidence'] usage={'total_tokens': 10}
+[工具轨迹] {"request_id": "ModelComplete", "call_id": "complete-call", "tool": "build_evidence", "model_arguments": "{}", "arguments": {"papers": [{"title": "Synthetic event fixture", "doi": "10.0000/event-fixture", "abstract": "Synthetic test excerpt, not a real paper."}], "facts": {"direction": "模型压缩", "compute": "CPU", "weeks": 4, "dataset": "公开数据集"}}, "status": "SUCCEEDED", "result": {"facts": {"direction": "模型压缩", "compute": "CPU", "weeks": 4, "dataset": "公开数据集"}, "rows": [{"id": "10.0000/event-fixture", "title": "Synthetic event fixture", "year": null, "doi": "10.0000/event-fixture", "notes": "", "excerpt": "Synthetic test excerpt, not a real paper."}], "gaps": []}, "duration_ms": 0}
+[模型决策] request=ModelComplete step=2 tools=[] usage={'total_tokens': 10}
+[工具顺序] build_evidence
+[写记忆] Complete: recent=2, full=2
+[结束] request=ModelComplete status=COMPLETED reason=TASK_COMPLETED
+[回答] 完整方案已生成
+PASS: ModelComplete 序号连续且归属一致
+PASS: 完整研究方案通过守卫并保存后，作为结构化结果交付
+[开始] request=RejectedDraft session=Draft model=True
+PASS: RejectedDraft 返回SSE
+[读记忆] {}
+[当前条件] {}
+[模型决策] request=RejectedDraft step=1 tools=[] usage={'total_tokens': 10}
+[模型决策] request=RejectedDraft step=2 tools=[] usage={'total_tokens': 10}
+[工具顺序] 
+[写记忆] Draft: recent=2, full=2
+[结束] request=RejectedDraft status=WAITING_USER reason=NEEDS_USER_INPUT
+[回答] 已修正，请补充条件
+PASS: RejectedDraft 序号连续且归属一致
+PASS: 校验失败会撤销已展示草稿，修正结果才作为最终回复
+PASS: 未通过校验的草稿不进入正式聊天历史
+[开始] request=StreamRetry session=Retry model=True
+PASS: StreamRetry 返回SSE
+[读记忆] {}
+[当前条件] {}
+[模型决策] request=StreamRetry step=1 tools=[] usage={'total_tokens': 10}
+[工具顺序] 
+[写记忆] Retry: recent=2, full=2
+[结束] request=StreamRetry status=WAITING_USER reason=NEEDS_USER_INPUT
+[回答] 重试成功
+PASS: StreamRetry 序号连续且归属一致
+PASS: 流中断后有限重试，清除旧草稿避免重复拼接
+PASS: 不完整Unicode代理对等待后续字节
+RESULT: PASS (32 checks); real model calls=0
+ARTIFACTS: D:\Learning_materials\西工大\课程\边云智能实践\AgentWorkflow\data\model-check\events-4b5c6347
+[结束] 2026-11-22T15:20:18 exit_code=0

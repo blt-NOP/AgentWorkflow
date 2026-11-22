@@ -1,6 +1,6 @@
 """网页入口：只做参数校验、接口映射和静态文件服务。"""
 from fastapi import FastAPI, HTTPException, Request, UploadFile, File, Form
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.exceptions import RequestValidationError
 from pydantic import BaseModel, Field
@@ -20,6 +20,7 @@ class Facts(BaseModel):
 
 
 class ChatInput(BaseModel):
+    request_id: str | None = Field(default=None, pattern=r"^[A-Za-z0-9_-]{1,64}$")
     session_id: str = Field(min_length=1, max_length=64)
     message: str = Field(min_length=1, max_length=10000)
     facts: Facts = Field(default_factory=Facts)
@@ -91,13 +92,28 @@ def health():
 def chat(data: ChatInput):
     try:
         return agent.run_turn(data.session_id, data.message, data.facts.model_dump(exclude_unset=True),
-                              data.search, data.use_model, skill=data.skill, choice_id=data.choice_id)
+                              data.search, data.use_model, skill=data.skill, choice_id=data.choice_id, request_id=data.request_id)
     except ValueError:
         raise
     except Exception as error:
         print(f"[失败] {type(error).__name__}", flush=True)
         raise HTTPException(502, {"code": "EXECUTION_ERROR", "message": "本轮执行失败，请按request_id检查日志后重试。",
                                    "request_id": getattr(error, "request_id", None), "retryable": True}) from error
+
+
+@app.post("/api/chat/stream", response_class=StreamingResponse, responses={200: {
+    "description": "按顺序发送SSE事件，completed交付最终JSON状态，failed表示执行失败",
+    "content": {"text/event-stream": {"schema": {"type": "string"}}}}})
+def chat_stream(data: ChatInput):
+    """SSE：运行期间推送阶段事件和模型reply草稿，completed交付已保存的最终状态。"""
+    from .events import stream_turn
+    memory.session_path(data.session_id)
+    if not data.message.strip():
+        raise ValueError("消息不能为空")
+    arguments = data.model_dump(exclude={"facts"})
+    arguments["facts"] = data.facts.model_dump(exclude_unset=True)
+    return StreamingResponse(stream_turn(arguments), media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
 
 
 @app.get("/api/sessions")

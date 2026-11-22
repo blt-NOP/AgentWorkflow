@@ -1,0 +1,30 @@
+{
+  "result": "PASS",
+  "checks": [
+    "legacy JSON migrated to SQLite",
+    "migration runs once; deleted paper stays deleted; original JSON retained",
+    "DOI normalization and duplicate save",
+    "paper edit preserves ID and creation time",
+    "SQLite search includes notes",
+    "paper detail endpoint",
+    "batch import updates existing papers",
+    "failed batch import rolls back",
+    "chat reads SQLite and asks first missing fact",
+    "option answer updates facts before evidence tool",
+    "multi-turn question advances",
+    "typed answer recorded",
+    "research goal persists; next question is baseline",
+    "dialogue and answers restored after history trimming",
+    "expired choice rejected without saving",
+    "explicit correction used by next tool result",
+    "session B does not inherit A facts or answers",
+    "new tool actually runs in agent chain",
+    "independent dialogue endpoint has no session writes",
+    "changing Skill changes question strategy",
+    "model receives Skill instructions and selected question",
+    "dialogue tool uses model response",
+    "SQLite schema contains paper and reading fields"
+  ],
+  "count": 23,
+  "artifacts": "D:\\Learning_materials\\西工大\\课程\\边云智能实践\\AgentWorkflow\\data\\feature-check\\run-a71cd156"
+}

@@ -1,0 +1,353 @@
+{
+  "arguments": {
+    "session_id": "Retry",
+    "request_id": "StreamRetry",
+    "message": "继续讨论",
+    "use_model": true
+  },
+  "events": [
+    {
+      "type": "started",
+      "seq": 1,
+      "request_id": "StreamRetry",
+      "session_id": "Retry",
+      "at": "2026-11-22T15:20:18.232",
+      "data": {
+        "use_model": true
+      }
+    },
+    {
+      "type": "model_started",
+      "seq": 2,
+      "request_id": "StreamRetry",
+      "session_id": "Retry",
+      "at": "2026-11-22T15:20:18.234",
+      "data": {
+        "step": 1
+      }
+    },
+    {
+      "type": "reply_reset",
+      "seq": 3,
+      "request_id": "StreamRetry",
+      "session_id": "Retry",
+      "at": "2026-11-22T15:20:18.234",
+      "data": {
+        "reason": "NEW_DECISION",
+        "step": 1
+      }
+    },
+    {
+      "type": "reply_reset",
+      "seq": 4,
+      "request_id": "StreamRetry",
+      "session_id": "Retry",
+      "at": "2026-11-22T15:20:18.234",
+      "data": {
+        "reason": "MODEL_ATTEMPT",
+        "step": 1
+      }
+    },
+    {
+      "type": "reply_delta",
+      "seq": 5,
+      "request_id": "StreamRetry",
+      "session_id": "Retry",
+      "at": "2026-11-22T15:20:18.234",
+      "data": {
+        "text": "旧草稿",
+        "draft": true,
+        "step": 1
+      }
+    },
+    {
+      "type": "reply_reset",
+      "seq": 6,
+      "request_id": "StreamRetry",
+      "session_id": "Retry",
+      "at": "2026-11-22T15:20:18.234",
+      "data": {
+        "reason": "MODEL_ATTEMPT",
+        "step": 1
+      }
+    },
+    {
+      "type": "reply_delta",
+      "seq": 7,
+      "request_id": "StreamRetry",
+      "session_id": "Retry",
+      "at": "2026-11-22T15:20:18.235",
+      "data": {
+        "text": "重",
+        "draft": true,
+        "step": 1
+      }
+    },
+    {
+      "type": "reply_delta",
+      "seq": 8,
+      "request_id": "StreamRetry",
+      "session_id": "Retry",
+      "at": "2026-11-22T15:20:18.235",
+      "data": {
+        "text": "试成",
+        "draft": true,
+        "step": 1
+      }
+    },
+    {
+      "type": "reply_delta",
+      "seq": 9,
+      "request_id": "StreamRetry",
+      "session_id": "Retry",
+      "at": "2026-11-22T15:20:18.235",
+      "data": {
+        "text": "功",
+        "draft": true,
+        "step": 1
+      }
+    },
+    {
+      "type": "model_result",
+      "seq": 10,
+      "request_id": "StreamRetry",
+      "session_id": "Retry",
+      "at": "2026-11-22T15:20:18.235",
+      "data": {
+        "step": 1,
+        "tool_names": [],
+        "duration_ms": 1
+      }
+    },
+    {
+      "type": "reply_ready",
+      "seq": 11,
+      "request_id": "StreamRetry",
+      "session_id": "Retry",
+      "at": "2026-11-22T15:20:18.235",
+      "data": {
+        "reply": "重试成功",
+        "status": "WAITING_USER"
+      }
+    },
+    {
+      "type": "completed",
+      "seq": 12,
+      "request_id": "StreamRetry",
+      "session_id": "Retry",
+      "at": "2026-11-22T15:20:18.237",
+      "data": {
+        "reply": "重试成功",
+        "dialogue": {
+          "skill": "research-dialogue",
+          "stage": "waiting",
+          "field": null,
+          "target": null,
+          "question": "",
+          "options": []
+        },
+        "status": "WAITING_USER",
+        "stop_reason": "NEEDS_USER_INPUT",
+        "proposal": null,
+        "request_id": "StreamRetry",
+        "state": {
+          "session_id": "Retry",
+          "facts": {},
+          "history": [
+            {
+              "role": "user",
+              "content": "继续讨论"
+            },
+            {
+              "role": "assistant",
+              "content": "重试成功"
+            }
+          ],
+          "messages": [
+            {
+              "role": "user",
+              "content": "继续讨论"
+            },
+            {
+              "role": "assistant",
+              "content": "重试成功"
+            }
+          ],
+          "papers": [],
+          "evidence": {},
+          "reply": "重试成功",
+          "trace": [],
+          "answers": {},
+          "dialogue": {
+            "skill": "research-dialogue",
+            "stage": "waiting",
+            "field": null,
+            "target": null,
+            "question": "",
+            "options": []
+          },
+          "skill": "research-dialogue",
+          "status": "WAITING_USER",
+          "proposal": null,
+          "decisions": [
+            {
+              "step": 1,
+              "request_id": "StreamRetry",
+              "model": "explicit-sse-fixture",
+              "usage": {
+                "total_tokens": 10
+              },
+              "provider_request_id": "synthetic-provider-id",
+              "attempts": 2,
+              "duration_ms": 1,
+              "tool_names": []
+            }
+          ],
+          "stop_reason": "NEEDS_USER_INPUT",
+          "request_id": "StreamRetry",
+          "events": [
+            {
+              "type": "started",
+              "seq": 1,
+              "request_id": "StreamRetry",
+              "session_id": "Retry",
+              "at": "2026-11-22T15:20:18.232",
+              "data": {
+                "use_model": true
+              }
+            },
+            {
+              "type": "model_started",
+              "seq": 2,
+              "request_id": "StreamRetry",
+              "session_id": "Retry",
+              "at": "2026-11-22T15:20:18.234",
+              "data": {
+                "step": 1
+              }
+            },
+            {
+              "type": "reply_reset",
+              "seq": 3,
+              "request_id": "StreamRetry",
+              "session_id": "Retry",
+              "at": "2026-11-22T15:20:18.234",
+              "data": {
+                "reason": "NEW_DECISION",
+                "step": 1
+              }
+            },
+            {
+              "type": "reply_reset",
+              "seq": 4,
+              "request_id": "StreamRetry",
+              "session_id": "Retry",
+              "at": "2026-11-22T15:20:18.234",
+              "data": {
+                "reason": "MODEL_ATTEMPT",
+                "step": 1
+              }
+            },
+            {
+              "type": "reply_delta",
+              "seq": 5,
+              "request_id": "StreamRetry",
+              "session_id": "Retry",
+              "at": "2026-11-22T15:20:18.234",
+              "data": {
+                "text": "旧草稿",
+                "draft": true,
+                "step": 1
+              }
+            },
+            {
+              "type": "reply_reset",
+              "seq": 6,
+              "request_id": "StreamRetry",
+              "session_id": "Retry",
+              "at": "2026-11-22T15:20:18.234",
+              "data": {
+                "reason": "MODEL_ATTEMPT",
+                "step": 1
+              }
+            },
+            {
+              "type": "reply_delta",
+              "seq": 7,
+              "request_id": "StreamRetry",
+              "session_id": "Retry",
+              "at": "2026-11-22T15:20:18.235",
+              "data": {
+                "text": "重",
+                "draft": true,
+                "step": 1
+              }
+            },
+            {
+              "type": "reply_delta",
+              "seq": 8,
+              "request_id": "StreamRetry",
+              "session_id": "Retry",
+              "at": "2026-11-22T15:20:18.235",
+              "data": {
+                "text": "试成",
+                "draft": true,
+                "step": 1
+              }
+            },
+            {
+              "type": "reply_delta",
+              "seq": 9,
+              "request_id": "StreamRetry",
+              "session_id": "Retry",
+              "at": "2026-11-22T15:20:18.235",
+              "data": {
+                "text": "功",
+                "draft": true,
+                "step": 1
+              }
+            },
+            {
+              "type": "model_result",
+              "seq": 10,
+              "request_id": "StreamRetry",
+              "session_id": "Retry",
+              "at": "2026-11-22T15:20:18.235",
+              "data": {
+                "step": 1,
+                "tool_names": [],
+                "duration_ms": 1
+              }
+            },
+            {
+              "type": "reply_ready",
+              "seq": 11,
+              "request_id": "StreamRetry",
+              "session_id": "Retry",
+              "at": "2026-11-22T15:20:18.235",
+              "data": {
+                "reply": "重试成功",
+                "status": "WAITING_USER"
+              }
+            }
+          ]
+        },
+        "trace": [],
+        "decisions": [
+          {
+            "step": 1,
+            "request_id": "StreamRetry",
+            "model": "explicit-sse-fixture",
+            "usage": {
+              "total_tokens": 10
+            },
+            "provider_request_id": "synthetic-provider-id",
+            "attempts": 2,
+            "duration_ms": 1,
+            "tool_names": []
+          }
+        ]
+      }
+    }
+  ]
+}

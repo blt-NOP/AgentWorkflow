@@ -2,6 +2,8 @@
 
 当前默认使用本地.env中的qwen3.7-plus，通过百炼OpenAI兼容Chat Completions接口调用。不安装模型SDK，不增加智能体框架。密钥仅保存在被Git忽略的.env，前端不接收密钥。MODEL_BASE_URL为北京兼容地址；地域与账号权限不同可自行修改，不自动切换到其他计费端点或模型。
 
+网页现已通过`POST /api/chat/stream`显示真实模型增量和执行阶段；普通`POST /api/chat`及CLI仍兼容完整响应。事件协议与会话切换验收见[events.md](events.md)。
+
 ## 阅读代码的顺序
 
 1. `backend/model.py`：统一HTTP适配，发送messages/tools，返回模型消息和usage；处理超时、响应校验、输出截断、有限重试。不输出Authorization、原始上游错误和推理过程。

@@ -67,7 +67,8 @@ def view(value):
     return value
 
 
-def run(state, message, search, request_id):
+def run(state, message, search, request_id, emit=None, stream_reply=False):
+    emit = emit or (lambda kind, data=None: None)
     instructions, config = dialogue.load_skill(state["skill"])
     papers = library.list_papers() + state["papers"]
     state["trace"], state["decisions"] = [], []
@@ -99,14 +100,36 @@ proposal必须包含research_question、hypothesis、method、experiment、metri
     tool_count = 0
     current = None
     for step in range(1, max_steps + 1):
+        emit("model_started", {"step": step})
+        emit("reply_reset", {"reason": "NEW_DECISION", "step": step})
         started = perf_counter()
-        completion = model.chat(messages, MODEL_TOOLS)
+        if stream_reply:
+            from .events import reply_prefix
+            buffer, preview = "", ""
+
+            def receive(fragment):
+                nonlocal buffer, preview
+                if fragment is None:
+                    buffer, preview = "", ""
+                    emit("reply_reset", {"reason": "MODEL_ATTEMPT", "step": step})
+                    return
+                buffer += fragment
+                value = reply_prefix(buffer)
+                if value.startswith(preview) and len(value) > len(preview):
+                    emit("reply_delta", {"text": value[len(preview):], "draft": True, "step": step})
+                    preview = value
+
+            completion = model.chat(messages, MODEL_TOOLS, on_delta=receive)
+        else:
+            completion = model.chat(messages, MODEL_TOOLS)
         assistant = completion["message"]
         calls = assistant.get("tool_calls") or []
         state["decisions"].append({"step": step, "request_id": request_id,
             "model": completion.get("model"), "usage": completion.get("usage", {}),
             "provider_request_id": completion.get("provider_request_id"), "attempts": completion.get("attempts", 1),
             "duration_ms": round((perf_counter() - started) * 1000), "tool_names": [c.get("function", {}).get("name") for c in calls]})
+        emit("model_result", {"step": step, "tool_names": [c.get("function", {}).get("name") for c in calls],
+                              "duration_ms": state["decisions"][-1]["duration_ms"]})
         print(f"[模型决策] request={request_id} step={step} tools={[c.get('function', {}).get('name') for c in calls]} usage={completion.get('usage', {})}", flush=True)
         if calls:
             if not isinstance(calls, list) or len(calls) > 3:
@@ -125,6 +148,7 @@ proposal必须包含research_question、hypothesis、method、experiment、metri
                           "model_arguments": raw, "arguments": None, "status": "RUNNING"}
                 state["trace"].append(record)
                 started = perf_counter()
+                emit("tool_started", {"tool": name, "call_id": call_id, "step": step})
                 try:
                     if name not in ARGUMENTS:
                         raise ToolError("UNKNOWN_TOOL", "工具名不在允许列表，请选择已提供的工具")
@@ -171,6 +195,9 @@ proposal必须包含research_question、hypothesis、method、experiment、metri
                     feedback = {"ok": False, "error": {"code": error.code, "message": str(error), "retryable": error.retryable}}
                     record.update(status="FAILED", error=feedback["error"])
                 record["duration_ms"] = round((perf_counter() - started) * 1000)
+                emit("tool_result" if record["status"] == "SUCCEEDED" else "tool_failed",
+                     {"tool": name, "call_id": call_id, "step": step, "duration_ms": record["duration_ms"],
+                      "result": record.get("result"), "error": record.get("error")})
                 print("[工具轨迹] " + json.dumps(record, ensure_ascii=False), flush=True)
                 messages.append({"role": "tool", "tool_call_id": call_id, "content": json.dumps(feedback, ensure_ascii=False)})
             continue
@@ -199,6 +226,7 @@ proposal必须包含research_question、hypothesis、method、experiment、metri
             return {"reply": final.reply, "dialogue": interaction, "status": "WAITING_USER",
                     "stop_reason": "NEEDS_USER_INPUT", "proposal": None}
         except (ValidationError, ValueError) as error:
+            emit("reply_reset", {"reason": "VALIDATION_REJECTED", "step": step})
             # 仅回传固定校验提示，不把上游原文、凭据或推理内容写到日志。
             messages.append({"role": "assistant", "content": assistant.get("content", "")})
             messages.append({"role": "user", "content": "最终结果未通过校验。请只返回规定JSON；缺条件请先research_dialogue并WAITING_USER，完成必须有本轮真实证据及完整proposal，references必须使用真实row.id。"})

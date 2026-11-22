@@ -5,6 +5,17 @@ let state = null;
 let editingPaperId = "";
 let parsedPaperId = "";
 let busy = false;
+const requests = new Map(); // 请求固定归属原会话；切换页面不会改变它。
+
+function latestRequest(id = sessionId) {
+  return [...requests.values()].reverse().find(request => request.session_id === id);
+}
+
+function refreshChatControls() {
+  const pending = latestRequest()?.running;
+  document.querySelectorAll("#chat-form button,#chat-form input,#chat-form textarea,#dialogue button,#direction,#claim,#weeks,#compute,#dataset,#skill,#use-model").forEach(node => node.disabled = busy || !!pending);
+  $("delete-session").disabled = busy || !!pending;
+}
 
 async function api(path, method = "GET", body) {
   const multipart = body instanceof FormData;
@@ -26,7 +37,7 @@ function text(parent, content, className = "") {
   return node;
 }
 
-// 防止上一条还未完成时重复发送或切换会话。
+// 普通短操作互斥；聊天单独按会话锁定，执行中允许新建/切换其他会话。
 async function run(task) {
   if (busy) return;
   busy = true;
@@ -34,7 +45,7 @@ async function run(task) {
   controls.forEach(node => node.disabled = true);
   try { await task(); }
   catch (error) { $("status").textContent = error.message; }
-  finally { busy = false; controls.forEach(node => node.disabled = false); }
+  finally { busy = false; controls.forEach(node => node.disabled = false); refreshChatControls(); }
 }
 
 function showState(data) {
@@ -67,11 +78,59 @@ function showState(data) {
     for (const option of state.dialogue.options) {
       const button = document.createElement("button"); button.type = "button";
       button.className = "option-card"; button.textContent = option.label;
-      button.onclick = () => run(() => sendMessage(option.label, option.id));
+      button.onclick = () => submitChat(option.label, option.id);
       options.append(button);
     }
     $("dialogue").append(options);
   }
+  const request = latestRequest();
+  if (request) renderRequest(request);
+  else { $("progress").replaceChildren(); $("stream-preview").hidden = true; }
+  refreshChatControls();
+}
+
+function renderRequest(request) {
+  if (request.session_id !== sessionId || latestRequest()?.request_id !== request.request_id) return;
+  $("progress").replaceChildren();
+  for (const item of request.progress) {
+    const row = document.createElement("li"); row.textContent = item; $("progress").append(row);
+  }
+  $("progress").scrollTop = $("progress").scrollHeight;
+  $("stream-preview").hidden = !request.running || !request.draft;
+  $("stream-text").textContent = request.draft;
+  $("stream-caption").textContent = request.ready ? "回复已校验，正在保存结果…" : "正在生成回复草稿，最终结果以校验完成后为准…";
+  if (request.running) {
+    for (const key of ["direction", "claim", "weeks", "compute", "dataset"]) $(key).value = request.facts[key] ?? "";
+    $("execution-status").textContent = `正在执行 · 请求 ${request.request_id}`;
+    $("status").textContent = request.progress.at(-1) || "正在连接…";
+  } else if (request.error) {
+    $("status").textContent = `${request.error}（请求 ${request.request_id}）`;
+    $("execution-status").textContent = `本轮未成功 · 请求 ${request.request_id}`;
+  }
+}
+
+function receiveEvent(request, event) {
+  const data = event.data;
+  const tools = {search_papers: "论文检索", build_evidence: "材料整理", research_dialogue: "交互追问"};
+  const name = tools[data.tool] || data.tool;
+  const lines = {
+    started: "开始执行", model_started: `第 ${data.step} 次模型决策`,
+    model_result: data.tool_names?.length ? "模型已选择下一步工具" : "模型回复已到达，正在校验",
+    tool_started: `正在执行：${name}`, tool_result: `${name}已返回${data.duration_ms === undefined ? "" : `（${data.duration_ms} ms）`}`,
+    tool_failed: `${name}失败，正在检查后续处理`, reply_ready: "回复校验通过，正在保存",
+    completed: data.status === "COMPLETED" ? "研究方案已完成并保存" : data.status === "STOPPED" ? "达到执行上限，本轮已停止并保存" : "本轮已保存，等待补充",
+    failed: `执行失败：${data.message}`
+  };
+  if (lines[event.type]) request.progress.push(lines[event.type]);
+  if (event.type === "reply_reset") { request.draft = ""; request.ready = false; }
+  if (event.type === "reply_delta") request.draft += data.text;
+  if (event.type === "reply_ready") { request.draft = data.reply; request.ready = true; }
+  if (event.type === "failed") { request.running = false; request.error = data.message; request.draft = ""; }
+  if (event.type === "completed") {
+    request.running = false; request.result = data; request.draft = "";
+    if (sessionId === request.session_id && latestRequest()?.request_id === request.request_id) showState(data.state);
+  }
+  renderRequest(request); refreshChatControls();
 }
 
 async function loadSkills() {
@@ -86,6 +145,9 @@ async function loadSession() {
   showState(await api(`/api/sessions/${encodeURIComponent(sessionId)}`));
   localStorage.setItem("research-session", sessionId);
   $("status").textContent = "";
+  if (latestRequest()) renderRequest(latestRequest());
+  $("message").value = latestRequest()?.running ? latestRequest().inputMessage : "";
+  $("search").value = latestRequest()?.running ? latestRequest().inputSearch : "";
 }
 
 async function loadSessions() {
@@ -127,23 +189,46 @@ async function loadLibrary() {
 }
 
 async function sendMessage(message, choiceId = null) {
+    if (latestRequest()?.running) return; // 同一会话不重复提交。
     const facts = {};
     for (const key of ["direction", "claim", "compute", "weeks", "dataset"]) {
       const raw = $(key).value.trim();
       const value = raw ? (key === "weeks" ? Number(raw) : raw) : null;
       if (value !== (state.facts[key] ?? null)) facts[key] = value;
     }
-    $("status").textContent = "正在执行工具和对话…";
-    const data = await api("/api/chat", "POST", { session_id: sessionId, message,
-      facts, search: $("search").value.trim() || null, use_model: $("use-model").checked,
-      skill: $("skill").value, choice_id: choiceId });
-    showState(data.state); await loadSessions();
-    $("message").value = ""; $("search").value = "";
-    $("status").textContent = `${data.status} · 请求 ${data.request_id} · 已保存 ${data.state.messages.length} 条消息`;
+    const request = {request_id: crypto.randomUUID(), session_id: sessionId, running: true, progress: [], draft: "", ready: false,
+      facts: {...state.facts, ...facts}, inputMessage: $("message").value, inputSearch: $("search").value};
+    const payload = {request_id: request.request_id, session_id: request.session_id, message,
+      facts, search: $("search").value.trim() || null, use_model: $("use-model").checked, skill: $("skill").value, choice_id: choiceId};
+    const inputMessage = $("message").value, inputSearch = $("search").value;
+    requests.set(request.request_id, request); refreshChatControls(); renderRequest(request);
+    try {
+      const response = await fetch("/api/chat/stream", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(payload)});
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(typeof data.detail === "string" ? data.detail : data.detail?.message || "请求无效，请检查输入。");
+      }
+      await ResearchStream.read(response, request, event => receiveEvent(request, event));
+      if (request.error) throw new Error(request.error);
+      await loadSessions();
+      if (sessionId === request.session_id && latestRequest()?.request_id === request.request_id) {
+        if ($("message").value === inputMessage) $("message").value = "";
+        if ($("search").value === inputSearch) $("search").value = "";
+        $("status").textContent = `${request.result.status} · 请求 ${request.request_id} · 结果已保存`;
+      }
+    } catch (error) {
+      request.error = error.message; request.draft = "";
+    } finally { request.running = false; renderRequest(request); refreshChatControls(); }
+}
+
+async function submitChat(message, choiceId = null) {
+  if (busy || latestRequest()?.running) return;
+  if (!message.trim()) { $("status").textContent = "请输入本轮消息。"; return; }
+  await sendMessage(message, choiceId);
 }
 $("chat-form").addEventListener("submit", event => {
   event.preventDefault();
-  run(() => sendMessage($("message").value.trim()));
+  submitChat($("message").value.trim());
 });
 $("new-session").onclick = () => run(async () => { sessionId = crypto.randomUUID(); await loadSession(); await loadSessions(); });
 $("sessions").onchange = () => run(async () => { sessionId = $("sessions").value; await loadSession(); });

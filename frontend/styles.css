@@ -5,7 +5,8 @@ header { max-width: 1240px; margin: auto; padding: 32px 24px 16px; }
 .brand { font-size: 13px; font-weight: 700; color: #287965; letter-spacing: .08em; }
 h1 { margin: 6px 0; font-size: 30px; }
 header p { margin: 5px 0; }
-main { max-width: 1240px; margin: auto; padding: 12px 24px 48px; display: grid; grid-template-columns: 310px 1fr; gap: 20px; }
+main { max-width: 1240px; margin: auto; padding: 12px 24px 48px; display: grid; grid-template-columns: 310px minmax(0, 1fr); gap: 20px; }
+.workspace { min-width: 0; }
 section { padding: 22px; margin-bottom: 20px; background: white; border: 1px solid #dce5e1; border-radius: 12px; }
 h2 { margin: 0 0 14px; font-size: 18px; }
 label { display: block; font-size: 14px; margin: 10px 0; }
@@ -30,6 +31,9 @@ button:hover { filter: brightness(.95); }
 summary { cursor: pointer; color: #226b59; padding: 8px 0; }
 pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 12px; background: #f3f6f5; padding: 14px; max-height: 400px; overflow-y: auto; }
 #status { white-space: pre-wrap; }
+#progress { max-height: 220px; overflow-y: auto; padding-left: 24px; color: #536f65; font-size: 13px; overflow-wrap: anywhere; }
+#progress li { margin: 5px 0; }
+#stream-preview { border-left: 3px solid #8cbca7; padding-left: 12px; }
 .question { margin-bottom: 8px; font-weight: 600; }
 .option-cards { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
 .option-card { background: #edf6f1; color: #226b59; border-color: #b6d8c9; text-align: left; }

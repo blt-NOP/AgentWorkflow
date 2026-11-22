@@ -1,0 +1,599 @@
+{
+  "arguments": {
+    "session_id": "Draft",
+    "request_id": "RejectedDraft",
+    "message": "继续讨论",
+    "use_model": true
+  },
+  "events": [
+    {
+      "type": "started",
+      "seq": 1,
+      "request_id": "RejectedDraft",
+      "session_id": "Draft",
+      "at": "2026-11-22T15:20:18.190",
+      "data": {
+        "use_model": true
+      }
+    },
+    {
+      "type": "model_started",
+      "seq": 2,
+      "request_id": "RejectedDraft",
+      "session_id": "Draft",
+      "at": "2026-11-22T15:20:18.191",
+      "data": {
+        "step": 1
+      }
+    },
+    {
+      "type": "reply_reset",
+      "seq": 3,
+      "request_id": "RejectedDraft",
+      "session_id": "Draft",
+      "at": "2026-11-22T15:20:18.191",
+      "data": {
+        "reason": "NEW_DECISION",
+        "step": 1
+      }
+    },
+    {
+      "type": "reply_reset",
+      "seq": 4,
+      "request_id": "RejectedDraft",
+      "session_id": "Draft",
+      "at": "2026-11-22T15:20:18.191",
+      "data": {
+        "reason": "MODEL_ATTEMPT",
+        "step": 1
+      }
+    },
+    {
+      "type": "reply_delta",
+      "seq": 5,
+      "request_id": "RejectedDraft",
+      "session_id": "Draft",
+      "at": "2026-11-22T15:20:18.191",
+      "data": {
+        "text": "错",
+        "draft": true,
+        "step": 1
+      }
+    },
+    {
+      "type": "reply_delta",
+      "seq": 6,
+      "request_id": "RejectedDraft",
+      "session_id": "Draft",
+      "at": "2026-11-22T15:20:18.191",
+      "data": {
+        "text": "误草",
+        "draft": true,
+        "step": 1
+      }
+    },
+    {
+      "type": "reply_delta",
+      "seq": 7,
+      "request_id": "RejectedDraft",
+      "session_id": "Draft",
+      "at": "2026-11-22T15:20:18.191",
+      "data": {
+        "text": "稿",
+        "draft": true,
+        "step": 1
+      }
+    },
+    {
+      "type": "model_result",
+      "seq": 8,
+      "request_id": "RejectedDraft",
+      "session_id": "Draft",
+      "at": "2026-11-22T15:20:18.191",
+      "data": {
+        "step": 1,
+        "tool_names": [],
+        "duration_ms": 0
+      }
+    },
+    {
+      "type": "reply_reset",
+      "seq": 9,
+      "request_id": "RejectedDraft",
+      "session_id": "Draft",
+      "at": "2026-11-22T15:20:18.191",
+      "data": {
+        "reason": "VALIDATION_REJECTED",
+        "step": 1
+      }
+    },
+    {
+      "type": "model_started",
+      "seq": 10,
+      "request_id": "RejectedDraft",
+      "session_id": "Draft",
+      "at": "2026-11-22T15:20:18.191",
+      "data": {
+        "step": 2
+      }
+    },
+    {
+      "type": "reply_reset",
+      "seq": 11,
+      "request_id": "RejectedDraft",
+      "session_id": "Draft",
+      "at": "2026-11-22T15:20:18.191",
+      "data": {
+        "reason": "NEW_DECISION",
+        "step": 2
+      }
+    },
+    {
+      "type": "reply_reset",
+      "seq": 12,
+      "request_id": "RejectedDraft",
+      "session_id": "Draft",
+      "at": "2026-11-22T15:20:18.191",
+      "data": {
+        "reason": "MODEL_ATTEMPT",
+        "step": 2
+      }
+    },
+    {
+      "type": "reply_delta",
+      "seq": 13,
+      "request_id": "RejectedDraft",
+      "session_id": "Draft",
+      "at": "2026-11-22T15:20:18.191",
+      "data": {
+        "text": "已",
+        "draft": true,
+        "step": 2
+      }
+    },
+    {
+      "type": "reply_delta",
+      "seq": 14,
+      "request_id": "RejectedDraft",
+      "session_id": "Draft",
+      "at": "2026-11-22T15:20:18.191",
+      "data": {
+        "text": "修正",
+        "draft": true,
+        "step": 2
+      }
+    },
+    {
+      "type": "reply_delta",
+      "seq": 15,
+      "request_id": "RejectedDraft",
+      "session_id": "Draft",
+      "at": "2026-11-22T15:20:18.191",
+      "data": {
+        "text": "，",
+        "draft": true,
+        "step": 2
+      }
+    },
+    {
+      "type": "reply_delta",
+      "seq": 16,
+      "request_id": "RejectedDraft",
+      "session_id": "Draft",
+      "at": "2026-11-22T15:20:18.191",
+      "data": {
+        "text": "请补",
+        "draft": true,
+        "step": 2
+      }
+    },
+    {
+      "type": "reply_delta",
+      "seq": 17,
+      "request_id": "RejectedDraft",
+      "session_id": "Draft",
+      "at": "2026-11-22T15:20:18.191",
+      "data": {
+        "text": "充条",
+        "draft": true,
+        "step": 2
+      }
+    },
+    {
+      "type": "reply_delta",
+      "seq": 18,
+      "request_id": "RejectedDraft",
+      "session_id": "Draft",
+      "at": "2026-11-22T15:20:18.191",
+      "data": {
+        "text": "件",
+        "draft": true,
+        "step": 2
+      }
+    },
+    {
+      "type": "model_result",
+      "seq": 19,
+      "request_id": "RejectedDraft",
+      "session_id": "Draft",
+      "at": "2026-11-22T15:20:18.191",
+      "data": {
+        "step": 2,
+        "tool_names": [],
+        "duration_ms": 0
+      }
+    },
+    {
+      "type": "reply_ready",
+      "seq": 20,
+      "request_id": "RejectedDraft",
+      "session_id": "Draft",
+      "at": "2026-11-22T15:20:18.193",
+      "data": {
+        "reply": "已修正，请补充条件",
+        "status": "WAITING_USER"
+      }
+    },
+    {
+      "type": "completed",
+      "seq": 21,
+      "request_id": "RejectedDraft",
+      "session_id": "Draft",
+      "at": "2026-11-22T15:20:18.194",
+      "data": {
+        "reply": "已修正，请补充条件",
+        "dialogue": {
+          "skill": "research-dialogue",
+          "stage": "waiting",
+          "field": null,
+          "target": null,
+          "question": "",
+          "options": []
+        },
+        "status": "WAITING_USER",
+        "stop_reason": "NEEDS_USER_INPUT",
+        "proposal": null,
+        "request_id": "RejectedDraft",
+        "state": {
+          "session_id": "Draft",
+          "facts": {},
+          "history": [
+            {
+              "role": "user",
+              "content": "继续讨论"
+            },
+            {
+              "role": "assistant",
+              "content": "已修正，请补充条件"
+            }
+          ],
+          "messages": [
+            {
+              "role": "user",
+              "content": "继续讨论"
+            },
+            {
+              "role": "assistant",
+              "content": "已修正，请补充条件"
+            }
+          ],
+          "papers": [],
+          "evidence": {},
+          "reply": "已修正，请补充条件",
+          "trace": [],
+          "answers": {},
+          "dialogue": {
+            "skill": "research-dialogue",
+            "stage": "waiting",
+            "field": null,
+            "target": null,
+            "question": "",
+            "options": []
+          },
+          "skill": "research-dialogue",
+          "status": "WAITING_USER",
+          "proposal": null,
+          "decisions": [
+            {
+              "step": 1,
+              "request_id": "RejectedDraft",
+              "model": "explicit-sse-fixture",
+              "usage": {
+                "total_tokens": 10
+              },
+              "provider_request_id": "synthetic-provider-id",
+              "attempts": 1,
+              "duration_ms": 0,
+              "tool_names": [],
+              "validation": "FINAL_REJECTED",
+              "validation_errors": [
+                {
+                  "field": "completion_guard",
+                  "type": "完成条件不足：需回答Skill问题、取得真实原文并在本轮整理材料"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "request_id": "RejectedDraft",
+              "model": "explicit-sse-fixture",
+              "usage": {
+                "total_tokens": 10
+              },
+              "provider_request_id": "synthetic-provider-id",
+              "attempts": 1,
+              "duration_ms": 0,
+              "tool_names": []
+            }
+          ],
+          "stop_reason": "NEEDS_USER_INPUT",
+          "request_id": "RejectedDraft",
+          "events": [
+            {
+              "type": "started",
+              "seq": 1,
+              "request_id": "RejectedDraft",
+              "session_id": "Draft",
+              "at": "2026-11-22T15:20:18.190",
+              "data": {
+                "use_model": true
+              }
+            },
+            {
+              "type": "model_started",
+              "seq": 2,
+              "request_id": "RejectedDraft",
+              "session_id": "Draft",
+              "at": "2026-11-22T15:20:18.191",
+              "data": {
+                "step": 1
+              }
+            },
+            {
+              "type": "reply_reset",
+              "seq": 3,
+              "request_id": "RejectedDraft",
+              "session_id": "Draft",
+              "at": "2026-11-22T15:20:18.191",
+              "data": {
+                "reason": "NEW_DECISION",
+                "step": 1
+              }
+            },
+            {
+              "type": "reply_reset",
+              "seq": 4,
+              "request_id": "RejectedDraft",
+              "session_id": "Draft",
+              "at": "2026-11-22T15:20:18.191",
+              "data": {
+                "reason": "MODEL_ATTEMPT",
+                "step": 1
+              }
+            },
+            {
+              "type": "reply_delta",
+              "seq": 5,
+              "request_id": "RejectedDraft",
+              "session_id": "Draft",
+              "at": "2026-11-22T15:20:18.191",
+              "data": {
+                "text": "错",
+                "draft": true,
+                "step": 1
+              }
+            },
+            {
+              "type": "reply_delta",
+              "seq": 6,
+              "request_id": "RejectedDraft",
+              "session_id": "Draft",
+              "at": "2026-11-22T15:20:18.191",
+              "data": {
+                "text": "误草",
+                "draft": true,
+                "step": 1
+              }
+            },
+            {
+              "type": "reply_delta",
+              "seq": 7,
+              "request_id": "RejectedDraft",
+              "session_id": "Draft",
+              "at": "2026-11-22T15:20:18.191",
+              "data": {
+                "text": "稿",
+                "draft": true,
+                "step": 1
+              }
+            },
+            {
+              "type": "model_result",
+              "seq": 8,
+              "request_id": "RejectedDraft",
+              "session_id": "Draft",
+              "at": "2026-11-22T15:20:18.191",
+              "data": {
+                "step": 1,
+                "tool_names": [],
+                "duration_ms": 0
+              }
+            },
+            {
+              "type": "reply_reset",
+              "seq": 9,
+              "request_id": "RejectedDraft",
+              "session_id": "Draft",
+              "at": "2026-11-22T15:20:18.191",
+              "data": {
+                "reason": "VALIDATION_REJECTED",
+                "step": 1
+              }
+            },
+            {
+              "type": "model_started",
+              "seq": 10,
+              "request_id": "RejectedDraft",
+              "session_id": "Draft",
+              "at": "2026-11-22T15:20:18.191",
+              "data": {
+                "step": 2
+              }
+            },
+            {
+              "type": "reply_reset",
+              "seq": 11,
+              "request_id": "RejectedDraft",
+              "session_id": "Draft",
+              "at": "2026-11-22T15:20:18.191",
+              "data": {
+                "reason": "NEW_DECISION",
+                "step": 2
+              }
+            },
+            {
+              "type": "reply_reset",
+              "seq": 12,
+              "request_id": "RejectedDraft",
+              "session_id": "Draft",
+              "at": "2026-11-22T15:20:18.191",
+              "data": {
+                "reason": "MODEL_ATTEMPT",
+                "step": 2
+              }
+            },
+            {
+              "type": "reply_delta",
+              "seq": 13,
+              "request_id": "RejectedDraft",
+              "session_id": "Draft",
+              "at": "2026-11-22T15:20:18.191",
+              "data": {
+                "text": "已",
+                "draft": true,
+                "step": 2
+              }
+            },
+            {
+              "type": "reply_delta",
+              "seq": 14,
+              "request_id": "RejectedDraft",
+              "session_id": "Draft",
+              "at": "2026-11-22T15:20:18.191",
+              "data": {
+                "text": "修正",
+                "draft": true,
+                "step": 2
+              }
+            },
+            {
+              "type": "reply_delta",
+              "seq": 15,
+              "request_id": "RejectedDraft",
+              "session_id": "Draft",
+              "at": "2026-11-22T15:20:18.191",
+              "data": {
+                "text": "，",
+                "draft": true,
+                "step": 2
+              }
+            },
+            {
+              "type": "reply_delta",
+              "seq": 16,
+              "request_id": "RejectedDraft",
+              "session_id": "Draft",
+              "at": "2026-11-22T15:20:18.191",
+              "data": {
+                "text": "请补",
+                "draft": true,
+                "step": 2
+              }
+            },
+            {
+              "type": "reply_delta",
+              "seq": 17,
+              "request_id": "RejectedDraft",
+              "session_id": "Draft",
+              "at": "2026-11-22T15:20:18.191",
+              "data": {
+                "text": "充条",
+                "draft": true,
+                "step": 2
+              }
+            },
+            {
+              "type": "reply_delta",
+              "seq": 18,
+              "request_id": "RejectedDraft",
+              "session_id": "Draft",
+              "at": "2026-11-22T15:20:18.191",
+              "data": {
+                "text": "件",
+                "draft": true,
+                "step": 2
+              }
+            },
+            {
+              "type": "model_result",
+              "seq": 19,
+              "request_id": "RejectedDraft",
+              "session_id": "Draft",
+              "at": "2026-11-22T15:20:18.191",
+              "data": {
+                "step": 2,
+                "tool_names": [],
+                "duration_ms": 0
+              }
+            },
+            {
+              "type": "reply_ready",
+              "seq": 20,
+              "request_id": "RejectedDraft",
+              "session_id": "Draft",
+              "at": "2026-11-22T15:20:18.193",
+              "data": {
+                "reply": "已修正，请补充条件",
+                "status": "WAITING_USER"
+              }
+            }
+          ]
+        },
+        "trace": [],
+        "decisions": [
+          {
+            "step": 1,
+            "request_id": "RejectedDraft",
+            "model": "explicit-sse-fixture",
+            "usage": {
+              "total_tokens": 10
+            },
+            "provider_request_id": "synthetic-provider-id",
+            "attempts": 1,
+            "duration_ms": 0,
+            "tool_names": [],
+            "validation": "FINAL_REJECTED",
+            "validation_errors": [
+              {
+                "field": "completion_guard",
+                "type": "完成条件不足：需回答Skill问题、取得真实原文并在本轮整理材料"
+              }
+            ]
+          },
+          {
+            "step": 2,
+            "request_id": "RejectedDraft",
+            "model": "explicit-sse-fixture",
+            "usage": {
+              "total_tokens": 10
+            },
+            "provider_request_id": "synthetic-provider-id",
+            "attempts": 1,
+            "duration_ms": 0,
+            "tool_names": []
+          }
+        ]
+      }
+    }
+  ]
+}

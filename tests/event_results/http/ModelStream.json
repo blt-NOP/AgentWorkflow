@@ -1,0 +1,716 @@
+{
+  "arguments": {
+    "session_id": "Model",
+    "request_id": "ModelStream",
+    "message": "继续讨论",
+    "use_model": true,
+    "facts": {
+      "direction": "模型压缩"
+    }
+  },
+  "events": [
+    {
+      "type": "started",
+      "seq": 1,
+      "request_id": "ModelStream",
+      "session_id": "Model",
+      "at": "2026-11-22T15:20:18.112",
+      "data": {
+        "use_model": true
+      }
+    },
+    {
+      "type": "model_started",
+      "seq": 2,
+      "request_id": "ModelStream",
+      "session_id": "Model",
+      "at": "2026-11-22T15:20:18.119",
+      "data": {
+        "step": 1
+      }
+    },
+    {
+      "type": "reply_reset",
+      "seq": 3,
+      "request_id": "ModelStream",
+      "session_id": "Model",
+      "at": "2026-11-22T15:20:18.119",
+      "data": {
+        "reason": "NEW_DECISION",
+        "step": 1
+      }
+    },
+    {
+      "type": "reply_reset",
+      "seq": 4,
+      "request_id": "ModelStream",
+      "session_id": "Model",
+      "at": "2026-11-22T15:20:18.119",
+      "data": {
+        "reason": "MODEL_ATTEMPT",
+        "step": 1
+      }
+    },
+    {
+      "type": "model_result",
+      "seq": 5,
+      "request_id": "ModelStream",
+      "session_id": "Model",
+      "at": "2026-11-22T15:20:18.120",
+      "data": {
+        "step": 1,
+        "tool_names": [
+          "research_dialogue"
+        ],
+        "duration_ms": 0
+      }
+    },
+    {
+      "type": "tool_started",
+      "seq": 6,
+      "request_id": "ModelStream",
+      "session_id": "Model",
+      "at": "2026-11-22T15:20:18.120",
+      "data": {
+        "tool": "research_dialogue",
+        "call_id": "fixture-call",
+        "step": 1
+      }
+    },
+    {
+      "type": "tool_result",
+      "seq": 7,
+      "request_id": "ModelStream",
+      "session_id": "Model",
+      "at": "2026-11-22T15:20:18.121",
+      "data": {
+        "tool": "research_dialogue",
+        "call_id": "fixture-call",
+        "step": 1,
+        "duration_ms": 1,
+        "result": {
+          "skill": "research-dialogue",
+          "stage": "compute",
+          "field": "compute",
+          "target": "facts",
+          "question": "你可以使用哪些计算资源？",
+          "options": [
+            {
+              "id": "compute-0",
+              "label": "只有 CPU",
+              "value": "CPU"
+            },
+            {
+              "id": "compute-1",
+              "label": "可以使用 GPU",
+              "value": "GPU"
+            },
+            {
+              "id": "compute-2",
+              "label": "算力尚未确定",
+              "value": "尚未确定"
+            }
+          ],
+          "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\"}"
+        },
+        "error": null
+      }
+    },
+    {
+      "type": "model_started",
+      "seq": 8,
+      "request_id": "ModelStream",
+      "session_id": "Model",
+      "at": "2026-11-22T15:20:18.121",
+      "data": {
+        "step": 2
+      }
+    },
+    {
+      "type": "reply_reset",
+      "seq": 9,
+      "request_id": "ModelStream",
+      "session_id": "Model",
+      "at": "2026-11-22T15:20:18.121",
+      "data": {
+        "reason": "NEW_DECISION",
+        "step": 2
+      }
+    },
+    {
+      "type": "reply_reset",
+      "seq": 10,
+      "request_id": "ModelStream",
+      "session_id": "Model",
+      "at": "2026-11-22T15:20:18.121",
+      "data": {
+        "reason": "MODEL_ATTEMPT",
+        "step": 2
+      }
+    },
+    {
+      "type": "reply_delta",
+      "seq": 11,
+      "request_id": "ModelStream",
+      "session_id": "Model",
+      "at": "2026-11-22T15:20:18.121",
+      "data": {
+        "text": "第",
+        "draft": true,
+        "step": 2
+      }
+    },
+    {
+      "type": "reply_delta",
+      "seq": 12,
+      "request_id": "ModelStream",
+      "session_id": "Model",
+      "at": "2026-11-22T15:20:18.121",
+      "data": {
+        "text": "一段",
+        "draft": true,
+        "step": 2
+      }
+    },
+    {
+      "type": "reply_delta",
+      "seq": 13,
+      "request_id": "ModelStream",
+      "session_id": "Model",
+      "at": "2026-11-22T15:20:18.121",
+      "data": {
+        "text": "\n第",
+        "draft": true,
+        "step": 2
+      }
+    },
+    {
+      "type": "reply_delta",
+      "seq": 14,
+      "request_id": "ModelStream",
+      "session_id": "Model",
+      "at": "2026-11-22T15:20:18.121",
+      "data": {
+        "text": "二段",
+        "draft": true,
+        "step": 2
+      }
+    },
+    {
+      "type": "reply_delta",
+      "seq": 15,
+      "request_id": "ModelStream",
+      "session_id": "Model",
+      "at": "2026-11-22T15:20:18.121",
+      "data": {
+        "text": "😀",
+        "draft": true,
+        "step": 2
+      }
+    },
+    {
+      "type": "model_result",
+      "seq": 16,
+      "request_id": "ModelStream",
+      "session_id": "Model",
+      "at": "2026-11-22T15:20:18.121",
+      "data": {
+        "step": 2,
+        "tool_names": [],
+        "duration_ms": 1
+      }
+    },
+    {
+      "type": "reply_ready",
+      "seq": 17,
+      "request_id": "ModelStream",
+      "session_id": "Model",
+      "at": "2026-11-22T15:20:18.121",
+      "data": {
+        "reply": "第一段\n第二段😀",
+        "status": "WAITING_USER"
+      }
+    },
+    {
+      "type": "completed",
+      "seq": 18,
+      "request_id": "ModelStream",
+      "session_id": "Model",
+      "at": "2026-11-22T15:20:18.124",
+      "data": {
+        "reply": "第一段\n第二段😀",
+        "dialogue": {
+          "skill": "research-dialogue",
+          "stage": "compute",
+          "field": "compute",
+          "target": "facts",
+          "question": "你可以使用哪些计算资源？",
+          "options": [
+            {
+              "id": "compute-0",
+              "label": "只有 CPU",
+              "value": "CPU"
+            },
+            {
+              "id": "compute-1",
+              "label": "可以使用 GPU",
+              "value": "GPU"
+            },
+            {
+              "id": "compute-2",
+              "label": "算力尚未确定",
+              "value": "尚未确定"
+            }
+          ],
+          "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\"}"
+        },
+        "status": "WAITING_USER",
+        "stop_reason": "NEEDS_USER_INPUT",
+        "proposal": null,
+        "request_id": "ModelStream",
+        "state": {
+          "session_id": "Model",
+          "facts": {
+            "direction": "模型压缩"
+          },
+          "history": [
+            {
+              "role": "user",
+              "content": "继续讨论"
+            },
+            {
+              "role": "assistant",
+              "content": "第一段\n第二段😀"
+            }
+          ],
+          "messages": [
+            {
+              "role": "user",
+              "content": "继续讨论"
+            },
+            {
+              "role": "assistant",
+              "content": "第一段\n第二段😀"
+            }
+          ],
+          "papers": [],
+          "evidence": {},
+          "reply": "第一段\n第二段😀",
+          "trace": [
+            {
+              "request_id": "ModelStream",
+              "call_id": "fixture-call",
+              "tool": "research_dialogue",
+              "model_arguments": "{}",
+              "arguments": {
+                "state": {
+                  "facts": {
+                    "direction": "模型压缩"
+                  },
+                  "answers": {},
+                  "evidence": {
+                    "rows": [],
+                    "gaps": []
+                  },
+                  "history": []
+                },
+                "message": "继续讨论",
+                "skill_id": "research-dialogue",
+                "use_model": false
+              },
+              "status": "SUCCEEDED",
+              "result": {
+                "skill": "research-dialogue",
+                "stage": "compute",
+                "field": "compute",
+                "target": "facts",
+                "question": "你可以使用哪些计算资源？",
+                "options": [
+                  {
+                    "id": "compute-0",
+                    "label": "只有 CPU",
+                    "value": "CPU"
+                  },
+                  {
+                    "id": "compute-1",
+                    "label": "可以使用 GPU",
+                    "value": "GPU"
+                  },
+                  {
+                    "id": "compute-2",
+                    "label": "算力尚未确定",
+                    "value": "尚未确定"
+                  }
+                ],
+                "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\"}"
+              },
+              "duration_ms": 1
+            }
+          ],
+          "answers": {},
+          "dialogue": {
+            "skill": "research-dialogue",
+            "stage": "compute",
+            "field": "compute",
+            "target": "facts",
+            "question": "你可以使用哪些计算资源？",
+            "options": [
+              {
+                "id": "compute-0",
+                "label": "只有 CPU",
+                "value": "CPU"
+              },
+              {
+                "id": "compute-1",
+                "label": "可以使用 GPU",
+                "value": "GPU"
+              },
+              {
+                "id": "compute-2",
+                "label": "算力尚未确定",
+                "value": "尚未确定"
+              }
+            ],
+            "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\"}"
+          },
+          "skill": "research-dialogue",
+          "status": "WAITING_USER",
+          "proposal": null,
+          "decisions": [
+            {
+              "step": 1,
+              "request_id": "ModelStream",
+              "model": "explicit-sse-fixture",
+              "usage": {
+                "total_tokens": 10
+              },
+              "provider_request_id": "synthetic-provider-id",
+              "attempts": 1,
+              "duration_ms": 0,
+              "tool_names": [
+                "research_dialogue"
+              ]
+            },
+            {
+              "step": 2,
+              "request_id": "ModelStream",
+              "model": "explicit-sse-fixture",
+              "usage": {
+                "total_tokens": 10
+              },
+              "provider_request_id": "synthetic-provider-id",
+              "attempts": 1,
+              "duration_ms": 1,
+              "tool_names": []
+            }
+          ],
+          "stop_reason": "NEEDS_USER_INPUT",
+          "request_id": "ModelStream",
+          "events": [
+            {
+              "type": "started",
+              "seq": 1,
+              "request_id": "ModelStream",
+              "session_id": "Model",
+              "at": "2026-11-22T15:20:18.112",
+              "data": {
+                "use_model": true
+              }
+            },
+            {
+              "type": "model_started",
+              "seq": 2,
+              "request_id": "ModelStream",
+              "session_id": "Model",
+              "at": "2026-11-22T15:20:18.119",
+              "data": {
+                "step": 1
+              }
+            },
+            {
+              "type": "reply_reset",
+              "seq": 3,
+              "request_id": "ModelStream",
+              "session_id": "Model",
+              "at": "2026-11-22T15:20:18.119",
+              "data": {
+                "reason": "NEW_DECISION",
+                "step": 1
+              }
+            },
+            {
+              "type": "reply_reset",
+              "seq": 4,
+              "request_id": "ModelStream",
+              "session_id": "Model",
+              "at": "2026-11-22T15:20:18.119",
+              "data": {
+                "reason": "MODEL_ATTEMPT",
+                "step": 1
+              }
+            },
+            {
+              "type": "model_result",
+              "seq": 5,
+              "request_id": "ModelStream",
+              "session_id": "Model",
+              "at": "2026-11-22T15:20:18.120",
+              "data": {
+                "step": 1,
+                "tool_names": [
+                  "research_dialogue"
+                ],
+                "duration_ms": 0
+              }
+            },
+            {
+              "type": "tool_started",
+              "seq": 6,
+              "request_id": "ModelStream",
+              "session_id": "Model",
+              "at": "2026-11-22T15:20:18.120",
+              "data": {
+                "tool": "research_dialogue",
+                "call_id": "fixture-call",
+                "step": 1
+              }
+            },
+            {
+              "type": "tool_result",
+              "seq": 7,
+              "request_id": "ModelStream",
+              "session_id": "Model",
+              "at": "2026-11-22T15:20:18.121",
+              "data": {
+                "tool": "research_dialogue",
+                "call_id": "fixture-call",
+                "step": 1,
+                "duration_ms": 1,
+                "result": {
+                  "skill": "research-dialogue",
+                  "stage": "compute",
+                  "field": "compute",
+                  "target": "facts",
+                  "question": "你可以使用哪些计算资源？",
+                  "options": [
+                    {
+                      "id": "compute-0",
+                      "label": "只有 CPU",
+                      "value": "CPU"
+                    },
+                    {
+                      "id": "compute-1",
+                      "label": "可以使用 GPU",
+                      "value": "GPU"
+                    },
+                    {
+                      "id": "compute-2",
+                      "label": "算力尚未确定",
+                      "value": "尚未确定"
+                    }
+                  ],
+                  "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\"}"
+                },
+                "error": null
+              }
+            },
+            {
+              "type": "model_started",
+              "seq": 8,
+              "request_id": "ModelStream",
+              "session_id": "Model",
+              "at": "2026-11-22T15:20:18.121",
+              "data": {
+                "step": 2
+              }
+            },
+            {
+              "type": "reply_reset",
+              "seq": 9,
+              "request_id": "ModelStream",
+              "session_id": "Model",
+              "at": "2026-11-22T15:20:18.121",
+              "data": {
+                "reason": "NEW_DECISION",
+                "step": 2
+              }
+            },
+            {
+              "type": "reply_reset",
+              "seq": 10,
+              "request_id": "ModelStream",
+              "session_id": "Model",
+              "at": "2026-11-22T15:20:18.121",
+              "data": {
+                "reason": "MODEL_ATTEMPT",
+                "step": 2
+              }
+            },
+            {
+              "type": "reply_delta",
+              "seq": 11,
+              "request_id": "ModelStream",
+              "session_id": "Model",
+              "at": "2026-11-22T15:20:18.121",
+              "data": {
+                "text": "第",
+                "draft": true,
+                "step": 2
+              }
+            },
+            {
+              "type": "reply_delta",
+              "seq": 12,
+              "request_id": "ModelStream",
+              "session_id": "Model",
+              "at": "2026-11-22T15:20:18.121",
+              "data": {
+                "text": "一段",
+                "draft": true,
+                "step": 2
+              }
+            },
+            {
+              "type": "reply_delta",
+              "seq": 13,
+              "request_id": "ModelStream",
+              "session_id": "Model",
+              "at": "2026-11-22T15:20:18.121",
+              "data": {
+                "text": "\n第",
+                "draft": true,
+                "step": 2
+              }
+            },
+            {
+              "type": "reply_delta",
+              "seq": 14,
+              "request_id": "ModelStream",
+              "session_id": "Model",
+              "at": "2026-11-22T15:20:18.121",
+              "data": {
+                "text": "二段",
+                "draft": true,
+                "step": 2
+              }
+            },
+            {
+              "type": "reply_delta",
+              "seq": 15,
+              "request_id": "ModelStream",
+              "session_id": "Model",
+              "at": "2026-11-22T15:20:18.121",
+              "data": {
+                "text": "😀",
+                "draft": true,
+                "step": 2
+              }
+            },
+            {
+              "type": "model_result",
+              "seq": 16,
+              "request_id": "ModelStream",
+              "session_id": "Model",
+              "at": "2026-11-22T15:20:18.121",
+              "data": {
+                "step": 2,
+                "tool_names": [],
+                "duration_ms": 1
+              }
+            },
+            {
+              "type": "reply_ready",
+              "seq": 17,
+              "request_id": "ModelStream",
+              "session_id": "Model",
+              "at": "2026-11-22T15:20:18.121",
+              "data": {
+                "reply": "第一段\n第二段😀",
+                "status": "WAITING_USER"
+              }
+            }
+          ]
+        },
+        "trace": [
+          {
+            "request_id": "ModelStream",
+            "call_id": "fixture-call",
+            "tool": "research_dialogue",
+            "model_arguments": "{}",
+            "arguments": {
+              "state": {
+                "facts": {
+                  "direction": "模型压缩"
+                },
+                "answers": {},
+                "evidence": {
+                  "rows": [],
+                  "gaps": []
+                },
+                "history": []
+              },
+              "message": "继续讨论",
+              "skill_id": "research-dialogue",
+              "use_model": false
+            },
+            "status": "SUCCEEDED",
+            "result": {
+              "skill": "research-dialogue",
+              "stage": "compute",
+              "field": "compute",
+              "target": "facts",
+              "question": "你可以使用哪些计算资源？",
+              "options": [
+                {
+                  "id": "compute-0",
+                  "label": "只有 CPU",
+                  "value": "CPU"
+                },
+                {
+                  "id": "compute-1",
+                  "label": "可以使用 GPU",
+                  "value": "GPU"
+                },
+                {
+                  "id": "compute-2",
+                  "label": "算力尚未确定",
+                  "value": "尚未确定"
+                }
+              ],
+              "message": "[未调用模型] 当前条件：{\"direction\": \"模型压缩\"}"
+            },
+            "duration_ms": 1
+          }
+        ],
+        "decisions": [
+          {
+            "step": 1,
+            "request_id": "ModelStream",
+            "model": "explicit-sse-fixture",
+            "usage": {
+              "total_tokens": 10
+            },
+            "provider_request_id": "synthetic-provider-id",
+            "attempts": 1,
+            "duration_ms": 0,
+            "tool_names": [
+              "research_dialogue"
+            ]
+          },
+          {
+            "step": 2,
+            "request_id": "ModelStream",
+            "model": "explicit-sse-fixture",
+            "usage": {
+              "total_tokens": 10
+            },
+            "provider_request_id": "synthetic-provider-id",
+            "attempts": 1,
+            "duration_ms": 1,
+            "tool_names": []
+          }
+        ]
+      }
+    }
+  ]
+}

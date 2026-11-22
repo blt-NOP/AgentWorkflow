@@ -1,0 +1,66 @@
+{
+  "arguments": {
+    "session_id": "Recovery",
+    "request_id": "ToolFault",
+    "message": "继续讨论",
+    "use_model": false,
+    "search": "explicit-fault"
+  },
+  "events": [
+    {
+      "type": "started",
+      "seq": 1,
+      "request_id": "ToolFault",
+      "session_id": "Recovery",
+      "at": "2026-11-22T15:20:18.046",
+      "data": {
+        "use_model": false
+      }
+    },
+    {
+      "type": "tool_started",
+      "seq": 2,
+      "request_id": "ToolFault",
+      "session_id": "Recovery",
+      "at": "2026-11-22T15:20:18.047",
+      "data": {
+        "tool": "search_papers",
+        "call_id": "a18dd2afc2ea463bbb67c118532a3070"
+      }
+    },
+    {
+      "type": "tool_failed",
+      "seq": 3,
+      "request_id": "ToolFault",
+      "session_id": "Recovery",
+      "at": "2026-11-22T15:20:18.047",
+      "data": {
+        "tool": "search_papers",
+        "call_id": "a18dd2afc2ea463bbb67c118532a3070",
+        "code": "TIMEOUT"
+      }
+    },
+    {
+      "type": "reply_reset",
+      "seq": 4,
+      "request_id": "ToolFault",
+      "session_id": "Recovery",
+      "at": "2026-11-22T15:20:18.047",
+      "data": {
+        "reason": "FAILED"
+      }
+    },
+    {
+      "type": "failed",
+      "seq": 5,
+      "request_id": "ToolFault",
+      "session_id": "Recovery",
+      "at": "2026-11-22T15:20:18.047",
+      "data": {
+        "code": "TIMEOUT",
+        "message": "测试检索超时",
+        "retryable": true
+      }
+    }
+  ]
+}

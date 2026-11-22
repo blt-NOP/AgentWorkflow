@@ -1,0 +1,265 @@
+{
+  "result": "PASS",
+  "mode": "offline_http_fixture",
+  "tool": "all",
+  "count": 42,
+  "passed": 42,
+  "model_calls": 0,
+  "at": "2026-11-22T15:16:30",
+  "artifacts": "D:\\Learning_materials\\西工大\\课程\\边云智能实践\\AgentWorkflow\\data\\tool-check\\run-a9dd6e8f",
+  "notice": "Default search uses explicit synthetic HTTP fixtures; --live uses real Crossref only for normal/changed and their chain. Faults are injected.",
+  "cases": [
+    {
+      "tool": "search_papers",
+      "case": "normal",
+      "passed": true,
+      "basis": "limit=1 返回1篇，包含实际解析的 title/doi/year/abstract"
+    },
+    {
+      "tool": "search_papers",
+      "case": "changed",
+      "passed": true,
+      "basis": "仅 limit 从1变3，返回数量从1变3；排序/论文内容由数据源决定"
+    },
+    {
+      "tool": "search_papers",
+      "case": "invalid",
+      "passed": true,
+      "basis": "空白 query 在发起HTTP前被拒绝"
+    },
+    {
+      "tool": "search_papers",
+      "case": "empty",
+      "passed": true,
+      "basis": "无结果返回 []，与调用失败区分"
+    },
+    {
+      "tool": "search_papers",
+      "case": "timeout",
+      "passed": true,
+      "basis": "明确注入故障，返回 TIMEOUT，可重试"
+    },
+    {
+      "tool": "search_papers",
+      "case": "network",
+      "passed": true,
+      "basis": "明确注入故障，返回 NETWORK_ERROR，可重试"
+    },
+    {
+      "tool": "search_papers",
+      "case": "http_error",
+      "passed": true,
+      "basis": "明确注入故障，返回 EXTERNAL_ERROR，可重试"
+    },
+    {
+      "tool": "search_papers",
+      "case": "invalid_response",
+      "passed": true,
+      "basis": "明确注入故障，返回 INVALID_RESPONSE，可重试"
+    },
+    {
+      "tool": "build_evidence",
+      "case": "normal",
+      "passed": true,
+      "basis": "1篇有摘要材料+完整条件，返回1行证据且无条件缺项"
+    },
+    {
+      "tool": "build_evidence",
+      "case": "invalid",
+      "passed": true,
+      "basis": "缺少必填 title，返回 INVALID_INPUT"
+    },
+    {
+      "tool": "build_evidence",
+      "case": "changed",
+      "passed": true,
+      "basis": "仅 facts.compute 从CPU变null；论文行不变，新增算力缺项"
+    },
+    {
+      "tool": "build_evidence",
+      "case": "empty",
+      "passed": true,
+      "basis": "无论文仍成功返回空行与材料缺项"
+    },
+    {
+      "tool": "build_evidence",
+      "case": "invalid_weeks",
+      "passed": true,
+      "basis": "weeks=0 超出1至520周范围"
+    },
+    {
+      "tool": "research_dialogue",
+      "case": "normal",
+      "passed": true,
+      "basis": "资源条件完整、研究目标未答：追问目标并返回3个选项"
+    },
+    {
+      "tool": "research_dialogue",
+      "case": "invalid",
+      "passed": true,
+      "basis": "非法 Skill 名称被拒绝，不读取目录外文件"
+    },
+    {
+      "tool": "research_dialogue",
+      "case": "changed",
+      "passed": true,
+      "basis": "仅添加 state.answers.goal，问题从研究目标推进到对照基线"
+    },
+    {
+      "tool": "research_dialogue",
+      "case": "all_answered",
+      "passed": true,
+      "basis": "配置问题全部回答后进入开放讨论；无选项不是失败"
+    },
+    {
+      "tool": "research_dialogue",
+      "case": "invalid_state",
+      "passed": true,
+      "basis": "history 类型错误时返回 INVALID_INPUT"
+    },
+    {
+      "tool": "chain",
+      "case": "search_to_evidence",
+      "passed": true,
+      "basis": "search_papers.normal.returned[0] 原样传入 papers[0]，验证真实 title/doi 标识"
+    },
+    {
+      "tool": "chain",
+      "case": "evidence_to_dialogue",
+      "passed": true,
+      "basis": "第二工具实际 evidence 返回作为第三工具 state.evidence"
+    },
+    {
+      "tool": "registration",
+      "case": "registry",
+      "passed": true,
+      "basis": "GET /api/tools 列出全部真实函数入口"
+    },
+    {
+      "tool": "parse_paper_pdf",
+      "case": "normal",
+      "passed": true,
+      "basis": "两页PDF只选择第1页，提取实际文字和页码"
+    },
+    {
+      "tool": "parse_paper_pdf",
+      "case": "changed",
+      "passed": true,
+      "basis": "仅end_page由1改2，新增第2页原文"
+    },
+    {
+      "tool": "parse_paper_pdf",
+      "case": "invalid",
+      "passed": true,
+      "basis": "返回INVALID_PDF，不伪造解析结果"
+    },
+    {
+      "tool": "parse_paper_pdf",
+      "case": "corrupt",
+      "passed": true,
+      "basis": "返回INVALID_PDF，不伪造解析结果"
+    },
+    {
+      "tool": "parse_paper_pdf",
+      "case": "encrypted",
+      "passed": true,
+      "basis": "返回ENCRYPTED_PDF，不伪造解析结果"
+    },
+    {
+      "tool": "parse_paper_pdf",
+      "case": "no_text",
+      "passed": true,
+      "basis": "返回NO_TEXT，不伪造解析结果"
+    },
+    {
+      "tool": "parse_paper_pdf",
+      "case": "oversize",
+      "passed": true,
+      "basis": "返回FILE_TOO_LARGE，不伪造解析结果"
+    },
+    {
+      "tool": "parse_paper_pdf",
+      "case": "invalid_range",
+      "passed": true,
+      "basis": "页码超出文件范围时明确失败"
+    },
+    {
+      "tool": "parse_paper_pdf",
+      "case": "repeat",
+      "passed": true,
+      "basis": "相同PDF及参数返回一致，不写入数据库"
+    },
+    {
+      "tool": "chain",
+      "case": "pdf_to_evidence",
+      "passed": true,
+      "basis": "parse_paper_pdf真实返回paper原样传入build_evidence；原文和页码保留"
+    },
+    {
+      "tool": "parse_paper_pdf",
+      "case": "api_normal",
+      "passed": true,
+      "basis": "multipart接口返回200及实际解析文本"
+    },
+    {
+      "tool": "parse_paper_pdf",
+      "case": "api_invalid",
+      "passed": true,
+      "basis": "非PDF上传返回400 INVALID_PDF"
+    },
+    {
+      "tool": "parse_paper_pdf",
+      "case": "api_no_text",
+      "passed": true,
+      "basis": "无文字页面返回422并提示OCR"
+    },
+    {
+      "tool": "parse_paper_pdf",
+      "case": "api_invalid_range",
+      "passed": true,
+      "basis": "表单页码0返回422参数校验错误"
+    },
+    {
+      "tool": "chain",
+      "case": "pdf_to_library",
+      "passed": true,
+      "basis": "真实paper经现有接口写入并读取SQLite；重复保存同一ID仍为1篇"
+    },
+    {
+      "tool": "search_papers",
+      "case": "api_normal",
+      "passed": true,
+      "basis": "独立后端入口返回 HTTP 200"
+    },
+    {
+      "tool": "search_papers",
+      "case": "api_invalid",
+      "passed": true,
+      "basis": "非法参数返回400/422及 INVALID_INPUT，不冒充无结果"
+    },
+    {
+      "tool": "build_evidence",
+      "case": "api_normal",
+      "passed": true,
+      "basis": "独立后端入口返回 HTTP 200"
+    },
+    {
+      "tool": "build_evidence",
+      "case": "api_invalid",
+      "passed": true,
+      "basis": "非法参数返回400/422及 INVALID_INPUT，不冒充无结果"
+    },
+    {
+      "tool": "research_dialogue",
+      "case": "api_normal",
+      "passed": true,
+      "basis": "独立后端入口返回 HTTP 200"
+    },
+    {
+      "tool": "research_dialogue",
+      "case": "api_invalid",
+      "passed": true,
+      "basis": "非法参数返回400/422及 INVALID_INPUT，不冒充无结果"
+    }
+  ]
+}

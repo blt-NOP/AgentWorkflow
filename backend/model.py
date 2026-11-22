@@ -13,7 +13,57 @@ def enabled():
     return os.getenv("MODEL_ENABLED", "true").lower() in ("1", "true", "yes")
 
 
-def chat(messages, tools=None):
+def check_status(status):
+    if status == 200:
+        return
+    hint = {401: "密钥无效，请检查本地.env", 403: "请检查模型权限和额度",
+            404: "请检查模型名称、地域和接口地址", 429: "请求限流或额度不足，请稍后检查控制台"}.get(status, "请检查接口参数和服务状态")
+    raise ToolError("MODEL_ERROR", f"模型HTTP {status}；{hint}", status == 429 or status >= 500)
+
+
+def read_stream(response, on_delta):
+    """拼装真实SSE中的content/tool_calls；推理字段仅用于模型协议往返。"""
+    content, reasoning, calls = [], [], {}
+    usage, finish, done, identity, name = {}, None, False, None, None
+    for line in response.iter_lines():
+        if not line.startswith("data:"):
+            continue
+        raw = line[5:].strip()
+        if raw == "[DONE]":
+            done = True
+            break
+        chunk = json.loads(raw)
+        identity, name = chunk.get("id", identity), chunk.get("model", name)
+        usage = chunk.get("usage") or usage
+        for choice in chunk.get("choices", []):
+            if choice.get("index", 0) != 0:
+                continue
+            finish = choice.get("finish_reason") or finish
+            delta = choice.get("delta") or {}
+            if delta.get("content"):
+                content.append(delta["content"])
+                on_delta(delta["content"])
+            if delta.get("reasoning_content"):
+                reasoning.append(delta["reasoning_content"])
+            for item in delta.get("tool_calls") or []:
+                index = item["index"]
+                if type(index) is not int or not 0 <= index < 3:
+                    raise ValueError("invalid call index")
+                call = calls.setdefault(index, {"id": "", "type": "function", "function": {"name": "", "arguments": ""}})
+                call["id"] += item.get("id") or ""
+                for field in ("name", "arguments"):
+                    call["function"][field] += (item.get("function") or {}).get(field) or ""
+    if not done or finish is None:
+        raise ToolError("MODEL_ERROR", "模型流提前结束，请重试", True)
+    message = {"role": "assistant", "content": "".join(content) or None}
+    if calls:
+        message["tool_calls"] = [calls[index] for index in sorted(calls)]
+    if reasoning:
+        message["reasoning_content"] = "".join(reasoning)
+    return {"id": identity, "model": name, "usage": usage, "choices": [{"message": message, "finish_reason": finish}]}
+
+
+def chat(messages, tools=None, on_delta=None):
     """返回模型消息与usage；不打印请求头、密钥、原始上游报错或推理过程。"""
     if not configured():
         raise ToolError("MODEL_NOT_CONFIGURED", "请在.env配置模型，或使用--no-model离线测试")
@@ -23,20 +73,25 @@ def chat(messages, tools=None):
         payload["enable_thinking"] = True
     if tools:
         payload.update(tools=tools, tool_choice="auto", parallel_tool_calls=False)
+    if on_delta is not None:
+        payload.update(stream=True, stream_options={"include_usage": True})
     attempts = max(0, min(2, int(os.getenv("MODEL_RETRIES", "1")))) + 1
     for attempt in range(attempts):
         try:
+            if on_delta is not None:
+                on_delta(None)  # 首次或重试均重置草稿，避免半段响应重复拼接。
             with httpx.Client(timeout=float(os.getenv("MODEL_TIMEOUT_SECONDS", "60")),
                               proxy=os.getenv("OUTBOUND_PROXY") or None) as client:
-                response = client.post(os.environ["MODEL_BASE_URL"].rstrip("/") + "/chat/completions",
-                    headers={"Authorization": "Bearer " + os.environ["MODEL_API_KEY"]}, json=payload)
-            if response.status_code != 200:
-                status = response.status_code
-                retryable = status == 429 or status >= 500
-                hint = {401: "密钥无效，请检查本地.env", 403: "请检查模型权限和额度",
-                        404: "请检查模型名称、地域和接口地址", 429: "请求限流或额度不足，请稍后检查控制台"}.get(status, "请检查接口参数和服务状态")
-                raise ToolError("MODEL_ERROR", f"模型HTTP {status}；{hint}", retryable)
-            data = response.json()
+                url = os.environ["MODEL_BASE_URL"].rstrip("/") + "/chat/completions"
+                headers = {"Authorization": "Bearer " + os.environ["MODEL_API_KEY"]}
+                if on_delta is None:
+                    response = client.post(url, headers=headers, json=payload)
+                    check_status(response.status_code)
+                    data = response.json()
+                else:
+                    with client.stream("POST", url, headers=headers, json=payload) as response:
+                        check_status(response.status_code)
+                        data = read_stream(response, on_delta)
             choice = data["choices"][0]
             message = choice["message"]
             if isinstance(message, dict) and message.get("tool_calls"):

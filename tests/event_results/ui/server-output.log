@@ -1,0 +1,47 @@
+INFO:     127.0.0.1:50060 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50060 - "GET /static/styles.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52854 - "GET /static/stream.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52854 - "GET /static/app.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52854 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50060 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52854 - "GET /api/skills HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52854 - "GET /api/sessions/6d58891b-7e21-431f-9b96-d06d02687fc9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52854 - "GET /api/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52854 - "GET /api/library?q= HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54151 - "POST /api/chat/stream HTTP/1.1" 200 OK
+[��ʼ] request=25582790-05a2-4249-bb25-27449733ed02 session=6d58891b-7e21-431f-9b96-d06d02687fc9 model=True
+[������] {}
+[��ǰ����] {"direction": "ģ��ѹ��"}
+[ģ�;���] request=25582790-05a2-4249-bb25-27449733ed02 step=1 tools=['research_dialogue'] usage={'completion_tokens': 77, 'completion_tokens_details': {'reasoning_tokens': 59, 'text_tokens': 77}, 'prompt_tokens': 1849, 'prompt_tokens_details': {'cached_tokens': 0, 'text_tokens': 1849}, 'total_tokens': 1926}
+[���߹켣] {"request_id": "25582790-05a2-4249-bb25-27449733ed02", "call_id": "call_a2dd27a098eb4fe48c85eaa9", "tool": "research_dialogue", "model_arguments": "{}", "arguments": {"state": {"facts": {"direction": "ģ��ѹ��"}, "answers": {}, "evidence": {"rows": [], "gaps": []}, "history": []}, "message": "���Ȱ�Skillȷ���ҵ���Դ����������Ҫ���������˵����һ����", "skill_id": "research-dialogue", "use_model": false}, "status": "SUCCEEDED", "result": {"skill": "research-dialogue", "stage": "compute", "field": "compute", "target": "facts", "question": "�����ʹ����Щ������Դ��", "options": [{"id": "compute-0", "label": "ֻ�� CPU", "value": "CPU"}, {"id": "compute-1", "label": "����ʹ�� GPU", "value": "GPU"}, {"id": "compute-2", "label": "������δȷ��", "value": "��δȷ��"}], "message": "[δ����ģ��] ��ǰ������{\"direction\": \"ģ��ѹ��\"}"}, "duration_ms": 1}
+[ģ�;���] request=25582790-05a2-4249-bb25-27449733ed02 step=2 tools=[] usage={'completion_tokens': 95, 'completion_tokens_details': {'reasoning_tokens': 30, 'text_tokens': 95}, 'prompt_tokens': 2077, 'prompt_tokens_details': {'cached_tokens': 1664, 'text_tokens': 2077}, 'total_tokens': 2172}
+[����˳��] research_dialogue
+[д����] 6d58891b-7e21-431f-9b96-d06d02687fc9: recent=2, full=2
+[����] request=25582790-05a2-4249-bb25-27449733ed02 status=WAITING_USER reason=NEEDS_USER_INPUT
+[�ش�] ��ǰ��ȷ�Ϸ���Ϊ��ģ��ѹ��������һ������ȷ����ļ�����Դ���Ա����ɸѡ���е�ѹ�����������֦������������ȶ�����Ҫ�����ϴ󣩡�����·�ѡ����ѡ����ļ���������
+INFO:     127.0.0.1:54151 - "GET /api/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60374 - "GET /api/sessions/a2a02ca6-9512-4c30-a90e-4fadcee33210 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60374 - "GET /api/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64518 - "GET /api/sessions/6d58891b-7e21-431f-9b96-d06d02687fc9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50082 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50082 - "GET /static/styles.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49670 - "GET /static/stream.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49670 - "GET /static/app.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49670 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49670 - "GET /api/skills HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49670 - "GET /api/sessions/6d58891b-7e21-431f-9b96-d06d02687fc9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49670 - "GET /api/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49670 - "GET /api/library?q= HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59789 - "POST /api/chat/stream HTTP/1.1" 200 OK
+[��ʼ] request=e1333849-1ebb-47d9-a1c9-beb0471d380c session=6d58891b-7e21-431f-9b96-d06d02687fc9 model=False
+[������] {"direction": "ģ��ѹ��"}
+[��ǰ����] {"direction": "ģ��ѹ��", "compute": "CPU"}
+[����˳��] build_evidence �� research_dialogue
+[д����] 6d58891b-7e21-431f-9b96-d06d02687fc9: recent=4, full=4
+[����] request=e1333849-1ebb-47d9-a1c9-beb0471d380c status=WAITING_USER reason=OFFLINE_DEMO
+[�ش�] [δ����ģ��] ��ǰ������{"direction": "ģ��ѹ��", "compute": "CPU"}
+����ȱ�ȱ�ٿ���ʱ�䣻ȱ�������������������ģ��뵼���������Ļ����
+
+��ƻ�Ͷ������������С��֤��
+INFO:     127.0.0.1:59789 - "GET /api/sessions HTTP/1.1" 200 OK
+
