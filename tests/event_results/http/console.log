@@ -95,7 +95,7 @@ PASS: RejectedDraft 返回SSE
 [当前条件] {}
 [模型决策] request=RejectedDraft step=1 tools=[] usage={'total_tokens': 10}
 [模型决策] request=RejectedDraft step=2 tools=[] usage={'total_tokens': 10}
-[工具顺序] 
+[工具顺序]
 [写记忆] Draft: recent=2, full=2
 [结束] request=RejectedDraft status=WAITING_USER reason=NEEDS_USER_INPUT
 [回答] 已修正，请补充条件
@@ -107,7 +107,7 @@ PASS: StreamRetry 返回SSE
 [读记忆] {}
 [当前条件] {}
 [模型决策] request=StreamRetry step=1 tools=[] usage={'total_tokens': 10}
-[工具顺序] 
+[工具顺序]
 [写记忆] Retry: recent=2, full=2
 [结束] request=StreamRetry status=WAITING_USER reason=NEEDS_USER_INPUT
 [回答] 重试成功
